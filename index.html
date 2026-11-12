@@ -14,65 +14,64 @@
 <meta property="og:description" content="Plastik, Rekonstrüktif ve Estetik Cerrahi Uzmanı · Çanakkale">
 <meta property="og:image" content="https://drcaghan.com/assets/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#f2f7f9" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0a1622" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f3f5f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0f1513" media="(prefers-color-scheme: dark)">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400..600&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet">
 <style>
 :root{
-  /* Layout idea: airy clinical canvas, navy type, one teal accent.
-     The single signature motif is a stitched vessel line (end-to-end anastomosis) under the hero. */
-  --bg:#f2f7f9;
+  /* Identity taken from the logo: the client's gold spiral and its Didone wordmark.
+     Layout idea: golden-ratio splits (1.618 : 1), left-aligned type, open ruled lists instead of boxes,
+     one deep surgical-green band, and one moment: the spiral drawing itself in the hero. */
+  --paper:#f3f5f3;        /* cool porcelain, never cream */
   --surface:#ffffff;
-  --ink:#0f2740;
-  --muted:#55697b;
-  --line:#d5e1e8;
-  --panel:#0e2b4a;
-  --on-panel:#e9f3f6;
-  --on-panel-muted:#a9c2d1;
-  --accent:#087a76;
-  --accent-bright:#19b3ab;
-  --accent-soft:#dcf1ef;
-  --gold:#b68235;
-  --font-display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
-  --font-body:"Figtree","Segoe UI",system-ui,sans-serif;
-  --radius:20px;      /* cards, frames, panels */
-  --radius-sm:12px;   /* rows inside a card */
-  --m-in:150ms; --m-out:120ms; --m-press:90ms;
+  --ink:#1b2321;          /* green-black, from surgical scrubs */
+  --muted:#57625f;
+  --line:#d8ded9;
+  --gold:#b68235;         /* the logo's gold: graphics and small marks */
+  --gold-text:#87591c;    /* the same gold, darkened to read as link text */
+  --deep:#17352f;         /* surgical green, one band */
+  --on-deep:#eef2ef;
+  --on-deep-muted:#b3c5be;
+  --gold-on-deep:#d3a35a;
+  --serif:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif;
+  --sans:"Instrument Sans","Helvetica Neue",Arial,sans-serif;
+  --golden:1.618fr 1fr;
+  --wrap:1160px;
   --ease:cubic-bezier(.2,.8,.2,1);
-  --ease-enter:cubic-bezier(.22,1,.36,1);
-  --wrap:1120px;
   color-scheme:light;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#0a1622; --surface:#111f2e; --ink:#e3ecf2; --muted:#9ab0c0; --line:#23384c;
-    --panel:#12304f; --on-panel:#e9f3f6; --on-panel-muted:#a9c2d1;
-    --accent:#4fd0c6; --accent-bright:#4fd0c6; --accent-soft:#11353a;
+    --paper:#0f1513; --surface:#151d1b; --ink:#e6ece9; --muted:#9aaaa5; --line:#27332f;
+    --gold:#c9974d; --gold-text:#d9ab62; --deep:#12302a; --on-deep:#eef2ef; --on-deep-muted:#a9bdb6; --gold-on-deep:#d9ab62;
     color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --bg:#0a1622; --surface:#111f2e; --ink:#e3ecf2; --muted:#9ab0c0; --line:#23384c;
-  --panel:#12304f; --on-panel:#e9f3f6; --on-panel-muted:#a9c2d1;
-  --accent:#4fd0c6; --accent-bright:#4fd0c6; --accent-soft:#11353a;
+  --paper:#0f1513; --surface:#151d1b; --ink:#e6ece9; --muted:#9aaaa5; --line:#27332f;
+  --gold:#c9974d; --gold-text:#d9ab62; --deep:#12302a; --on-deep:#eef2ef; --on-deep-muted:#a9bdb6; --gold-on-deep:#d9ab62;
   color-scheme:dark;
 }
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 img,svg{max-width:100%}
-a{color:var(--accent);text-underline-offset:3px}
-a:hover{text-decoration-thickness:2px}
-:focus-visible{outline:2px solid var(--accent-bright);outline-offset:2px;border-radius:6px}
-h1,h2,h3{font-family:var(--font-display);text-wrap:balance;margin:0;line-height:1.1;letter-spacing:-0.015em}
+h1,h2,h3{font-family:var(--serif);font-weight:400;margin:0;text-wrap:balance;letter-spacing:-0.01em}
+/* Bodoni at reading sizes: a touch heavier and lower contrast so hairlines hold up */
+.facts dd:not(.s),.area h3,.row .what b,.cite .t,.pair b,.block .big,.lists h2,.brand-name{font-weight:500;font-optical-sizing:auto}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) :is(.facts dd:not(.s),.area h3,.row .what b,.cite .t,.pair b,.block .big,.lists h2,.brand-name){font-weight:600}}
+:root[data-theme="dark"] :is(.facts dd:not(.s),.area h3,.row .what b,.cite .t,.pair b,.block .big,.lists h2,.brand-name){font-weight:600}
 p{margin:0}
-ul,ol{margin:0;padding:0;list-style:none}
-.wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+ul,ol,dl,dd{margin:0;padding:0;list-style:none}
+a{color:var(--gold-text);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;text-decoration-color:color-mix(in srgb,currentColor 40%,transparent);transition:text-decoration-color 150ms var(--ease)}
+a:hover{text-decoration-color:currentColor}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 28px}
 
-/* Logo (traced from the supplied artwork; text layers follow the theme) */
+/* Logo sprite colours (text layers follow the theme) */
 .lg-gold{fill:var(--gold);stroke:var(--gold);stroke-linejoin:round}
 .lg-ink{fill:var(--ink)}
 .lg-grey{fill:var(--muted)}
@@ -80,230 +79,212 @@ ul,ol{margin:0;padding:0;list-style:none}
 .logo{display:block;stroke-width:0;overflow:visible}
 
 /* Header */
-.site-head{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.head-row{display:flex;align-items:center;gap:20px;min-height:68px;flex-wrap:wrap;padding-top:8px;padding-bottom:8px}
-.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink);margin-right:auto}
-.brand-mark{height:44px;width:auto;stroke-width:12}
-.brand-text{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
-.brand-text b{font-family:var(--font-display);font-weight:600;font-size:1.25rem;letter-spacing:-0.02em}
-.brand-text span{font-size:.8rem;color:var(--muted);font-weight:500;letter-spacing:.02em}
-.nav{display:flex;gap:4px 26px;flex-wrap:wrap}
-.nav a{position:relative;display:inline-flex;align-items:center;min-height:44px;text-decoration:none;color:var(--muted);font-weight:500;font-size:.95rem;transition:color var(--m-out) var(--ease)}
-.nav a::after{content:"";position:absolute;left:0;right:0;bottom:8px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform var(--m-out) var(--ease)}
-.nav a[aria-current="page"]{color:var(--ink)}
-.nav a[aria-current="page"]::after{height:2px;background:var(--accent);transform:scaleX(1)}
-.lang{display:flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--surface)}
-.lang button{border:0;background:transparent;color:var(--muted);font:600 .8rem var(--font-body);min-height:36px;min-width:44px;padding:5px 11px;border-radius:999px;cursor:pointer;letter-spacing:.04em}
-.lang button[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent)}
+.skip-link{position:absolute;left:28px;top:-80px;z-index:30;background:var(--ink);color:var(--paper);border:0;border-radius:999px;padding:10px 18px;font:600 .9rem var(--sans);cursor:pointer}
+.skip-link:not(:focus-visible){opacity:0;pointer-events:none}
+.skip-link:focus-visible{top:14px}
+main:focus{outline:none}
+.site-head{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.head-row{display:flex;align-items:center;gap:20px 32px;min-height:76px;flex-wrap:wrap;padding-top:6px;padding-bottom:6px}
+.brand{display:flex;align-items:center;gap:12px;color:var(--ink);text-decoration:none;margin-right:auto}
+.brand-mark{height:40px;width:auto;stroke-width:12}
+.brand-name{font-family:var(--serif);font-size:1.4rem;line-height:1;letter-spacing:-0.01em}
+.nav{display:flex;gap:4px 28px;flex-wrap:wrap}
+.nav a{display:inline-flex;align-items:center;min-height:44px;color:var(--muted);font-size:.95rem;font-weight:500;text-decoration:none;border-bottom:1px solid transparent;transition:color 150ms var(--ease)}
+.nav a:hover{color:var(--ink)}
+.nav a[aria-current="page"]{color:var(--ink);box-shadow:inset 0 -2px 0 -0.5px var(--gold)}
+.lang{display:flex;align-items:center}
+.lang button{border:0;background:none;color:var(--muted);font:600 .82rem var(--sans);letter-spacing:.04em;min-width:40px;min-height:40px;cursor:pointer;border-radius:4px}
+.lang button + button{border-left:1px solid var(--line);border-radius:0 4px 4px 0}
+.lang button[aria-pressed="true"]{color:var(--ink)}
+.lang button:hover{color:var(--ink)}
 
-/* Generic blocks */
+/* Page rhythm */
 main{display:block;min-height:60vh}
-.page{padding:56px 0 80px;display:flex;flex-direction:column;gap:64px}
-.eyebrow{font-size:.8rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
-.page-head{display:flex;flex-direction:column;gap:14px;max-width:760px}
-.page-head h1{font-size:clamp(2.1rem,4.6vw,3.2rem);font-weight:600}
-.lead{font-size:1.15rem;color:var(--muted);max-width:62ch}
-.sec{display:flex;flex-direction:column;gap:24px;scroll-margin-top:96px}
-.sec > h2{font-size:1.6rem;font-weight:600}
-.sec-row{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.sec-row h2{font-size:1.6rem;font-weight:600}
-.more{font-weight:600;text-decoration:none}
+.page{padding:72px 0 104px;display:flex;flex-direction:column;gap:96px}
+.page-head{display:flex;flex-direction:column;gap:18px;max-width:46rem}
+.page-head h1{font-size:clamp(2.6rem,5.4vw,4rem);line-height:1.05}
+.lead{font-size:1.15rem;color:var(--muted);max-width:40rem}
+.sec{display:flex;flex-direction:column;gap:32px;scroll-margin-top:110px}
+.sec > h2,.sec-head h2{font-size:clamp(1.9rem,3.2vw,2.4rem);line-height:1.1}
+.sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px 24px;flex-wrap:wrap}
+.quiet{font-size:.95rem;color:var(--muted)}
 .btns{display:flex;gap:12px;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;font:600 .98rem var(--font-body);text-decoration:none;border:1px solid transparent;cursor:pointer}
-.btn-primary{background:var(--panel);color:var(--on-panel)}
-.btn-ghost{border-color:var(--line);color:var(--ink);background:var(--surface)}
-.pill{display:inline-block;font-size:.72rem;font-weight:600;letter-spacing:.04em;padding:2px 9px;border-radius:999px;background:var(--accent-soft);color:var(--accent);white-space:nowrap;vertical-align:middle}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:26px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 24px;border-radius:999px;font:600 .98rem var(--sans);text-decoration:none;border:1px solid transparent;cursor:pointer;transition:background-color 150ms var(--ease),border-color 150ms var(--ease),color 150ms var(--ease)}
+.btn:active{transform:scale(.985)}
+.btn-primary{background:var(--ink);color:var(--paper)}
+.btn-primary:hover{background:color-mix(in srgb,var(--ink) 82%,var(--gold))}
+.btn-ghost{border-color:color-mix(in srgb,var(--ink) 28%,transparent);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--ink)}
+.btn-light{background:var(--on-deep);color:#17352f}
+.btn-light:hover{background:#ffffff}
 
-/* Hero */
-.hero{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,.8fr);gap:48px;align-items:center}
-.hero-text{display:flex;flex-direction:column;gap:20px}
-.hero h1{font-size:clamp(2.8rem,7.4vw,5.2rem);font-weight:600;letter-spacing:-0.035em;line-height:.98}
-.hero .title{font-family:var(--font-display);font-size:clamp(1.15rem,2.2vw,1.5rem);font-weight:500;color:var(--ink);line-height:1.3}
-.portrait{aspect-ratio:4/5;border-radius:var(--radius);background:var(--surface);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;overflow:hidden;max-width:360px;width:100%;justify-self:end}
-.portrait img{width:100%;height:100%;object-fit:cover;display:block}
-.portrait-mark{height:46%;width:auto}
-.portrait .ph{font-size:.82rem;color:var(--muted)}
+/* Hero: the name set like the logo's wordmark, the spiral drawing itself beside it */
+.hero{display:grid;grid-template-columns:var(--golden);gap:56px;align-items:center;min-height:min(620px,72vh)}
+.hero-text{display:flex;flex-direction:column;gap:26px}
+.hero h1{font-size:clamp(3.2rem,8.4vw,6.4rem);line-height:.98;letter-spacing:-0.025em}
+.hero h1 .pre{display:block;font-size:.5em;letter-spacing:-0.01em;color:var(--muted);margin-bottom:.12em}
+.hero .title{font-size:1.25rem;font-weight:500;line-height:1.35}
+.hero .lead{max-width:34rem}
+.hero-art{position:relative;justify-self:center;width:100%;max-width:380px}
+.hero-art svg{display:block;width:100%;height:auto;overflow:visible}
+.hero-art .spiral{fill:none;stroke:var(--gold);stroke-width:11.3;stroke-linecap:butt;stroke-linejoin:round}
+.hero-art .dot{fill:var(--gold)}
+.hero-art img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:2px}
+.hero-art.has-photo svg{position:absolute;width:42%;left:-18%;bottom:-6%}
+.hero.enter .spiral{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.9s cubic-bezier(.45,0,.2,1) .15s forwards}
+.hero.enter .dot{opacity:0;transform-box:fill-box;transform-origin:center;animation:dot .5s var(--ease) 1.95s forwards}
+.hero.enter .hero-text > *{opacity:0;animation:fade .8s var(--ease) forwards}
+.hero.enter .hero-text > :nth-child(1){animation-delay:.1s}
+.hero.enter .hero-text > :nth-child(2){animation-delay:.35s}
+.hero.enter .hero-text > :nth-child(3){animation-delay:.5s}
+.hero.enter .hero-text > :nth-child(4){animation-delay:.65s}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes dot{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 
-/* Signature: stitched vessel line */
-.vessel{display:flex;flex-direction:column;gap:6px;align-items:center;margin:-16px 0}
-.vessel svg{width:100%;height:140px;display:block;-webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent);mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent)}
-.vessel .lumen{fill:var(--accent-soft)}
-.vessel .wall{stroke:var(--ink);stroke-width:2;fill:none;stroke-linecap:round}
-.vessel .join{stroke:var(--ink);stroke-width:1.2;fill:none;stroke-dasharray:2 3;opacity:.6}
-.vessel .st line{stroke:var(--accent-bright);stroke-width:2;stroke-linecap:round}
-.vessel .st circle{fill:var(--accent-bright)}
-.vessel.enter .st{animation:stitch .45s var(--ease-enter) both}
-.vessel .scale{stroke:var(--muted);stroke-width:1;fill:none;opacity:.7}
-.vessel text{fill:var(--muted);font:500 11px var(--font-body);letter-spacing:.04em}
-.vessel figcaption{font-size:.78rem;color:var(--muted);letter-spacing:.04em}
-@keyframes stitch{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
+/* Facts: a ruled definition list */
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--ink);border-bottom:1px solid var(--line)}
+.facts > div{padding:22px 24px 24px 0;display:flex;flex-direction:column;gap:6px}
+.facts > div + div{padding-left:24px;border-left:1px solid var(--line)}
+.facts dt{font-size:.9rem;color:var(--muted)}
+.facts dd{font-family:var(--serif);font-size:1.3rem;line-height:1.25}
+.facts .s{font-family:var(--sans);font-size:.95rem;color:var(--muted)}
 
+/* Clinical areas on the home page: three open columns */
+.areas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px}
+.area{display:flex;flex-direction:column;gap:12px;padding-top:22px;border-top:1px solid var(--line)}
+.area h3{font-size:1.55rem;line-height:1.15}
+.area h3 a{color:var(--ink);text-decoration:none}
+.area h3 a:hover{color:var(--gold-text)}
+.area p{color:var(--muted)}
 
-/* Facts */
-.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);overflow:hidden}
-.fact{padding:22px 24px;display:flex;flex-direction:column;gap:4px;border-left:1px solid var(--line)}
-.fact:first-child{border-left:0}
-.fact .k{font-size:.74rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.fact .v{font-family:var(--font-display);font-weight:600;font-size:1.08rem;line-height:1.25}
-.fact .s{font-size:.95rem;color:var(--muted);font-variant-numeric:tabular-nums}
+/* The one deep band */
+.band{margin-inline:calc(50% - 50vw);background:var(--deep);color:var(--on-deep)}
+.band-in{max-width:var(--wrap);margin:0 auto;padding:80px 28px;display:grid;grid-template-columns:var(--golden);gap:56px;align-items:end}
+.band .kicker{color:var(--on-deep-muted);font-size:.95rem}
+.band h2{font-size:clamp(1.7rem,3vw,2.35rem);line-height:1.15;margin-top:14px}
+.band .meta{color:var(--on-deep-muted);margin-top:18px;max-width:40rem}
+.band a:not(.btn){color:var(--on-deep)}
+.counts{display:flex;gap:40px;flex-wrap:wrap}
+.count b{display:block;font-family:var(--serif);font-weight:400;font-size:4.2rem;line-height:1;color:var(--gold-on-deep);font-variant-numeric:lining-nums}
+.count span{color:var(--on-deep-muted);font-size:.95rem}
+.band-side{display:flex;flex-direction:column;gap:30px;align-items:flex-start}
 
-/* Clinical cards */
-.areas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
-.area{display:flex;flex-direction:column;gap:12px;text-decoration:none;color:inherit}
-.area h3{font-size:1.25rem;font-weight:600}
-.area p{color:var(--muted);font-size:.98rem}
-.area .n{font:600 .8rem var(--font-body);color:var(--accent);font-variant-numeric:tabular-nums;letter-spacing:.08em}
-
-/* Feature panel */
-.panel{background:var(--panel);color:var(--on-panel);border-radius:var(--radius);padding:44px;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:40px;align-items:end}
-.panel .eyebrow{color:var(--accent-bright)}
-.panel h2{font-size:clamp(1.4rem,2.6vw,1.9rem);font-weight:500;line-height:1.2;margin-top:12px}
-.panel .meta{color:var(--on-panel-muted);margin-top:14px;font-size:.98rem}
-.panel a{color:var(--on-panel)}
-.counts{display:flex;gap:36px;flex-wrap:wrap}
-.count b{display:block;font-family:var(--font-display);font-size:3rem;font-weight:600;line-height:1;font-variant-numeric:tabular-nums}
-.count span{color:var(--on-panel-muted);font-size:.92rem}
-.panel-side{display:flex;flex-direction:column;gap:24px;align-items:flex-start}
-.panel .btn-light{background:var(--on-panel);color:#0e2b4a}
-
-/* Contact strip */
-.strip{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
-.strip h2{font-size:1.5rem;font-weight:600}
-.strip p{color:var(--muted)}
+/* Visit block */
+.visit{display:grid;grid-template-columns:var(--golden);gap:56px;align-items:end;padding-top:32px;border-top:1px solid var(--line)}
+.visit h2{font-size:clamp(1.9rem,3.2vw,2.4rem);line-height:1.1;margin-bottom:14px}
+.visit p{color:var(--muted);max-width:38rem}
+.visit .btns{justify-content:flex-end}
 
 /* About */
-.about-top{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,.8fr);gap:48px;align-items:center}
-.about-logo{padding:40px 32px;display:flex;justify-content:center}
-.about-logo svg{width:100%;max-width:290px;height:auto}
-.bio{display:flex;flex-direction:column;gap:16px;max-width:65ch;font-size:1.08rem}
-.rows{border-top:1px solid var(--line)}
-.row{display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px;padding:18px 0;border-bottom:1px solid var(--line)}
-.row .when{color:var(--muted);font-variant-numeric:tabular-nums;font-size:.95rem;padding-top:2px}
-.row .what b{display:block;font-family:var(--font-display);font-weight:600;font-size:1.08rem;line-height:1.3}
+.about-top{display:grid;grid-template-columns:var(--golden);gap:64px;align-items:start}
+.bio{display:flex;flex-direction:column;gap:18px;font-size:1.08rem;max-width:40rem}
+.about-logo{padding-top:8px}
+.about-logo svg{width:100%;max-width:280px;height:auto}
+.rows{border-top:1px solid var(--ink)}
+.row{display:grid;grid-template-columns:220px minmax(0,1fr);gap:24px;padding:20px 0;border-bottom:1px solid var(--line)}
+.row .when{color:var(--muted);font-variant-numeric:tabular-nums;font-size:.95rem;padding-top:3px}
+.row .what b{display:block;font-family:var(--serif);font-weight:400;font-size:1.3rem;line-height:1.25}
 .row .what span{color:var(--muted)}
-.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
-.card h2{font-size:1.2rem;font-weight:600;margin-bottom:14px}
-.list{display:flex;flex-direction:column;gap:12px}
-.list li{display:flex;flex-direction:column;gap:1px}
+.lists{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:64px 56px}
+.lists section{display:flex;flex-direction:column;gap:18px}
+.lists h2{font-size:1.6rem;line-height:1.15;padding-bottom:12px;border-bottom:1px solid var(--ink)}
+.list{display:flex;flex-direction:column;gap:14px}
+.list li{display:flex;flex-direction:column;gap:2px}
 .list b{font-weight:600}
 .list span{color:var(--muted);font-size:.95rem}
 
 /* Clinical page */
-.focus{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:40px;padding:36px;align-items:start}
-.focus-main{display:flex;flex-direction:column;gap:14px}
-.focus h2{font-size:1.7rem;font-weight:600}
-.focus p{color:var(--muted);max-width:60ch}
-.focus h3{font:600 .76rem var(--font-body);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.focus{display:grid;grid-template-columns:var(--golden);gap:56px;padding:40px 0;border-top:1px solid var(--line)}
+.focus:first-child{border-top:1px solid var(--ink)}
+.focus-main{display:flex;flex-direction:column;gap:16px}
+.focus h2{font-size:clamp(1.9rem,3.2vw,2.4rem);line-height:1.1}
+.focus p{color:var(--muted);max-width:40rem}
+.focus-side{display:flex;flex-direction:column;gap:28px}
+.focus h3{font-family:var(--sans);font-size:.95rem;font-weight:600;letter-spacing:0;margin-bottom:10px}
 .ticks{display:flex;flex-direction:column;gap:8px}
-.ticks li{padding-left:22px;position:relative}
-.ticks li::before{content:"";position:absolute;left:0;top:.72em;width:12px;height:2px;background:var(--accent-bright);border-radius:2px}
-.focus-side{display:flex;flex-direction:column;gap:26px}
+.ticks li{padding-left:20px;position:relative}
+.ticks li::before{content:"";position:absolute;left:0;top:.72em;width:6px;height:6px;border-radius:50%;background:var(--gold)}
 .refs{display:flex;flex-direction:column;gap:8px;font-size:.95rem;color:var(--muted)}
-.note{font-size:.95rem;color:var(--muted);max-width:70ch}
+.note{font-size:.95rem;color:var(--muted);max-width:44rem}
 
 /* Research */
-.chips{display:flex;gap:8px;flex-wrap:wrap}
-.chip{border:1px solid var(--line);background:var(--surface);color:var(--ink);font:500 .92rem var(--font-body);padding:8px 14px;border-radius:999px;cursor:pointer}
-.chip b{color:var(--accent);font-variant-numeric:tabular-nums;margin-left:4px}
-.sub{font:600 .78rem var(--font-body);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:8px}
-.cites{counter-reset:c var(--start,0);border-top:1px solid var(--line)}
-.cites li{counter-increment:c;display:grid;grid-template-columns:44px minmax(0,1fr);gap:8px;padding:16px 0;border-bottom:1px solid var(--line)}
-.cites li::before{content:counter(c,decimal-leading-zero);color:var(--accent);font-weight:600;font-variant-numeric:tabular-nums;font-size:.9rem;padding-top:3px}
-.cite .t{font-weight:600;line-height:1.4}
+.jump{display:flex;gap:10px 28px;flex-wrap:wrap}
+.jump button{border:0;background:none;padding:0;min-height:40px;color:var(--gold-text);font:500 1rem var(--sans);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;text-decoration-color:color-mix(in srgb,currentColor 40%,transparent);cursor:pointer}
+.jump button:hover{text-decoration-color:currentColor}
+.sub{font-size:.95rem;font-weight:600;color:var(--muted);margin-top:8px}
+.cites{counter-reset:c var(--start,0);border-top:1px solid var(--ink)}
+.cites li{counter-increment:c;display:grid;grid-template-columns:48px minmax(0,1fr);gap:8px;padding:18px 0;border-bottom:1px solid var(--line)}
+.cites li::before{content:counter(c) ".";font-family:var(--serif);font-size:1.15rem;color:var(--gold-text);font-variant-numeric:lining-nums;line-height:1.4}
+.cite{display:flex;flex-direction:column;gap:4px;max-width:48rem}
+.cite .t{font-family:var(--serif);font-size:1.18rem;line-height:1.35}
 .cite .a,.cite .j{color:var(--muted);font-size:.95rem}
 .cite .a b{color:var(--ink);font-weight:600}
-.cite{display:flex;flex-direction:column;gap:3px}
-.links{display:flex;gap:10px;flex-wrap:wrap}
+.cite .idx{white-space:nowrap}
+.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:56px}
+.pair > div{display:flex;flex-direction:column;gap:10px;padding-top:18px;border-top:1px solid var(--ink)}
+.pair h3{font-family:var(--sans);font-size:.95rem;font-weight:600;color:var(--muted);letter-spacing:0}
+.pair b{font-family:var(--serif);font-weight:400;font-size:1.3rem;line-height:1.3}
+.pair span{color:var(--muted)}
+.links{display:flex;gap:12px;flex-wrap:wrap}
 
 /* Contact */
-.contact-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
-.contact-grid .card{display:flex;flex-direction:column;gap:10px}
-.contact-grid h2{font-size:1.2rem;font-weight:600;margin:0}
-.contact-grid p{color:var(--muted)}
-.contact-grid p.big{color:var(--ink)}
-.big{font-family:var(--font-display);font-size:1.25rem;font-weight:600;color:var(--ink);overflow-wrap:anywhere}
-.copy{align-self:flex-start;border:1px solid var(--line);background:transparent;color:var(--ink);font:600 .85rem var(--font-body);padding:7px 14px;border-radius:999px;cursor:pointer}
-.profiles{display:flex;flex-direction:column;gap:10px}
-.profiles a{display:flex;justify-content:space-between;gap:12px;padding:10px 14px;border:1px solid var(--line);border-radius:var(--radius-sm);text-decoration:none;color:var(--ink);font-weight:500}
-.profiles a span{color:var(--muted);font-size:.9rem;font-variant-numeric:tabular-nums}
+.contact{display:grid;grid-template-columns:var(--golden);gap:64px;align-items:start}
+.contact-col{display:flex;flex-direction:column;gap:48px}
+.block{display:flex;flex-direction:column;gap:10px;padding-top:18px;border-top:1px solid var(--ink)}
+.block h2{font-family:var(--sans);font-size:.95rem;font-weight:600;color:var(--muted);letter-spacing:0}
+.block .big{font-family:var(--serif);font-size:1.7rem;line-height:1.2;overflow-wrap:anywhere;color:var(--ink)}
+.block .big a{color:var(--ink);text-decoration:none}
+.block p{color:var(--muted)}
+.copy{align-self:flex-start;border:1px solid color-mix(in srgb,var(--ink) 28%,transparent);background:none;color:var(--ink);font:600 .9rem var(--sans);min-height:40px;padding:0 16px;border-radius:999px;cursor:pointer;transition:border-color 150ms var(--ease)}
+.copy:hover{border-color:var(--ink)}
+.profiles{display:flex;flex-direction:column}
+.profiles a{display:flex;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none;font-weight:500}
+.profiles a span{color:var(--muted);font-weight:400;font-variant-numeric:tabular-nums}
+.profiles a:hover{color:var(--gold-text)}
 
 /* Footer */
-.site-foot{border-top:1px solid var(--line);padding:36px 0 44px;color:var(--muted);font-size:.88rem}
+.site-foot{border-top:1px solid var(--line);padding:44px 0 52px;color:var(--muted);font-size:.9rem}
 .foot-row{display:flex;justify-content:space-between;align-items:center;gap:28px;flex-wrap:wrap}
 .foot-logo{display:block;width:300px;max-width:100%}
 .foot-logo svg{width:100%;height:auto}
-.foot-text{display:flex;flex-direction:column;gap:6px;text-align:right;max-width:52ch}
+.foot-text{display:flex;flex-direction:column;gap:6px;text-align:right;max-width:30rem}
 
-/* Motion: the hero enters once on load, every link and button answers the pointer, nothing moves on scroll */
-.skip-link{position:absolute;left:24px;top:-80px;z-index:30;background:var(--panel);color:var(--on-panel);border:0;border-radius:999px;padding:10px 18px;font:600 .9rem var(--font-body);cursor:pointer}
-.skip-link:not(:focus-visible){opacity:0;pointer-events:none}
-.skip-link:focus-visible{top:12px}
-main:focus{outline:none}
-.btn,.chip,.copy{transition:transform var(--m-out) var(--ease),background-color var(--m-out) var(--ease),border-color var(--m-out) var(--ease)}
-a.card,.profiles a{transition:transform var(--m-out) var(--ease),border-color var(--m-out) var(--ease),box-shadow var(--m-out) var(--ease)}
-.m-arrow{display:inline-block;transition:transform var(--m-out) var(--ease)}
-main a:not([class]){text-decoration:none;background:linear-gradient(currentColor,currentColor) 100% 100%/0 1px no-repeat;box-shadow:inset 0 -1px 0 color-mix(in srgb,currentColor 32%,transparent);transition:background-size var(--m-out) var(--ease)}
-.profiles a:not([class]),.big a:not([class]){background:none;box-shadow:none}
-@media (hover: hover) and (pointer: fine){
-  .btn:hover,.chip:hover,.copy:hover{transform:translateY(-1px);transition-duration:var(--m-in)}
-  .btn-primary:hover{background:color-mix(in srgb,var(--panel) 86%,var(--on-panel))}
-  .btn-light:hover{background:color-mix(in srgb,var(--on-panel) 86%,var(--panel))}
-  .btn-ghost:hover,.chip:hover,.copy:hover{border-color:color-mix(in srgb,var(--ink) 45%,var(--line));background:color-mix(in srgb,var(--ink) 5%,var(--surface))}
-  a.card:hover,.profiles a:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--ink) 30%,var(--line));box-shadow:0 14px 24px -14px color-mix(in srgb,var(--ink) 22%,transparent);transition-duration:180ms}
-  .nav a:hover{color:var(--ink)}
-  .nav a:hover::after{transform:scaleX(1);transform-origin:left;transition-duration:var(--m-in)}
-  .more:hover .m-arrow{transform:translateX(3px);transition-duration:var(--m-in)}
-  main a:not([class]):hover{background-size:100% 1px;background-position:0 100%;transition-duration:var(--m-in)}
-  .profiles a:not([class]):hover,.big a:not([class]):hover{background-size:0 1px}
-}
-.btn:active,.chip:active,.copy:active{transform:translateY(1px) scale(.985);transition-duration:var(--m-press)}
-.hero h1 .mask{display:block;overflow:hidden;padding:.14em 0;margin:-.14em 0}
-.hero h1 .mask > span{display:block}
-.hero.enter h1 .mask > span{animation:rise .7s var(--ease-enter) both}
-.hero.enter .eyebrow{animation:fadeup .52s var(--ease-enter) both}
-.hero.enter .title{animation:fadeup .52s var(--ease-enter) .35s both}
-.hero.enter .lead{animation:fadeup .52s var(--ease-enter) .41s both}
-.hero.enter .btns{animation:fadeup .52s var(--ease-enter) .47s both}
-.hero.enter .portrait{animation:settle .9s var(--ease-enter) both}
-@keyframes rise{from{transform:translateY(110%)}}
-@keyframes fadeup{from{opacity:0;transform:translateY(12px)}}
-@keyframes settle{from{transform:scale(.98)}}
-@media (pointer: coarse){.lang button,.chip,.copy{min-height:44px}}
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto}
-  .hero.enter *,.vessel.enter .st{animation:none !important}
-  .btn,.chip,.copy,a.card,.profiles a,.m-arrow,.nav a::after,main a:not([class]){transition:none}
+  .hero.enter .spiral,.hero.enter .dot,.hero.enter .hero-text > *{animation:none;opacity:1;stroke-dashoffset:0}
+  .btn,.copy,a,.nav a{transition:none}
 }
-
 @media (max-width: 900px){
-  .hero{grid-template-columns:1fr;gap:32px}
-  .portrait{justify-self:start;max-width:240px}
+  .hero,.band-in,.visit,.about-top,.focus,.contact{grid-template-columns:1fr}
+  .hero{min-height:0;gap:40px}
+  .hero-art{max-width:220px;justify-self:start;grid-row:1}
   .facts{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .fact:nth-child(3){border-left:0}
-  .fact:nth-child(n+3){border-top:1px solid var(--line)}
-  .areas{grid-template-columns:1fr}
-  .panel{grid-template-columns:1fr;padding:32px}
-  .focus{grid-template-columns:1fr;padding:26px}
-  .grid2,.contact-grid{grid-template-columns:1fr}
-  .about-top{grid-template-columns:1fr;gap:32px}
-  .about-logo{justify-self:start;width:100%;max-width:340px}
+  .facts > div:nth-child(3){padding-left:0;border-left:0}
+  .facts > div:nth-child(n+3){border-top:1px solid var(--line)}
+  .areas,.lists,.pair{grid-template-columns:1fr;gap:40px}
+  .visit .btns{justify-content:flex-start}
+  .about-logo{max-width:240px}
   .foot-text{text-align:left}
+  .page{gap:72px}
 }
 @media (max-width: 560px){
-  .wrap{padding:0 18px}
-  .page{padding:36px 0 56px;gap:48px}
-  .head-row{gap:10px}
-  .brand-mark{height:38px}
-  .brand-text span{display:none}
-  .nav{order:3;width:100%;flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px}
-  .nav{gap:4px 22px}
+  .wrap{padding:0 20px}
+  .page{padding:44px 0 72px;gap:60px}
+  .head-row{gap:4px 16px;min-height:64px}
+  .brand-mark{height:34px}
+  .brand-name{font-size:1.25rem}
+  .nav{order:3;width:100%;flex-wrap:nowrap;overflow-x:auto;gap:22px;margin:0 -20px;padding:0 20px}
   .nav a{white-space:nowrap}
+  .hero-art{max-width:150px}
   .facts{grid-template-columns:1fr}
-  .fact{border-left:0;border-top:1px solid var(--line)}
-  .fact:first-child{border-top:0}
+  .facts > div,.facts > div + div{padding:18px 0;border-left:0}
+  .facts > div + div{border-top:1px solid var(--line)}
+  .band-in{padding:56px 20px}
+  .count b{font-size:3.2rem}
   .row{grid-template-columns:1fr;gap:4px}
-  .cites li{grid-template-columns:32px minmax(0,1fr)}
+  .cites li{grid-template-columns:36px minmax(0,1fr)}
+  .btns .btn{flex:1 1 100%}
 }
 </style>
 </head>
@@ -312,7 +293,7 @@ main a:not([class]){text-decoration:none;background:linear-gradient(currentColor
 <header class="site-head">
   <div class="wrap head-row">
     <button type="button" class="skip-link" id="skip">İçeriğe geç</button>
-    <a class="brand" href="#home"><svg class="logo brand-mark" viewBox="0 0 360 627" aria-hidden="true"><use href="#lg-mark" width="360" height="627"/></svg><span class="brand-text"><b>Çağhan Benli</b><span>Op. Dr. · FEBOPRAS</span></span></a>
+    <a class="brand" href="#home"><svg class="logo brand-mark" viewBox="0 0 360 627" aria-hidden="true" focusable="false"><use href="#lg-mark" width="360" height="627"/></svg><span class="brand-name">Çağhan Benli</span></a>
     <nav class="nav" id="nav" aria-label="Site"></nav>
     <div class="lang" role="group" aria-label="Dil / Language">
       <button type="button" id="lang-tr" data-lang="tr">TR</button>
@@ -323,7 +304,7 @@ main a:not([class]){text-decoration:none;background:linear-gradient(currentColor
 <main id="main" class="wrap"></main>
 <footer class="site-foot">
   <div class="wrap foot-row">
-    <a class="foot-logo" href="#home"><svg class="logo" viewBox="0 0 578 200" role="img" aria-label="Op. Dr. Çağhan Benli · Plastik, Rekonstrüktif ve Estetik Cerrahi"><use href="#lg-h" width="578" height="200"/></svg></a>
+    <a class="foot-logo" href="#home"><svg class="logo" viewBox="0 0 578 200" role="img" aria-label="Op. Dr. Çağhan Benli, Plastik, Rekonstrüktif ve Estetik Cerrahi"><use href="#lg-h" width="578" height="200"/></svg></a>
     <div class="foot-text" id="foot"></div>
   </div>
 </footer>
@@ -369,11 +350,11 @@ const EDUCATION = [
 ];
 
 const CERTS = [
-  { b: "FEBOPRAS", s: { tr: "Fellow of the European Board of Plastic, Reconstructive and Aesthetic Surgery · Nisan 2025", en: "Fellow of the European Board of Plastic, Reconstructive and Aesthetic Surgery · April 2025" } },
-  { b: { tr: "TPRECD Yeterlik Belgesi", en: "Turkish Board Certification (TPRECD)" }, s: { tr: "Türk Plastik, Rekonstrüktif ve Estetik Cerrahi Derneği · Nisan 2024", en: "Turkish Society of Plastic, Reconstructive and Aesthetic Surgeons · April 2024" } },
-  { b: { tr: "ECFMG Sertifikası", en: "ECFMG Certification" }, s: { tr: "Eylül 2024 · Aralık 2028'e kadar geçerli", en: "September 2024 · valid through December 2028" } },
-  { b: { tr: "Temel Mikrocerrahi Sertifikası", en: "Basic Microsurgery Certificate" }, s: { tr: "42. Temel Mikrocerrahi Kursu · Haziran 2022", en: "42nd Basic Microsurgery Course · June 2022" } },
-  { b: { tr: "Deney Hayvanları Kullanım Sertifikası (A kategorisi)", en: "Laboratory Animal Use Certificate (Category A)" }, s: { tr: "ÇOMÜ Hayvan Deneyleri Yerel Etik Kurulu · Kasım 2021", en: "ÇOMU Local Ethics Committee for Animal Experiments · November 2021" } }
+  { b: "FEBOPRAS", s: { tr: "Fellow of the European Board of Plastic, Reconstructive and Aesthetic Surgery, Nisan 2025", en: "Fellow of the European Board of Plastic, Reconstructive and Aesthetic Surgery, April 2025" } },
+  { b: { tr: "TPRECD Yeterlik Belgesi", en: "Turkish Board Certification (TPRECD)" }, s: { tr: "Türk Plastik, Rekonstrüktif ve Estetik Cerrahi Derneği, Nisan 2024", en: "Turkish Society of Plastic, Reconstructive and Aesthetic Surgeons, April 2024" } },
+  { b: { tr: "ECFMG Sertifikası", en: "ECFMG Certification" }, s: { tr: "Eylül 2024, Aralık 2028'e kadar geçerli", en: "September 2024, valid through December 2028" } },
+  { b: { tr: "Temel Mikrocerrahi Sertifikası", en: "Basic Microsurgery Certificate" }, s: { tr: "42. Temel Mikrocerrahi Kursu, Haziran 2022", en: "42nd Basic Microsurgery Course, June 2022" } },
+  { b: { tr: "Deney Hayvanları Kullanım Sertifikası (A kategorisi)", en: "Laboratory Animal Use Certificate (Category A)" }, s: { tr: "ÇOMÜ Hayvan Deneyleri Yerel Etik Kurulu, Kasım 2021", en: "ÇOMU Local Ethics Committee for Animal Experiments, November 2021" } }
 ];
 
 const MEMBERSHIPS = [
@@ -385,24 +366,24 @@ const MEMBERSHIPS = [
 ];
 
 const AWARDS = [
-  { b: { tr: "Vehbi Koç Onur Ödülü", en: "Vehbi Koç Honor Award" }, s: { tr: "Koç Üniversitesi · 2014", en: "Koç University · 2014" } },
-  { b: { tr: "LYS Türkiye 199.'su", en: "Ranked 199th nationwide, university entrance exam (LYS)" }, s: { tr: "Sayısal puan türü, yaklaşık 1.860.000 aday · 2012", en: "Quantitative track, about 1,860,000 candidates · 2012" } }
+  { b: { tr: "Vehbi Koç Onur Ödülü", en: "Vehbi Koç Honor Award" }, s: { tr: "Koç Üniversitesi, 2014", en: "Koç University, 2014" } },
+  { b: { tr: "LYS Türkiye 199.'su", en: "Ranked 199th nationwide, university entrance exam (LYS)" }, s: { tr: "Sayısal puan türü, yaklaşık 1.860.000 aday, 2012", en: "Quantitative track, about 1,860,000 candidates, 2012" } }
 ];
 
 const LANGS = [
   { b: { tr: "Türkçe", en: "Turkish" }, s: { tr: "Anadil", en: "Native" } },
-  { b: { tr: "İngilizce", en: "English" }, s: { tr: "C1 · YDS 93,75 (2022), OET (2025)", en: "C1 · YDS 93.75 (2022), OET (2025)" } },
+  { b: { tr: "İngilizce", en: "English" }, s: { tr: "C1, YDS 93,75 (2022), OET (2025)", en: "C1, YDS 93.75 (2022), OET (2025)" } },
   { b: { tr: "İtalyanca", en: "Italian" }, s: "A2" }
 ];
 
 const COURSES = [
   { b: { tr: "42. Temel Mikrocerrahi Kursu", en: "42nd Basic Microsurgery Course" }, s: { tr: "Haziran 2022", en: "June 2022" } },
-  { b: { tr: "VI. Plastik Cerrahi Asistan Temel Eğitim Kursu", en: "6th Basic Training Course for Plastic Surgery Residents" }, s: { tr: "TPRECD · Ocak 2021", en: "TPRECD · January 2021" } }
+  { b: { tr: "VI. Plastik Cerrahi Asistan Temel Eğitim Kursu", en: "6th Basic Training Course for Plastic Surgery Residents" }, s: { tr: "TPRECD, Ocak 2021", en: "TPRECD, January 2021" } }
 ];
 
 const PUBS_INTL = [
   { a: `${ME}, Akyürek M.`, t: "Suturing and knot-tying techniques in microsurgery: anastomosis time, learning curve and scanning electron microscopic assessment", j: "J Plast Surg Hand Surg", r: "2026;61:229–236", doi: "10.2340/jphs.v61.46794", idx: "SCI-E" },
-  { a: `Akyürek M, ${ME}, Esmer S.`, t: "Our experience with the management of non-melanoma skin cancers with orbital invasion", j: "Eur J Plast Surg", r: "2023;46(1):41–50", doi: "10.1007/s00238-022-01969-8", idx: "ESCI · Scopus" },
+  { a: `Akyürek M, ${ME}, Esmer S.`, t: "Our experience with the management of non-melanoma skin cancers with orbital invasion", j: "Eur J Plast Surg", r: "2023;46(1):41–50", doi: "10.1007/s00238-022-01969-8", idx: "ESCI, Scopus" },
   { a: `Akyürek M, ${ME}, Kaya M, Sürmeli A.`, t: "Does surgical treatment for complicated pilonidal cyst disease in the sacral region affect anal sphincter functions", j: "Turk J Plast Surg", r: "2023;31(1):8–12", doi: "10.4103/tjps.tjps_44_22", idx: "ESCI" },
   { a: "Aslan G, Afsar B, Siriopol D, Kanbay A, Sal O, <b>Benli C</b>, Okcuoglu J, Covic A, Kanbay M.", t: "Cardiovascular effects of continuous positive airway pressure treatment in patients with obstructive sleep apnea: a meta-analysis", j: "Angiology", r: "2018;69(3):195–204", doi: "10.1177/0003319717709175", idx: "SCI-E" },
   { a: "Sag AA, Sos TA, <b>Benli C</b>, Sal O, Rossignol P, Ortiz A, Solak Y, Kanbay M.", t: "Atherosclerotic renal artery stenosis in the post-CORAL era part 2: new directions in transcatheter nephron salvage following flawed revascularization trials", j: "J Am Soc Hypertens", r: "2016;10(4):368–377", doi: "10.1016/j.jash.2016.02.005", idx: "SCI-E" }
@@ -454,12 +435,12 @@ const POSTERS = [
 ];
 
 const ATTENDED = [
-  { b: { tr: "TPRECD 48. Ulusal Kurultayı", en: "48th TPRECD National Congress" }, s: { tr: "Antalya · Ekim 2026", en: "Antalya · October 2026" } },
-  { b: "68th Annual Meeting of the Japan Society of Plastic and Reconstructive Surgery", s: { tr: "Tokyo, Japonya · Nisan 2025", en: "Tokyo, Japan · April 2025" } },
-  { b: { tr: "TPRECD 46. Ulusal Kurultayı", en: "46th TPRECD National Congress" }, s: { tr: "Antalya · Ekim 2024", en: "Antalya · October 2024" } },
-  { b: { tr: "15. Ulusal 3. Uluslararası Yara Kongresi", en: "15th National and 3rd International Wound Congress" }, s: { tr: "Antalya · Aralık 2021", en: "Antalya · December 2021" } },
-  { b: { tr: "TPRECD 43. Ulusal Kurultayı", en: "43rd TPRECD National Congress" }, s: { tr: "Antalya · Kasım 2021", en: "Antalya · November 2021" } },
-  { b: { tr: "17. Ulusal Türk El ve Üst Ekstremite Cerrahisi Kongresi", en: "17th National Congress of Turkish Hand and Upper Extremity Surgery" }, s: { tr: "Eskişehir · Kasım 2020", en: "Eskişehir · November 2020" } }
+  { b: { tr: "TPRECD 48. Ulusal Kurultayı", en: "48th TPRECD National Congress" }, s: { tr: "Antalya, Ekim 2026", en: "Antalya, October 2026" } },
+  { b: "68th Annual Meeting of the Japan Society of Plastic and Reconstructive Surgery", s: { tr: "Tokyo, Japonya, Nisan 2025", en: "Tokyo, Japan, April 2025" } },
+  { b: { tr: "TPRECD 46. Ulusal Kurultayı", en: "46th TPRECD National Congress" }, s: { tr: "Antalya, Ekim 2024", en: "Antalya, October 2024" } },
+  { b: { tr: "15. Ulusal 3. Uluslararası Yara Kongresi", en: "15th National and 3rd International Wound Congress" }, s: { tr: "Antalya, Aralık 2021", en: "Antalya, December 2021" } },
+  { b: { tr: "TPRECD 43. Ulusal Kurultayı", en: "43rd TPRECD National Congress" }, s: { tr: "Antalya, Kasım 2021", en: "Antalya, November 2021" } },
+  { b: { tr: "17. Ulusal Türk El ve Üst Ekstremite Cerrahisi Kongresi", en: "17th National Congress of Turkish Hand and Upper Extremity Surgery" }, s: { tr: "Eskişehir, Kasım 2020", en: "Eskişehir, November 2020" } }
 ];
 
 const AREAS = [
@@ -532,38 +513,27 @@ const N_TALKS = ORALS.length + POSTERS.length;
 
 const rows = list => `<div class="rows">${list.map(x => `
   <div class="row"><div class="when">${t(x.when)}</div><div class="what"><b>${t(x.role)}</b><span>${t(x.place)}</span></div></div>`).join("")}</div>`;
-const listCard = (title, list) => `<div class="card"><h2>${t(title)}</h2><ul class="list">${list.map(x =>
-  (typeof x === "string" || !x.b) ? `<li><b>${t(x)}</b></li>` : `<li><b>${t(x.b)}</b><span>${t(x.s)}</span></li>`).join("")}</ul></div>`;
+const listSec = (title, list) => `<section><h2>${t(title)}</h2><ul class="list">${list.map(x =>
+  (typeof x === "string" || !x.b) ? `<li><b>${t(x)}</b></li>` : `<li><b>${t(x.b)}</b><span>${t(x.s)}</span></li>`).join("")}</ul></section>`;
 const pub = p => `<li><div class="cite"><span class="t">${p.t}</span><span class="a">${p.a}</span>
-  <span class="j"><i>${p.j}</i>. ${p.r}.${p.doi ? ` <a href="https://doi.org/${p.doi}">doi:${p.doi}</a>` : ""}${p.idx ? ` <span class="pill">${p.idx}</span>` : ""}</span></div></li>`;
+  <span class="j"><i>${p.j}</i>. ${p.r}.${p.doi ? ` <a href="https://doi.org/${p.doi}">doi:${p.doi}</a>` : ""}${p.idx ? ` <span class="idx">(${p.idx})</span>` : ""}</span></div></li>`;
 const talk = p => `<li><div class="cite"><span class="t">${t(p.t)}</span><span class="a">${p.a}</span>
-  <span class="j">${t(p.v)}${p.d ? `, ${t(p.d)}` : ""}${p.code ? ` (${p.code})` : ""}.${(p.turkish && lang === "en") ? ` <span class="pill">Presented in Turkish</span>` : ""}</span></div></li>`;
+  <span class="j">${t(p.v)}${p.d ? `, ${t(p.d)}` : ""}${p.code ? ` (${p.code})` : ""}.${(p.turkish && lang === "en") ? ` <i>Presented in Turkish.</i>` : ""}</span></div></li>`;
 
-const vessel = () => {
-  const ys = [36, 53, 70, 87, 104];
-  const stitches = ys.map((y, i) => `<g class="st" style="animation-delay:${0.25 + i * 0.12}s"><line x1="586" y1="${y}" x2="614" y2="${y}"/><circle cx="600" cy="${y}" r="3"/><line x1="600" y1="${y}" x2="605" y2="${y - 7}"/></g>`).join("");
-  return `<figure class="vessel${ENTER}" style="margin-left:0;margin-right:0">
-  <svg viewBox="0 0 1200 140" preserveAspectRatio="xMidYMid slice" role="img" aria-label="${t({ tr: "Uç uca mikrovasküler anastomoz şeması", en: "Schematic of an end-to-end microvascular anastomosis" })}">
-    <rect class="lumen" x="0" y="24" width="1200" height="92"/>
-    <path class="wall" d="M0 24 H1200 M0 116 H1200"/>
-    <path class="join" d="M600 24 V116"/>
-    ${stitches}
-    <path class="scale" d="M676 30 h8 M680 30 V110 M676 110 h8"/>
-    <text x="692" y="74">≈ 1 mm</text>
-  </svg>
-</figure>`;
-};
-
-const portrait = () => PHOTO
-  ? `<div class="portrait"><img src="${PHOTO}" alt="Çağhan Benli"></div>`
-  : `<div class="portrait" aria-label="${t({ tr: "Fotoğraf alanı", en: "Photo placeholder" })}"><svg class="logo portrait-mark" viewBox="0 0 360 627" aria-hidden="true"><use href="#lg-mark" width="360" height="627"/></svg></div>`;
+/* The logo's spiral as one stroke (its centre line), so it can draw itself */
+const SPIRAL = `M445.2,257.1C443.2,258.5 436.8,261.9 433.1,265.2C429.4,268.5 425.2,272.8 422.9,277.1C420.6,281.4 419.5,286.4 419.3,291.0C419.1,295.6 420.1,300.4 421.9,305.0C423.7,309.6 426.7,314.5 430.2,318.6C433.7,322.6 438.6,326.6 443.1,329.2C447.5,331.8 452.3,333.3 457.0,334.3C461.7,335.2 466.3,335.2 471.0,334.9C475.7,334.6 480.3,333.8 485.0,332.5C489.7,331.2 494.4,329.5 499.0,327.1C503.6,324.7 508.5,321.7 512.8,318.2C517.1,314.7 521.5,310.2 524.9,305.8C528.3,301.5 531.2,296.6 533.4,292.0C535.7,287.4 537.3,282.7 538.5,278.0C539.7,273.3 540.3,268.7 540.7,264.0C541.0,259.3 540.9,254.7 540.6,250.0C540.4,245.3 539.8,240.7 539.0,236.0C538.1,231.3 537.0,226.7 535.6,222.0C534.1,217.3 532.4,212.7 530.2,208.0C528.1,203.3 525.7,198.7 522.7,194.0C519.8,189.3 516.4,184.6 512.6,180.1C508.8,175.5 504.3,170.9 499.9,166.9C495.4,162.9 490.6,159.1 486.0,156.0C481.4,152.8 476.7,150.2 472.0,147.9C467.3,145.6 462.7,143.7 458.0,142.1C453.3,140.5 448.7,139.2 444.0,138.1C439.3,137.1 434.7,136.3 430.0,135.8C425.3,135.3 420.7,135.2 416.0,135.2C411.3,135.2 406.7,135.4 402.0,135.8C397.3,136.2 392.7,136.7 388.0,137.5C383.3,138.3 378.7,139.2 374.0,140.3C369.3,141.4 364.7,142.6 360.0,144.0C355.3,145.4 350.7,146.9 346.0,148.7C341.3,150.6 336.7,152.6 332.0,154.9C327.3,157.2 322.7,159.6 318.0,162.4C313.3,165.1 308.7,168.0 304.0,171.4C299.3,174.7 294.6,178.2 290.0,182.2C285.4,186.2 280.6,190.6 276.2,195.1C271.7,199.6 267.3,204.4 263.4,209.0C259.5,213.6 255.9,218.3 252.6,223.0C249.3,227.7 246.4,232.3 243.7,237.0C241.0,241.7 238.6,246.3 236.4,251.0C234.2,255.7 232.2,260.3 230.4,265.0C228.7,269.7 227.1,274.3 225.7,279.0C224.3,283.7 223.1,288.3 222.0,293.0C221.0,297.7 220.0,302.3 219.3,307.0C218.6,311.7 218.1,316.3 217.8,321.0C217.4,325.7 217.2,330.3 217.1,335.0C217.1,339.7 217.2,344.3 217.4,349.0C217.6,353.7 217.9,358.3 218.2,363.0C218.6,367.7 219.1,372.3 219.7,377.0C220.3,381.7 221.1,386.3 221.9,391.0C222.8,395.7 223.7,400.3 224.7,405.0C225.8,409.7 226.9,414.3 228.1,419.0C229.4,423.7 230.7,428.3 232.2,433.0C233.6,437.7 235.1,442.3 236.8,447.0C238.5,451.7 240.3,456.3 242.2,461.0C244.2,465.7 246.3,470.3 248.5,475.0C250.7,479.7 253.1,484.3 255.6,489.0C258.1,493.7 260.7,498.3 263.5,503.0C266.4,507.7 269.3,512.3 272.5,517.0C275.6,521.7 278.9,526.3 282.5,531.0C286.0,535.7 289.7,540.3 293.7,545.0C297.7,549.7 301.9,554.4 306.3,559.0C310.7,563.6 315.4,568.2 320.0,572.6C324.6,576.9 329.3,581.1 334.0,585.0C338.7,588.9 343.3,592.6 348.0,596.0C352.7,599.5 357.3,602.7 362.0,605.8C366.7,608.9 371.3,611.8 376.0,614.6C380.7,617.4 385.3,620.0 390.0,622.5C394.7,625.0 399.3,627.4 404.0,629.6C408.7,631.8 413.3,633.9 418.0,635.9C422.7,637.8 427.3,639.5 432.0,641.2C436.7,642.9 441.3,644.5 446.0,645.9C450.7,647.4 455.3,648.7 460.0,650.0C464.7,651.2 469.3,652.2 474.0,653.1C478.7,654.1 483.3,655.0 488.0,655.7C492.7,656.5 497.3,657.1 502.0,657.7C506.7,658.3 511.5,658.8 516.0,659.2C520.5,659.5 525.7,659.8 528.9,659.9C532.1,660.0 534.2,660.0 535.2,660.0`;
+const DOT = [449.0,710.1,21.6];
+const spiralSvg = () => `<svg viewBox="190 110 380 640" aria-hidden="true" focusable="false">
+  <path class="spiral" pathLength="1" d="${SPIRAL}"/><circle class="dot" cx="${DOT[0]}" cy="${DOT[1]}" r="${DOT[2]}"/></svg>`;
+const heroArt = () => PHOTO
+  ? `<figure class="hero-art has-photo" style="margin:0"><img src="${PHOTO}" alt="Op. Dr. Çağhan Benli">${spiralSvg()}</figure>`
+  : `<figure class="hero-art" style="margin:0">${spiralSvg()}</figure>`;
 
 const PAGES = {
   home: () => `
   <section class="hero${ENTER}">
     <div class="hero-text">
-      <span class="eyebrow">Op. Dr. · FEBOPRAS</span>
-      <h1><span class="mask"><span>Çağhan Benli</span></span></h1>
+      <h1><span class="pre">Op. Dr.</span>Çağhan Benli</h1>
       <p class="title">${t(SPECIALTY)}</p>
       <p class="lead">${t({
         tr: "Çanakkale Mehmet Akif Ersoy Devlet Hastanesi'nde rekonstrüktif mikrocerrahi, estetik cerrahi ile baş-boyun ve yüz cerrahisi alanlarında çalışıyorum.",
@@ -573,84 +543,80 @@ const PAGES = {
         <a class="btn btn-ghost" href="#research">${t(CTA_PUBS)}</a>
       </div>
     </div>
-    ${portrait()}
+    ${heroArt()}
   </section>
 
-  ${vessel()}
-
-  <section class="facts" aria-label="${t({ tr: "Özet", en: "Summary" })}">
-    <div class="fact"><span class="k">${t({ tr: "Görev yeri", en: "Current post" })}</span><span class="v">${t(HOSPITAL)}</span><span class="s">${t({ tr: "Ekim 2026'dan beri", en: "Since October 2026" })}</span></div>
-    <div class="fact"><span class="k">${t({ tr: "Avrupa Board'u", en: "European Board" })}</span><span class="v">FEBOPRAS</span><span class="s">${t({ tr: "Nisan 2025", en: "April 2025" })}</span></div>
-    <div class="fact"><span class="k">${t({ tr: "Uzmanlık eğitimi", en: "Specialty training" })}</span><span class="v">${t(COMU)}</span><span class="s">2020 – 2025</span></div>
-    <div class="fact"><span class="k">${t({ tr: "Yurt dışı deneyimi", en: "International experience" })}</span><span class="v">${t({ tr: "Asan Medical Center, Seul", en: "Asan Medical Center, Seoul" })}</span><span class="s">${t({ tr: "Konuk akademisyen · 2023", en: "Visiting scholar · 2023" })}</span></div>
-  </section>
+  <dl class="facts">
+    <div><dt>${t({ tr: "Görev yeri", en: "Current post" })}</dt><dd>${t(HOSPITAL)}</dd><dd class="s">${t({ tr: "Ekim 2026'dan beri", en: "Since October 2026" })}</dd></div>
+    <div><dt>${t({ tr: "Avrupa Board'u", en: "European Board" })}</dt><dd>FEBOPRAS</dd><dd class="s">${t({ tr: "Nisan 2025", en: "April 2025" })}</dd></div>
+    <div><dt>${t({ tr: "Uzmanlık eğitimi", en: "Specialty training" })}</dt><dd>${t(COMU)}</dd><dd class="s">2020–2025</dd></div>
+    <div><dt>${t({ tr: "Yurt dışı deneyimi", en: "International experience" })}</dt><dd>${t({ tr: "Asan Medical Center, Seul", en: "Asan Medical Center, Seoul" })}</dd><dd class="s">${t({ tr: "Konuk akademisyen, 2023", en: "Visiting scholar, 2023" })}</dd></div>
+  </dl>
 
   <section class="sec">
-    <div class="sec-row"><h2>${t({ tr: "Klinik alanlar", en: "Clinical focus" })}</h2><a class="more" href="#clinical">${t({ tr: "Tüm klinik alanları gör", en: "See all clinical areas" })} <span class="m-arrow" aria-hidden="true">→</span></a></div>
-    <div class="areas">${AREAS.map((a, i) => `
-      <a class="card area" href="#clinical"><span class="n">0${i + 1}</span><h3>${t(a.name)}</h3><p>${t(a.short)}</p></a>`).join("")}</div>
+    <div class="sec-head"><h2>${t({ tr: "Klinik alanlar", en: "Clinical focus" })}</h2><a href="#clinical">${t({ tr: "Tüm klinik alanları gör", en: "See all clinical areas" })}</a></div>
+    <div class="areas">${AREAS.map(a => `
+      <article class="area"><h3><a href="#clinical">${t(a.name)}</a></h3><p>${t(a.short)}</p></article>`).join("")}</div>
   </section>
 
-  <section class="panel">
-    <div>
-      <span class="eyebrow">${t({ tr: "Son yayın · 2026", en: "Latest publication · 2026" })}</span>
-      <h2>${PUBS_INTL[0].t}</h2>
-      <p class="meta">Benli Ç, Akyürek M. <i>Journal of Plastic Surgery and Hand Surgery</i>. 2026;61:229–236. <a href="https://doi.org/${PUBS_INTL[0].doi}">doi:${PUBS_INTL[0].doi}</a></p>
-    </div>
-    <div class="panel-side">
-      <div class="counts">
-        <div class="count"><b>${N_PUBS}</b><span>${t({ tr: "hakemli makale", en: "peer-reviewed articles" })}</span></div>
-        <div class="count"><b>${N_TALKS}</b><span>${t({ tr: "kongre bildirisi", en: "congress presentations" })}</span></div>
+  <section class="band">
+    <div class="band-in">
+      <div>
+        <p class="kicker">${t({ tr: "Son yayın, 2026", en: "Latest publication, 2026" })}</p>
+        <h2>${PUBS_INTL[0].t}</h2>
+        <p class="meta">Benli Ç, Akyürek M. <i>Journal of Plastic Surgery and Hand Surgery</i>. 2026;61:229–236. <a href="https://doi.org/${PUBS_INTL[0].doi}">doi:${PUBS_INTL[0].doi}</a></p>
       </div>
-      <a class="btn btn-light" href="#research">${t(CTA_PUBS)}</a>
+      <div class="band-side">
+        <div class="counts">
+          <div class="count"><b>${N_PUBS}</b><span>${t({ tr: "hakemli makale", en: "peer-reviewed articles" })}</span></div>
+          <div class="count"><b>${N_TALKS}</b><span>${t({ tr: "kongre bildirisi", en: "congress presentations" })}</span></div>
+        </div>
+        <a class="btn btn-light" href="#research">${t(CTA_PUBS)}</a>
+      </div>
     </div>
   </section>
 
-  <section class="card strip">
-    <div><h2>${t({ tr: "Muayene ve iletişim", en: "Appointments and contact" })}</h2>
-    <p>${t({ tr: "Poliklinik randevuları MHRS veya ALO 182 üzerinden alınır.", en: "Outpatient appointments are booked through MHRS, the national appointment system, or by calling 182." })}</p></div>
-    <a class="btn btn-primary" href="#contact">${t(CTA_VISIT)}</a>
+  <section class="visit">
+    <div><h2>${t({ tr: "Muayene ve randevu", en: "Appointments" })}</h2>
+    <p>${t({ tr: "Poliklinik randevuları MHRS üzerinden ya da ALO 182 aranarak alınır.", en: "Outpatient appointments are booked through MHRS, the national appointment system, or by calling 182." })}</p></div>
+    <div class="btns"><a class="btn btn-primary" href="#contact">${t(CTA_VISIT)}</a></div>
   </section>`,
 
   about: () => `
-  <div class="page-head">
-    <span class="eyebrow">${t({ tr: "Hakkımda", en: "About" })}</span>
-    <h1>${t({ tr: "Özgeçmiş", en: "Curriculum vitae" })}</h1>
-  </div>
+  <div class="page-head"><h1>${t({ tr: "Özgeçmiş", en: "Curriculum vitae" })}</h1></div>
   <div class="about-top">
-  <div class="bio">
-    <p>${t({
-      tr: "Mikrocerrahi odaklı çalışan bir plastik, rekonstrüktif ve estetik cerrahi uzmanıyım. Ekim 2026'dan beri Çanakkale Mehmet Akif Ersoy Devlet Hastanesi'nde görev yapıyorum.",
-      en: "I am a plastic, reconstructive and aesthetic surgeon with a focus on microsurgery. Since October 2026 I have been working at Çanakkale Mehmet Akif Ersoy State Hospital." })}</p>
-    <p>${t({
-      tr: "Tıp eğitimimi 2019'da Koç Üniversitesi'nde, işletme çift anadalıyla birlikte tamamladım. Uzmanlık eğitimimi 2020–2025 yılları arasında Çanakkale Onsekiz Mart Üniversitesi Tıp Fakültesi'nde aldım. Bu dönemde Seul'deki Asan Medical Center'da uluslararası konuk akademisyen olarak bulundum. Uzmanlığın ardından Bitlis Devlet Hastanesi'nde çalıştım.",
-      en: "I graduated in medicine from Koç University in 2019, with a double major in business administration. I trained in plastic surgery at Çanakkale Onsekiz Mart University Faculty of Medicine between 2020 and 2025, and during that time spent a period at Asan Medical Center in Seoul as an international visiting scholar. After qualifying I worked at Bitlis State Hospital." })}</p>
-    <p>${t({
-      tr: "Avrupa Plastik, Rekonstrüktif ve Estetik Cerrahi Board'u (FEBOPRAS) ile Türk Plastik, Rekonstrüktif ve Estetik Cerrahi Derneği Yeterlik Belgesi sahibiyim. Uzmanlık tezim ve 2026'da Journal of Plastic Surgery and Hand Surgery'de yayımlanan makalem mikrocerrahide dikiş ve düğüm tekniklerini konu alıyor.",
-      en: "I am a Fellow of the European Board of Plastic, Reconstructive and Aesthetic Surgery (FEBOPRAS) and hold the Turkish board certification in the specialty. My specialty thesis and my 2026 article in the Journal of Plastic Surgery and Hand Surgery both deal with suturing and knot-tying techniques in microsurgery." })}</p>
-  </div>
-  <div class="card about-logo"><svg class="logo" viewBox="0 0 540 576" role="img" aria-label="Op. Dr. Çağhan Benli · ${t(SPECIALTY)}"><use href="#lg-v" width="540" height="576"/></svg></div>
+    <div class="bio">
+      <p>${t({
+        tr: "Mikrocerrahi odaklı çalışan bir plastik, rekonstrüktif ve estetik cerrahi uzmanıyım. Ekim 2026'dan beri Çanakkale Mehmet Akif Ersoy Devlet Hastanesi'nde görev yapıyorum.",
+        en: "I am a plastic, reconstructive and aesthetic surgeon with a focus on microsurgery. Since October 2026 I have been working at Çanakkale Mehmet Akif Ersoy State Hospital." })}</p>
+      <p>${t({
+        tr: "Tıp eğitimimi 2019'da Koç Üniversitesi'nde, işletme çift anadalıyla birlikte tamamladım. Uzmanlık eğitimimi 2020–2025 yılları arasında Çanakkale Onsekiz Mart Üniversitesi Tıp Fakültesi'nde aldım. Bu dönemde Seul'deki Asan Medical Center'da uluslararası konuk akademisyen olarak bulundum. Uzmanlığın ardından Bitlis Devlet Hastanesi'nde çalıştım.",
+        en: "I graduated in medicine from Koç University in 2019, with a double major in business administration. I trained in plastic surgery at Çanakkale Onsekiz Mart University Faculty of Medicine between 2020 and 2025, and during that time spent a period at Asan Medical Center in Seoul as an international visiting scholar. After qualifying I worked at Bitlis State Hospital." })}</p>
+      <p>${t({
+        tr: "Avrupa Plastik, Rekonstrüktif ve Estetik Cerrahi Board'u (FEBOPRAS) ile Türk Plastik, Rekonstrüktif ve Estetik Cerrahi Derneği Yeterlik Belgesi sahibiyim. Uzmanlık tezim ve 2026'da Journal of Plastic Surgery and Hand Surgery'de yayımlanan makalem mikrocerrahide dikiş ve düğüm tekniklerini konu alıyor.",
+        en: "I am a Fellow of the European Board of Plastic, Reconstructive and Aesthetic Surgery (FEBOPRAS) and hold the Turkish board certification in the specialty. My specialty thesis and my 2026 article in the Journal of Plastic Surgery and Hand Surgery both deal with suturing and knot-tying techniques in microsurgery." })}</p>
+    </div>
+    <div class="about-logo"><svg class="logo" viewBox="0 0 540 576" role="img" aria-label="Op. Dr. Çağhan Benli, ${t(SPECIALTY)}"><use href="#lg-v" width="540" height="576"/></svg></div>
   </div>
   <section class="sec"><h2>${t({ tr: "Mesleki deneyim", en: "Professional experience" })}</h2>${rows(EXPERIENCE)}</section>
   <section class="sec"><h2>${t({ tr: "Eğitim", en: "Education" })}</h2>${rows(EDUCATION)}</section>
-  <section class="grid2">
-    ${listCard({ tr: "Sertifikalar ve yeterlikler", en: "Certifications" }, CERTS)}
-    ${listCard({ tr: "Dernek üyelikleri", en: "Society memberships" }, MEMBERSHIPS)}
-    ${listCard({ tr: "Kurslar", en: "Courses" }, COURSES)}
-    ${listCard({ tr: "Diller", en: "Languages" }, LANGS)}
-    ${listCard({ tr: "Ödüller", en: "Awards" }, AWARDS)}
-  </section>`,
+  <div class="lists">
+    ${listSec({ tr: "Sertifikalar ve yeterlikler", en: "Certifications" }, CERTS)}
+    ${listSec({ tr: "Dernek üyelikleri", en: "Society memberships" }, MEMBERSHIPS)}
+    ${listSec({ tr: "Kurslar", en: "Courses" }, COURSES)}
+    ${listSec({ tr: "Diller", en: "Languages" }, LANGS)}
+    ${listSec({ tr: "Ödüller", en: "Awards" }, AWARDS)}
+  </div>`,
 
   clinical: () => `
   <div class="page-head">
-    <span class="eyebrow">${t({ tr: "Klinik alanlar", en: "Clinical focus" })}</span>
-    <h1>${t({ tr: "İlgi ve çalışma alanlarım", en: "Areas of practice" })}</h1>
+    <h1>${t({ tr: "Klinik alanlar", en: "Clinical focus" })}</h1>
     <p class="lead">${t({
       tr: "Plastik, rekonstrüktif ve estetik cerrahinin üç alanında yoğunlaşıyorum. Her başlığın yanında o alandaki akademik çalışmalarımdan örnekler yer alıyor.",
       en: "My practice concentrates on three areas of plastic, reconstructive and aesthetic surgery. Each one is listed with examples of my academic work in that field." })}</p>
   </div>
-  <div class="sec">${AREAS.map(a => `
-    <article class="card focus">
+  <div>${AREAS.map(a => `
+    <article class="focus">
       <div class="focus-main"><h2>${t(a.name)}</h2><p>${t(a.body)}</p></div>
       <div class="focus-side">
         <div><h3>${t({ tr: "Kapsam", en: "Scope" })}</h3><ul class="ticks">${a.scope.map(s => `<li>${t(s)}</li>`).join("")}</ul></div>
@@ -664,36 +630,35 @@ const PAGES = {
 
   research: () => `
   <div class="page-head">
-    <span class="eyebrow">${t({ tr: "Akademik", en: "Research" })}</span>
     <h1>${t({ tr: "Yayınlar ve bildiriler", en: "Publications and presentations" })}</h1>
-    <div class="chips">
-      <button class="chip" type="button" data-jump="sec-pubs">${t({ tr: "Makaleler", en: "Articles" })}<b>${N_PUBS}</b></button>
-      <button class="chip" type="button" data-jump="sec-talks">${t({ tr: "Kongre bildirileri", en: "Presentations" })}<b>${N_TALKS}</b></button>
-      <button class="chip" type="button" data-jump="sec-thesis">${t({ tr: "Tez ve projeler", en: "Thesis and projects" })}</button>
-      <button class="chip" type="button" data-jump="sec-attended">${t({ tr: "Kongre katılımları", en: "Congress attendance" })}</button>
+    <div class="jump">
+      <button type="button" data-jump="sec-pubs">${t({ tr: `Makaleler (${N_PUBS})`, en: `Articles (${N_PUBS})` })}</button>
+      <button type="button" data-jump="sec-talks">${t({ tr: `Kongre bildirileri (${N_TALKS})`, en: `Presentations (${N_TALKS})` })}</button>
+      <button type="button" data-jump="sec-thesis">${t({ tr: "Tez ve projeler", en: "Thesis and projects" })}</button>
+      <button type="button" data-jump="sec-attended">${t({ tr: "Kongre katılımları", en: "Congress attendance" })}</button>
     </div>
   </div>
   <section class="sec" id="sec-pubs">
     <h2>${t({ tr: "Makaleler", en: "Articles" })}</h2>
-    <div class="sub">${t({ tr: "Uluslararası hakemli dergiler", en: "International peer-reviewed journals" })}</div>
+    <p class="sub">${t({ tr: "Uluslararası hakemli dergiler", en: "International peer-reviewed journals" })}</p>
     <ol class="cites">${PUBS_INTL.map(pub).join("")}</ol>
-    <div class="sub">${t({ tr: "Ulusal hakemli dergiler", en: "National peer-reviewed journals" })}</div>
+    <p class="sub">${t({ tr: "Ulusal hakemli dergiler", en: "National peer-reviewed journals" })}</p>
     <ol class="cites" style="--start:${PUBS_INTL.length}">${PUBS_NAT.map(pub).join("")}</ol>
   </section>
   <section class="sec" id="sec-talks">
     <h2>${t({ tr: "Kongre bildirileri", en: "Congress presentations" })}</h2>
-    <div class="sub">${t({ tr: "Sözlü bildiriler", en: "Oral presentations" })}</div>
+    <p class="sub">${t({ tr: "Sözlü bildiriler", en: "Oral presentations" })}</p>
     <ol class="cites">${ORALS.map(talk).join("")}</ol>
-    <div class="sub">${t({ tr: "Poster bildiriler", en: "Poster presentations" })}</div>
+    <p class="sub">${t({ tr: "Poster bildiriler", en: "Poster presentations" })}</p>
     <ol class="cites" style="--start:${ORALS.length}">${POSTERS.map(talk).join("")}</ol>
   </section>
   <section class="sec" id="sec-thesis">
     <h2>${t({ tr: "Tez ve projeler", en: "Thesis and projects" })}</h2>
-    <div class="grid2">
-      <div class="card"><h2>${t({ tr: "Uzmanlık tezi", en: "Specialty thesis" })}</h2><ul class="list"><li><b>${t({
+    <div class="pair">
+      <div><h3>${t({ tr: "Uzmanlık tezi", en: "Specialty thesis" })}</h3><b>${t({
         tr: "Mikrocerrahide dikiş tekniklerinin karşılaştırılmalı analizi: etkin cerrahi sonuçlar için hız ve verimliliğin değerlendirilmesi",
-        en: "Comparative analysis of suturing techniques in microsurgery: evaluation of speed and efficiency for effective surgical outcomes" })}</b><span>${t(COMU)} · 2025</span></li></ul></div>
-      <div class="card"><h2>${t({ tr: "Araştırma projesi", en: "Research project" })}</h2><ul class="list"><li><b>${t({ tr: "ÇOMÜ Bilimsel Araştırma Projesi TTU-2024-4668", en: "ÇOMU Scientific Research Project TTU-2024-4668" })}</b><span>${t({ tr: "Uzmanlık tezi projesi", en: "Specialty thesis project" })}</span></li></ul></div>
+        en: "Comparative analysis of suturing techniques in microsurgery: evaluation of speed and efficiency for effective surgical outcomes" })}</b><span>${t(COMU)}, 2025</span></div>
+      <div><h3>${t({ tr: "Araştırma projesi", en: "Research project" })}</h3><b>${t({ tr: "ÇOMÜ Bilimsel Araştırma Projesi TTU-2024-4668", en: "ÇOMU Scientific Research Project TTU-2024-4668" })}</b><span>${t({ tr: "Uzmanlık tezi projesi", en: "Specialty thesis project" })}</span></div>
     </div>
   </section>
   <section class="sec" id="sec-attended">
@@ -706,33 +671,34 @@ const PAGES = {
   </section>`,
 
   contact: () => `
-  <div class="page-head">
-    <span class="eyebrow">${t({ tr: "İletişim", en: "Contact" })}</span>
-    <h1>${t({ tr: "Muayene ve iletişim", en: "Appointments and contact" })}</h1>
-  </div>
-  <div class="contact-grid">
-    <div class="card">
-      <h2>${t({ tr: "Görev yeri", en: "Where I work" })}</h2>
-      <p class="big">${t(HOSPITAL)}</p>
-      <p>${t({ tr: "Plastik, Rekonstrüktif ve Estetik Cerrahi Polikliniği", en: "Plastic, Reconstructive and Aesthetic Surgery Outpatient Clinic" })}<br>${t({ tr: "Kepez, Çanakkale", en: "Kepez, Çanakkale, Türkiye" })}</p>
-      <p><a href="https://canakkaledh.saglik.gov.tr">canakkaledh.saglik.gov.tr</a></p>
+  <div class="page-head"><h1>${t({ tr: "Muayene ve iletişim", en: "Appointments and contact" })}</h1></div>
+  <div class="contact">
+    <div class="contact-col">
+      <div class="block">
+        <h2>${t({ tr: "Görev yeri", en: "Where I work" })}</h2>
+        <p class="big">${t(HOSPITAL)}</p>
+        <p>${t({ tr: "Plastik, Rekonstrüktif ve Estetik Cerrahi Polikliniği", en: "Plastic, Reconstructive and Aesthetic Surgery Outpatient Clinic" })}<br>${t({ tr: "Kepez, Çanakkale", en: "Kepez, Çanakkale, Türkiye" })}</p>
+        <p><a href="https://canakkaledh.saglik.gov.tr">canakkaledh.saglik.gov.tr</a></p>
+      </div>
+      <div class="block">
+        <h2>${t({ tr: "Randevu", en: "Appointments" })}</h2>
+        <p>${t({
+          tr: "Poliklinik randevuları Merkezi Hekim Randevu Sistemi (MHRS) üzerinden ya da ALO 182 aranarak alınır.",
+          en: "Outpatient appointments are booked through the national appointment system (MHRS) or by calling 182." })}</p>
+        <p><a href="https://www.mhrs.gov.tr">mhrs.gov.tr</a></p>
+      </div>
     </div>
-    <div class="card">
-      <h2>${t({ tr: "Randevu", en: "Appointments" })}</h2>
-      <p>${t({
-        tr: "Poliklinik randevuları Merkezi Hekim Randevu Sistemi (MHRS) üzerinden ya da ALO 182 aranarak alınır.",
-        en: "Outpatient appointments are booked through the national appointment system (MHRS) or by calling 182." })}</p>
-      <p><a href="https://www.mhrs.gov.tr">mhrs.gov.tr</a></p>
-    </div>
-    <div class="card">
-      <h2>${t({ tr: "E-posta", en: "Email" })}</h2>
-      <p class="big"><a href="mailto:${EMAIL}" style="color:inherit;text-decoration:none">${EMAIL}</a></p>
-      <p>${t({ tr: "Akademik iş birliği, davet ve basın soruları için.", en: "For academic collaboration, invitations and media enquiries." })}</p>
-      <button class="copy" type="button" id="copy-mail">${t({ tr: "Adresi kopyala", en: "Copy address" })}</button>
-    </div>
-    <div class="card">
-      <h2>${t({ tr: "Akademik profiller", en: "Academic profiles" })}</h2>
-      <div class="profiles">${PROFILES.map(p => `<a href="${p.href}">${p.name}<span>${p.id}</span></a>`).join("")}</div>
+    <div class="contact-col">
+      <div class="block">
+        <h2>${t({ tr: "E-posta", en: "Email" })}</h2>
+        <p class="big"><a href="mailto:${EMAIL}">${EMAIL}</a></p>
+        <p>${t({ tr: "Akademik iş birliği, davet ve basın soruları için.", en: "For academic collaboration, invitations and media enquiries." })}</p>
+        <button class="copy" type="button" id="copy-mail">${t({ tr: "Adresi kopyala", en: "Copy address" })}</button>
+      </div>
+      <div class="block">
+        <h2>${t({ tr: "Akademik profiller", en: "Academic profiles" })}</h2>
+        <div class="profiles">${PROFILES.map(p => `<a href="${p.href}">${p.name}<span>${p.id}</span></a>`).join("")}</div>
+      </div>
     </div>
   </div>
   <p class="note">${t({
@@ -753,7 +719,8 @@ function render(scrollTop) {
   document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
   document.getElementById("main").innerHTML = `<div class="page">${PAGES[r]()}</div>`;
   document.getElementById("foot").innerHTML = `
-    <p>© 2026 Çağhan Benli · ${t({ tr: "Son güncelleme", en: "Last updated" })}: ${t(UPDATED)}</p>
+    <p>© 2026 Çağhan Benli</p>
+    <p>${t({ tr: "Son güncelleme", en: "Last updated" })}: ${t(UPDATED)}</p>
     <p>${t({ tr: "Bu sitedeki içerik bilgilendirme amaçlıdır, tanı ve tedavi yerine geçmez.", en: "The content of this site is for information only and does not replace diagnosis or treatment." })}</p>`;
   if (scrollTop) window.scrollTo(0, 0);
 }
