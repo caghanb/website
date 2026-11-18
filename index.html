@@ -127,9 +127,17 @@ main{display:block;min-height:60vh}
 @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 
 /* Facts: a ruled definition list */
-.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--ink);border-bottom:1px solid var(--line)}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--ink);border-bottom:1px solid var(--line)}
 .facts > div{padding:22px 24px 24px 0;display:flex;flex-direction:column;gap:6px}
-.facts > div + div{padding-left:24px;border-left:1px solid var(--line)}
+.facts > div:not(:nth-child(3n+1)){padding-left:24px;border-left:1px solid var(--line)}
+.facts > div:nth-child(n+4){border-top:1px solid var(--line)}
+
+/* Workplace */
+.post{display:grid;grid-template-columns:var(--golden);gap:56px;align-items:end;padding-top:24px;border-top:1px solid var(--ink)}
+.post-main{display:flex;flex-direction:column;gap:14px}
+.post h2{font-family:var(--sans);font-size:.95rem;font-weight:600;color:var(--muted);letter-spacing:0}
+.post-name{font-family:var(--serif);font-weight:500;font-size:clamp(1.9rem,3.6vw,2.7rem);line-height:1.1;max-width:22ch;text-wrap:balance}
+.post-side{display:flex;flex-direction:column;gap:4px;color:var(--ink)}
 .facts dt{font-size:.9rem;color:var(--muted)}
 .facts dd{font-family:var(--serif);font-size:1.3rem;line-height:1.25}
 .facts .s{font-family:var(--sans);font-size:.95rem;color:var(--muted)}
@@ -244,8 +252,10 @@ main{display:block;min-height:60vh}
   .hero{min-height:0;gap:40px}
   .hero-art{max-width:220px;justify-self:start;grid-row:1}
   .facts{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .facts > div:nth-child(3){padding-left:0;border-left:0}
+  .facts > div:nth-child(n){padding-left:24px;border-left:1px solid var(--line)}
+  .facts > div:nth-child(odd){padding-left:0;border-left:0}
   .facts > div:nth-child(n+3){border-top:1px solid var(--line)}
+  .post{grid-template-columns:1fr;gap:20px}
   .areas,.lists,.pair{grid-template-columns:1fr;gap:40px}
   .visit .btns{justify-content:flex-start}
   .about-logo{max-width:240px}
@@ -262,8 +272,8 @@ main{display:block;min-height:60vh}
   .nav a{white-space:nowrap}
   .hero-art{max-width:150px}
   .facts{grid-template-columns:1fr}
-  .facts > div,.facts > div + div{padding:18px 0;border-left:0}
-  .facts > div + div{border-top:1px solid var(--line)}
+  .facts > div:nth-child(n){padding:18px 0;border-left:0}
+  .facts > div:nth-child(n+2){border-top:1px solid var(--line)}
   .band-in{padding:56px 20px}
   .count b{font-size:3.2rem}
   .row{grid-template-columns:1fr;gap:4px}
@@ -324,6 +334,15 @@ const EXPERIENCE = [
   { when: { tr: "Ocak 2020 – Şubat 2025", en: "Jan 2020 – Feb 2025" },
     role: { tr: "Uzmanlık Öğrencisi, Plastik, Rekonstrüktif ve Estetik Cerrahi", en: "Resident, Plastic, Reconstructive and Aesthetic Surgery" },
     place: { tr: "Çanakkale Onsekiz Mart Üniversitesi Tıp Fakültesi", en: "Çanakkale Onsekiz Mart University Faculty of Medicine" } }
+];
+
+const EDU_PATH = [
+  { k: { tr: "Lise", en: "High school" }, v: { tr: "Samsun Fen Lisesi", en: "Samsun Science High School" }, s: "2008–⁠2012" },
+  { k: { tr: "Lisans", en: "Undergraduate" }, v: { tr: "Koç Üniversitesi", en: "Koç University" }, s: { tr: "Tıp ve işletme çift anadal, 2012–⁠2019", en: "Medicine and business administration, double major, 2012–⁠2019" } },
+  { k: { tr: "Uzmanlık eğitimi", en: "Specialty training" }, v: COMU, s: { tr: "Plastik, rekonstrüktif ve estetik cerrahi, 2020–⁠2025", en: "Plastic, reconstructive and aesthetic surgery, 2020–⁠2025" } },
+  { k: { tr: "Yurt dışı deneyimi", en: "International experience" }, v: { tr: "Asan Medical Center, Seul", en: "Asan Medical Center, Seoul" }, s: { tr: "Konuk akademisyen, 2023", en: "Visiting scholar, 2023" } },
+  { k: { tr: "Sertifika", en: "Certification" }, v: "ECFMG", s: { tr: "Eylül 2024, Aralık 2028'e kadar geçerli", en: "September 2024, valid through December 2028" } },
+  { k: { tr: "Avrupa Board'u", en: "European Board" }, v: "FEBOPRAS", s: { tr: "Nisan 2025", en: "April 2025" } }
 ];
 
 const EDUCATION = [
@@ -530,12 +549,25 @@ const PAGES = {
     ${heroArt()}
   </section>
 
-  <dl class="facts">
-    <div><dt>${t({ tr: "Görev yeri", en: "Current post" })}</dt><dd>${t(HOSPITAL)}</dd><dd class="s">${t({ tr: "Ekim 2026'dan beri", en: "Since October 2026" })}</dd></div>
-    <div><dt>${t({ tr: "Avrupa Board'u", en: "European Board" })}</dt><dd>FEBOPRAS</dd><dd class="s">${t({ tr: "Nisan 2025", en: "April 2025" })}</dd></div>
-    <div><dt>${t({ tr: "Uzmanlık eğitimi", en: "Specialty training" })}</dt><dd>${t(COMU)}</dd><dd class="s">2020–2025</dd></div>
-    <div><dt>${t({ tr: "Yurt dışı deneyimi", en: "International experience" })}</dt><dd>${t({ tr: "Asan Medical Center, Seul", en: "Asan Medical Center, Seoul" })}</dd><dd class="s">${t({ tr: "Konuk akademisyen, 2023", en: "Visiting scholar, 2023" })}</dd></div>
-  </dl>
+  <section class="sec">
+    <h2>${t({ tr: "Eğitim", en: "Education" })}</h2>
+    <dl class="facts">${EDU_PATH.map(x => `
+      <div><dt>${t(x.k)}</dt><dd>${t(x.v)}</dd><dd class="s">${t(x.s)}</dd></div>`).join("")}
+    </dl>
+  </section>
+
+  <section class="post">
+    <div class="post-main">
+      <h2>${t({ tr: "Görev yeri", en: "Where I work" })}</h2>
+      <p class="post-name">${t(HOSPITAL)}</p>
+    </div>
+    <div class="post-side">
+      <p>${t({ tr: "Plastik, Rekonstrüktif ve Estetik Cerrahi Polikliniği", en: "Plastic, Reconstructive and Aesthetic Surgery Outpatient Clinic" })}</p>
+      <p>${t({ tr: "Kepez, Çanakkale", en: "Kepez, Çanakkale, Türkiye" })}</p>
+      <p class="quiet">${t({ tr: "Ekim 2026'dan beri", en: "Since October 2026" })}</p>
+      <p><a href="https://canakkaledh.saglik.gov.tr">canakkaledh.saglik.gov.tr</a></p>
+    </div>
+  </section>
 
   <section class="sec">
     <div class="sec-head"><h2>${t({ tr: "Klinik alanlar", en: "Clinical focus" })}</h2><a href="#clinical">${t({ tr: "Tüm klinik alanları gör", en: "See all clinical areas" })}</a></div>
