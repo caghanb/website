@@ -14,16 +14,15 @@
 <meta property="og:description" content="Plastik, Rekonstrüktif ve Estetik Cerrahi Uzmanı · Çanakkale">
 <meta property="og:image" content="https://drcaghan.com/assets/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#f3f5f3" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0f1513" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f3f5f3">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400..600&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Bodoni:wght@400..700&family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet">
 <style>
 :root{
-  /* Identity taken from the logo: the client's gold spiral and its Didone wordmark.
+  /* Identity taken from the logo: the client's gold spiral and its Didone wordmark (Libre Bodoni: a text-weight Didone).
      Layout idea: golden-ratio splits (1.618 : 1), left-aligned type, open ruled lists instead of boxes,
-     one deep surgical-green band, and one moment: the spiral drawing itself in the hero. */
+     one sage band, and one moment: the spiral drawing itself in the hero. */
   --paper:#f3f5f3;        /* cool porcelain, never cream */
   --surface:#ffffff;
   --ink:#1b2321;          /* green-black, from surgical scrubs */
@@ -31,39 +30,24 @@
   --line:#d8ded9;
   --gold:#b68235;         /* the logo's gold: graphics and small marks */
   --gold-text:#87591c;    /* the same gold, darkened to read as link text */
-  --deep:#17352f;         /* surgical green, one band */
-  --on-deep:#eef2ef;
-  --on-deep-muted:#b3c5be;
-  --gold-on-deep:#d3a35a;
-  --serif:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif;
+  --deep:#c5cfc6;         /* sage, one band */
+  --on-deep:#1b2321;
+  --on-deep-muted:#4a5650;
+  --gold-on-deep:#6f4a14;  /* deep bronze: the logo gold darkened to read on sage */
+  --serif:"Libre Bodoni","Bodoni 72",Georgia,serif;
   --sans:"Instrument Sans","Helvetica Neue",Arial,sans-serif;
   --golden:1.618fr 1fr;
   --wrap:1160px;
   --ease:cubic-bezier(.2,.8,.2,1);
   color-scheme:light;
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --paper:#0f1513; --surface:#151d1b; --ink:#e6ece9; --muted:#9aaaa5; --line:#27332f;
-    --gold:#c9974d; --gold-text:#d9ab62; --deep:#12302a; --on-deep:#eef2ef; --on-deep-muted:#a9bdb6; --gold-on-deep:#d9ab62;
-    color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --paper:#0f1513; --surface:#151d1b; --ink:#e6ece9; --muted:#9aaaa5; --line:#27332f;
-  --gold:#c9974d; --gold-text:#d9ab62; --deep:#12302a; --on-deep:#eef2ef; --on-deep-muted:#a9bdb6; --gold-on-deep:#d9ab62;
-  color-scheme:dark;
-}
-
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 img,svg{max-width:100%}
 h1,h2,h3{font-family:var(--serif);font-weight:400;margin:0;text-wrap:balance;letter-spacing:-0.01em}
-/* Bodoni at reading sizes: a touch heavier and lower contrast so hairlines hold up */
+/* Serif at reading sizes: medium weight so the hairlines hold up */
 .facts dd:not(.s),.area h3,.row .what b,.cite .t,.pair b,.block .big,.lists h2,.brand-name{font-weight:500;font-optical-sizing:auto}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) :is(.facts dd:not(.s),.area h3,.row .what b,.cite .t,.pair b,.block .big,.lists h2,.brand-name){font-weight:600}}
-:root[data-theme="dark"] :is(.facts dd:not(.s),.area h3,.row .what b,.cite .t,.pair b,.block .big,.lists h2,.brand-name){font-weight:600}
 p{margin:0}
 ul,ol,dl,dd{margin:0;padding:0;list-style:none}
 a{color:var(--gold-text);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;text-decoration-color:color-mix(in srgb,currentColor 40%,transparent);transition:text-decoration-color 150ms var(--ease)}
@@ -115,8 +99,8 @@ main{display:block;min-height:60vh}
 .btn-primary:hover{background:color-mix(in srgb,var(--ink) 82%,var(--gold))}
 .btn-ghost{border-color:color-mix(in srgb,var(--ink) 28%,transparent);color:var(--ink)}
 .btn-ghost:hover{border-color:var(--ink)}
-.btn-light{background:var(--on-deep);color:#17352f}
-.btn-light:hover{background:#ffffff}
+.btn-light{background:var(--ink);color:var(--paper)}
+.btn-light:hover{background:color-mix(in srgb,var(--ink) 82%,var(--gold))}
 
 /* Hero: the name set like the logo's wordmark, the spiral drawing itself beside it */
 .hero{display:grid;grid-template-columns:var(--golden);gap:56px;align-items:center;min-height:min(620px,72vh)}
@@ -162,11 +146,11 @@ main{display:block;min-height:60vh}
 .band{margin-inline:calc(50% - 50vw);background:var(--deep);color:var(--on-deep)}
 .band-in{max-width:var(--wrap);margin:0 auto;padding:80px 28px;display:grid;grid-template-columns:var(--golden);gap:56px;align-items:end}
 .band .kicker{color:var(--on-deep-muted);font-size:.95rem}
-.band h2{font-size:clamp(1.7rem,3vw,2.35rem);line-height:1.15;margin-top:14px}
+.band h2{font-size:clamp(1.7rem,3vw,2.35rem);line-height:1.15;margin-top:14px;font-weight:500}
 .band .meta{color:var(--on-deep-muted);margin-top:18px;max-width:40rem}
 .band a:not(.btn){color:var(--on-deep)}
 .counts{display:flex;gap:40px;flex-wrap:wrap}
-.count b{display:block;font-family:var(--serif);font-weight:400;font-size:4.2rem;line-height:1;color:var(--gold-on-deep);font-variant-numeric:lining-nums}
+.count b{display:block;font-family:var(--serif);font-weight:500;font-size:4.2rem;line-height:1;color:var(--gold-on-deep);font-variant-numeric:lining-nums}
 .count span{color:var(--on-deep-muted);font-size:.95rem}
 .band-side{display:flex;flex-direction:column;gap:30px;align-items:flex-start}
 
