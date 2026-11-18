@@ -199,6 +199,20 @@ main{display:block;min-height:60vh}
 .ticks li::before{content:"";position:absolute;left:0;top:.72em;width:6px;height:6px;border-radius:50%;background:var(--gold)}
 .refs{display:flex;flex-direction:column;gap:8px;font-size:.95rem;color:var(--muted)}
 .note{font-size:.95rem;color:var(--muted);max-width:44rem}
+.press{display:flex;flex-direction:column}
+.press-item{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:48px;align-items:start;padding:48px 0;border-top:1px solid var(--line)}
+.press-item:first-child{border-top:0;padding-top:0}
+.press-item:last-child{padding-bottom:0}
+.press-shot{display:block;justify-self:start;max-width:100%;border:1px solid var(--line);border-radius:4px;overflow:hidden;background:#fff;box-shadow:0 1px 2px rgb(40 46 43 / .06)}
+.press-shot img{display:block;width:100%;height:auto;max-height:420px;object-fit:cover;object-position:top}
+.press-item:nth-child(2) .press-shot{max-width:340px}
+.press-text{display:flex;flex-direction:column;gap:14px}
+.press-meta{display:flex;flex-wrap:wrap;gap:4px 16px;color:var(--muted);font-size:.95rem}
+.press-meta b{color:var(--ink);font-weight:600}
+.press-text h2{font-size:clamp(1.45rem,2.4vw,1.9rem);line-height:1.2}
+.press-text h2 a{color:inherit;text-decoration:none;background:linear-gradient(var(--gold),var(--gold)) 0 100%/0 1px no-repeat;transition:background-size 200ms var(--ease)}
+.press-text h2 a:hover{background-size:100% 1px}
+.press-src{color:var(--muted);font-size:.95rem}
 
 /* Research */
 .jump{display:flex;gap:10px 28px;flex-wrap:wrap}
@@ -287,6 +301,7 @@ main{display:block;min-height:60vh}
   .facts.facts-4 > div:nth-child(odd){padding-left:0;border-left:0}
   .facts.facts-4 > div:nth-child(n+3){border-top:1px solid var(--line)}
   .psec,.plist li{grid-template-columns:1fr;gap:14px}
+  .press-item{grid-template-columns:1fr;gap:24px;padding:40px 0}
   .visit .btns{justify-content:flex-start}
   .about-logo{max-width:240px}
   .foot-text{text-align:left}
@@ -349,6 +364,7 @@ const NAV = [
   ["clinical", { tr: "Klinik Alanlar", en: "Clinical Focus" }],
   ["procedures", { tr: "Ameliyatlar", en: "Procedures" }],
   ["research", { tr: "Akademik",       en: "Research" }],
+  ["press",    { tr: "Basında biz",    en: "In the press" }],
   ["contact",  { tr: "İletişim",       en: "Contact" }]
 ];
 
@@ -1842,6 +1858,23 @@ const procPage = p => {
   </section>` : ""}`;
 };
 
+/* Press coverage. Screenshots are cropped to masthead, headline and date:
+   patient photos and identity are left out (Tanıtım Yönetmeliği, RG 12.11.2025). */
+const PRESS = [
+  { outlet: "Milliyet", agency: "DHA", date: { tr: "24 Aralık 2025", en: "24 December 2025" },
+    title: "Devlet hastanesinde bir ilk! Yüz germe operasyonuna girdi, 15 yıl gençleşerek çıktı",
+    href: "https://www.milliyet.com.tr/gundem/devlet-hastanesinde-bir-ilk-ameliyat-masasindan-15-yil-gencleserek-kalkti-7508616",
+    img: "assets/press/milliyet.jpg", w: 800, h: 530 },
+  { outlet: "Habertürk", agency: "Anadolu Ajansı", date: { tr: "24 Aralık 2025", en: "24 December 2025" },
+    title: "Bitlis'te ilk kez \"derin plan yüz germe ameliyatı\" yapıldı",
+    href: "https://yerel-haberler.haberturk.com/bitlis-haberleri/bitliste-ilk-kez-derin-plan-yuz-germe-ameliyati-yapildi-40065690",
+    img: "assets/press/haberturk.jpg", w: 480, h: 494 },
+  { outlet: "CNN Türk", agency: "DHA", date: { tr: "24 Aralık 2025", en: "24 December 2025" },
+    title: "Devlet hastanesinde bir ilk! 15 yıl gençleşti",
+    href: "https://www.cnnturk.com/turkiye/galeri/devlet-hastanesinde-bir-ilk-15-yil-genclesti-2376594",
+    img: "assets/press/cnnturk.jpg", w: 800, h: 306 }
+];
+
 const PAGES = {
   procedures: () => procIndex(),
   home: () => `
@@ -1998,6 +2031,30 @@ const PAGES = {
     <div class="links">${PROFILES.map(p => `<a class="btn btn-ghost" href="${p.href}">${p.name}</a>`).join("")}</div>
   </section>`,
 
+  press: () => `
+  <div class="page-head">
+    <h1>${t({ tr: "Basında biz", en: "In the press" })}</h1>
+    <p class="lead">${t({
+      tr: "Aralık 2025'te Bitlis Devlet Hastanesi'nde ekibimle yaptığımız derin plan yüz germe ameliyatı, hastanede bu alanda bir ilk olarak ulusal basında yer aldı.",
+      en: "In December 2025 the deep-plane facelift my team performed at Bitlis State Hospital, the first of its kind at the hospital, was covered by the national press." })}</p>
+  </div>
+  <div class="press">${PRESS.map(n => `
+    <article class="press-item">
+      <a class="press-shot" href="${n.href}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+        <img src="${n.img}" width="${n.w}" height="${n.h}" loading="lazy" alt="">
+      </a>
+      <div class="press-text">
+        <p class="press-meta"><b>${n.outlet}</b><span>${t(n.date)}</span></p>
+        <h2><a href="${n.href}" target="_blank" rel="noopener" lang="tr">${n.title}</a></h2>
+        <p class="press-src">${t({ tr: "Kaynak", en: "Source" })}: ${n.agency}${lang === "en" ? " (in Turkish)" : ""}</p>
+        <p><a class="btn btn-ghost" href="${n.href}" target="_blank" rel="noopener">${t({ tr: "Haberi oku", en: "Read the article" })}<span class="sr"> (${n.outlet}, ${t({ tr: "yeni sekmede açılır", en: "opens in a new tab" })})</span></a></p>
+      </div>
+    </article>`).join("")}
+  </div>
+  <p class="note">${t({
+    tr: "Görseller haberlerin başlık bölümünden alınmıştır. Hasta mahremiyeti gereği hasta fotoğrafları ve kimlik bilgileri bu sitede yer almaz. Haberlerin tamamı yayın kuruluşlarının sitelerindedir.",
+    en: "The images show the headline area of each article. To protect patient privacy, patient photographs and identifying details are not shown on this site. The full articles are on the publishers' websites." })}</p>`,
+
   contact: () => `
   <div class="page-head"><h1>${t({ tr: "Muayene ve iletişim", en: "Appointments and contact" })}</h1></div>
   <div class="contact">
@@ -2048,7 +2105,7 @@ function render(scrollTop) {
     `<a href="#${id}"${id === navId ? ' aria-current="page"' : ""}>${t(label)}</a>`).join("");
   document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
   document.getElementById("main").innerHTML = `<div class="page">${proc ? procPage(proc) : PAGES[r]()}</div>`;
-  document.title = proc ? `${pl(proc).name} · Op. Dr. Çağhan Benli` : (navId === "procedures" ? `${t({ tr: "Ameliyatlar", en: "Procedures" })} · Op. Dr. Çağhan Benli` : "Op. Dr. Çağhan Benli");
+  document.title = proc ? `${pl(proc).name} · Op. Dr. Çağhan Benli` : (navId === "procedures" ? `${t({ tr: "Ameliyatlar", en: "Procedures" })} · Op. Dr. Çağhan Benli` : navId === "press" ? `${t({ tr: "Basında biz", en: "In the press" })} · Op. Dr. Çağhan Benli` : "Op. Dr. Çağhan Benli");
   document.getElementById("foot").innerHTML = `
     <p>© 2026 Çağhan Benli</p>
     <p>${t({ tr: "Son güncelleme", en: "Last updated" })}: ${t(UPDATED)}</p>
