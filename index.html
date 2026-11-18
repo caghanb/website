@@ -551,7 +551,7 @@ const PAGES = {
 
   <section class="sec">
     <h2>${t({ tr: "Eğitim", en: "Education" })}</h2>
-    <dl class="facts">${EDU_PATH.map(x => `
+    <dl class="facts">${EDU_PATH.slice().reverse().map(x => `
       <div><dt>${t(x.k)}</dt><dd>${t(x.v)}</dd><dd class="s">${t(x.s)}</dd></div>`).join("")}
     </dl>
   </section>
