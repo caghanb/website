@@ -235,6 +235,32 @@ main{display:block;min-height:60vh}
 .profiles a span{color:var(--muted);font-weight:400;font-variant-numeric:tabular-nums}
 .profiles a:hover{color:var(--gold-text)}
 
+/* Procedure pages */
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.crumb{display:flex;flex-wrap:wrap;gap:6px 10px;font-size:.95rem;color:var(--muted)}
+.facts-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.facts.facts-4 > div:nth-child(n){padding-left:24px;border-left:1px solid var(--line);border-top:0}
+.facts.facts-4 > div:first-child{padding-left:0;border-left:0}
+.facts-4 dd{font-family:var(--sans);font-weight:500;font-size:1.05rem;line-height:1.4}
+.psecs{display:flex;flex-direction:column;border-top:1px solid var(--ink)}
+.psec{display:grid;grid-template-columns:1fr 1.618fr;gap:56px;padding:32px 0;border-bottom:1px solid var(--line)}
+.psec h2{font-size:clamp(1.5rem,2.4vw,1.85rem);line-height:1.15}
+.psec-body{display:flex;flex-direction:column;gap:14px;max-width:40rem}
+.psec-body .ticks{gap:12px}
+.faq{border-top:1px solid var(--line)}
+.faq:last-child{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;padding:14px 0;font-weight:600}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:var(--gold-text);font-size:1.3rem;line-height:1;transition:transform 150ms var(--ease)}
+.faq[open] summary::after{transform:rotate(45deg)}
+.faq p{padding:0 0 16px;color:var(--muted)}
+.plist{border-top:1px solid var(--ink)}
+.plist li{display:grid;grid-template-columns:1fr 1.618fr;gap:8px 56px;padding:18px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.plist a{font-family:var(--serif);font-weight:500;font-size:1.3rem;line-height:1.25;color:var(--ink);text-decoration:none}
+.plist a:hover{color:var(--gold-text)}
+.plist p{color:var(--muted)}
+.site-foot a{color:inherit}
+
 /* Footer */
 .site-foot{border-top:1px solid var(--line);padding:44px 0 52px;color:var(--muted);font-size:.9rem}
 .foot-row{display:flex;justify-content:space-between;align-items:center;gap:28px;flex-wrap:wrap}
@@ -257,6 +283,10 @@ main{display:block;min-height:60vh}
   .facts > div:nth-child(n+3){border-top:1px solid var(--line)}
   .post{grid-template-columns:1fr;gap:20px}
   .areas,.lists,.pair{grid-template-columns:1fr;gap:40px}
+  .facts-4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .facts.facts-4 > div:nth-child(odd){padding-left:0;border-left:0}
+  .facts.facts-4 > div:nth-child(n+3){border-top:1px solid var(--line)}
+  .psec,.plist li{grid-template-columns:1fr;gap:14px}
   .visit .btns{justify-content:flex-start}
   .about-logo{max-width:240px}
   .foot-text{text-align:left}
@@ -272,7 +302,9 @@ main{display:block;min-height:60vh}
   .nav a{white-space:nowrap}
   .hero-art{max-width:150px}
   .facts{grid-template-columns:1fr}
-  .facts > div:nth-child(n){padding:18px 0;border-left:0}
+  .facts > div:nth-child(n),.facts.facts-4 > div:nth-child(n){padding:18px 0;border-left:0}
+  .facts-4{grid-template-columns:1fr}
+  .facts.facts-4 > div:nth-child(n+2){border-top:1px solid var(--line)}
   .facts > div:nth-child(n+2){border-top:1px solid var(--line)}
   .band-in{padding:56px 20px}
   .count b{font-size:3.2rem}
@@ -307,7 +339,7 @@ main{display:block;min-height:60vh}
 /* ---------- Settings you may want to change ---------- */
 const PHOTO = "";               // portrait: put a data: URI or a relative file path here
 const EMAIL = "drcaghanbenli@gmail.com";
-const UPDATED = { tr: "Kasım 2026", en: "November 2026" };
+const UPDATED = { tr: "18 Kasım 2026", en: "18 November 2026" };
 
 /* ---------- Content ---------- */
 const ME = "<b>Benli Ç</b>";
@@ -315,6 +347,7 @@ const NAV = [
   ["home",     { tr: "Ana Sayfa",      en: "Home" }],
   ["about",    { tr: "Hakkımda",       en: "About" }],
   ["clinical", { tr: "Klinik Alanlar", en: "Clinical Focus" }],
+  ["procedures", { tr: "Ameliyatlar", en: "Procedures" }],
   ["research", { tr: "Akademik",       en: "Research" }],
   ["contact",  { tr: "İletişim",       en: "Contact" }]
 ];
@@ -532,7 +565,1285 @@ const heroArt = () => PHOTO
   ? `<figure class="hero-art has-photo" style="margin:0"><img src="${PHOTO}" alt="Op. Dr. Çağhan Benli">${spiralSvg()}</figure>`
   : `<figure class="hero-art" style="margin:0">${spiralSvg()}</figure>`;
 
+
+/* ---------- Procedure information pages ---------- */
+const PROC_GROUPS = [
+  { id: "recon",    name: { tr: "Rekonstrüktif cerrahi ve mikrocerrahi", en: "Reconstructive surgery and microsurgery" } },
+  { id: "headneck", name: { tr: "Baş-boyun ve yüz",                      en: "Head, neck and face" } },
+  { id: "face",     name: { tr: "Yüz estetiği",                          en: "Facial aesthetic surgery" } },
+  { id: "body",     name: { tr: "Meme ve vücut",                         en: "Breast and body" } }
+];
+const PROC_LABELS = {
+  who:      { tr: "Kimler için uygun",    en: "Who it is for" },
+  before:   { tr: "Ameliyattan önce",     en: "Before surgery" },
+  surgery:  { tr: "Ameliyat",             en: "The operation" },
+  recovery: { tr: "İyileşme",             en: "Recovery" },
+  risks:    { tr: "Olası riskler",        en: "Possible risks" },
+  faq:      { tr: "Sık sorulan sorular",  en: "Frequently asked questions" },
+  all:      { tr: "Tüm ameliyatlar",      en: "All procedures" },
+  others:   { tr: "Bu gruptaki diğer ameliyatlar", en: "Other procedures in this group" },
+  facts:    { tr: "Özet",                 en: "At a glance" },
+  typical:  { tr: "Süreler genel bilgi içindir; kişiye ve yapılacak işleme göre değişir.", en: "Times are a general guide and vary with the person and the procedure." },
+  note:     { tr: "Bu sayfa genel bilgilendirme amaçlıdır; muayene ve kişiye özel tıbbi değerlendirmenin yerine geçmez. Size uygun tedavi, muayene sonrasında birlikte belirlenir.",
+              en: "This page is general information and does not replace an examination or personal medical advice. The right treatment for you is decided together after an examination." }
+};
+const PROCS = [
+/* Reconstructive surgery and microsurgery */
+{ slug: "mikrocerrahi-serbest-doku-nakli", group: "recon",
+  tr: {
+    name: "Mikrocerrahi ve serbest doku nakli",
+    short: "Büyük doku kayıplarının, vücudun başka bir yerinden damarlarıyla alınan dokuyla onarılması.",
+    lead: "Serbest doku nakli (serbest flep), vücudun bir bölgesinden deri, yağ, kas ya da kemik dokusunun besleyen damarlarıyla birlikte alınıp onarım gereken bölgeye taşınmasıdır. Taşınan dokunun atardamarı ve toplardamarı, ameliyat mikroskobu altında alıcı bölgedeki damarlara dikilir. Damar çapları çoğu zaman 1–3 milimetredir.",
+    facts: [["Anestezi", "Genel anestezi"], ["Ameliyat süresi", "Genellikle 4–8 saat"], ["Hastanede kalış", "Çoğunlukla 5–10 gün"], ["Dokunun takibi", "İlk 3–5 gün sık aralıklarla"]],
+    who: [
+      "Trafik kazası, iş kazası ya da ezilme sonrası kemik, tendon veya damar gibi önemli yapıların açıkta kaldığı yaralar",
+      "Baş-boyun, meme, kol, bacak ya da gövdedeki tümörlerin çıkarılmasından sonra oluşan geniş doku kayıpları",
+      "Deri grefti ya da çevredeki dokunun kaydırılmasıyla kapatılamayacak kadar büyük veya derin yaralar",
+      "Kemik enfeksiyonu (osteomiyelit) ya da ışın tedavisi sonrası iyileşmeyen yaralar"
+    ],
+    before: [
+      "Doku kaybının boyutu, açıkta kalan yapılar ve bölgedeki damarların durumu muayene ile değerlendirilir; gerekirse anjiyografi ya da tomografi ile damarlar görüntülenir.",
+      "Dokunun alınacağı bölge (uyluk, karın, sırt, kol ya da bacak kemiği) kayıp bölgenin ihtiyacına göre seçilir.",
+      "Sigara, damarlarda kasılmaya yol açarak naklin tutmamasına neden olabilir. Ameliyattan önce ve sonra en az 4 hafta sigara içilmemesi istenir.",
+      "Kalp, şeker ve pıhtılaşma bozukluğu gibi hastalıklar ve kullanılan ilaçlar, özellikle kan sulandırıcılar, ameliyattan önce gözden geçirilir."
+    ],
+    surgery: [
+      "Önce alıcı bölge temizlenir ve bağlanacak damarlar hazırlanır. Aynı anda ya da ardından verici bölgeden doku, besleyen damarlarıyla birlikte çıkarılır.",
+      "Doku yerine yerleştirilir ve damarları mikroskop altında, saç telinden ince iplerle alıcı damarlara dikilir. Verici bölge çoğunlukla doğrudan kapatılır; bazen deri grefti gerekir."
+    ],
+    recovery: [
+      "İlk günlerde taşınan dokunun rengi, ısısı ve kan akımı saat başı ya da birkaç saatte bir kontrol edilir. Damarda pıhtı gelişirse acil olarak yeniden ameliyata alınması gerekebilir.",
+      "Bölgenin sıkışmaması ve aşırı soğumaması önemlidir; pozisyon ve oda ısısı buna göre ayarlanır. Bacağa yapılan onarımlarda yürümeye ve bacağı sarkıtmaya kademeli olarak başlanır.",
+      "Şişlik haftalar içinde azalır. Dokunun şeklini inceltmek ya da düzeltmek için aylar sonra ikinci, daha küçük bir ameliyat planlanabilir.",
+      "Kol ve el onarımlarından sonra fizik tedavi ve el terapisi iyileşmenin önemli bir parçasıdır."
+    ],
+    risks: [
+      "Damarlarda pıhtı oluşması ve buna bağlı olarak taşınan dokunun kısmen ya da tamamen kaybı",
+      "Kanama, kan toplanması (hematom) ve enfeksiyon",
+      "Verici bölgede iz, his kaybı, kas gücünde azalma ya da yara iyileşmesi sorunları",
+      "Uzun ameliyata bağlı bacakta pıhtı ve akciğere pıhtı atması gibi genel riskler"
+    ],
+    faq: [
+      ["Neden deri grefti yeterli olmuyor?", "Deri grefti yalnızca ince bir deri tabakasıdır ve tutunabilmek için altında kanlanması iyi bir zemin gerekir. Kemik, tendon ya da metal plak açıktaysa veya bölge ışın almışsa greft tutmayabilir; bu durumda kendi damarıyla gelen kalın bir doku gerekir."],
+      ["Doku tutmazsa ne olur?", "Tutmayan doku çıkarılır ve yara başka bir yöntemle, gerekirse ikinci bir serbest doku nakliyle onarılır. Bu nedenle ilk günlerdeki sık kontroller önemlidir."],
+      ["Dokunun alındığı yerde sorun kalır mı?", "Verici bölge, işlev kaybı en az olacak şekilde seçilir. Çoğu hastada yalnızca bir iz kalır; bazı bölgelerde his azalması ya da hafif güç kaybı görülebilir."]
+    ]
+  },
+  en: {
+    name: "Microsurgery and free tissue transfer",
+    short: "Repairing large areas of tissue loss with tissue moved, with its own blood vessels, from another part of the body.",
+    lead: "A free tissue transfer (free flap) moves skin, fat, muscle or bone from one part of the body to another together with the vessels that feed it. Under the operating microscope, the tissue's artery and vein are stitched to vessels at the site being repaired. These vessels are often only 1–3 millimetres wide.",
+    facts: [["Anaesthesia", "General anaesthesia"], ["Operating time", "Usually 4–8 hours"], ["Hospital stay", "Mostly 5–10 days"], ["Flap monitoring", "Frequent checks for the first 3–5 days"]],
+    who: [
+      "Wounds after road or work accidents and crush injuries that leave bone, tendon or vessels exposed",
+      "Large defects left after removing tumours of the head and neck, breast, limbs or trunk",
+      "Wounds too large or deep to close with a skin graft or by moving nearby tissue",
+      "Wounds that will not heal after bone infection (osteomyelitis) or radiotherapy"
+    ],
+    before: [
+      "The size of the defect, the structures exposed and the state of the local vessels are assessed by examination and, when needed, by angiography or CT imaging.",
+      "The donor site (thigh, abdomen, back, forearm or lower-leg bone) is chosen to match what the defect needs.",
+      "Smoking narrows blood vessels and can make the transfer fail. You will be asked not to smoke for at least 4 weeks before and after surgery.",
+      "Heart disease, diabetes, clotting disorders and your medicines, especially blood thinners, are reviewed before the operation."
+    ],
+    surgery: [
+      "The wound is cleaned and the recipient vessels are prepared. At the same time or afterwards, the tissue is raised from the donor site with its vessels.",
+      "The tissue is set into place and its vessels are joined to the recipient vessels under the microscope with stitches finer than a hair. The donor site is usually closed directly; sometimes a skin graft is needed."
+    ],
+    recovery: [
+      "For the first days the colour, warmth and blood flow of the transferred tissue are checked every hour or every few hours. If a clot forms in the vessels, an urgent return to theatre may be needed.",
+      "The area must not be compressed or allowed to get cold; positioning and room temperature are adjusted for this. After leg reconstruction, walking and letting the leg hang down are started gradually.",
+      "Swelling settles over weeks. A second, smaller operation may be planned months later to thin or reshape the tissue.",
+      "After arm and hand reconstruction, physiotherapy and hand therapy are an important part of recovery."
+    ],
+    risks: [
+      "A clot in the vessels leading to partial or complete loss of the transferred tissue",
+      "Bleeding, a collection of blood (haematoma) and infection",
+      "A scar, numbness, reduced muscle strength or healing problems at the donor site",
+      "General risks of a long operation, such as a clot in the leg or lung"
+    ],
+    faq: [
+      ["Why is a skin graft not enough?", "A skin graft is a thin layer of skin and needs a well-supplied bed to take. Over exposed bone, tendon or metal plates, or after radiotherapy, a graft may fail, and a thicker tissue that brings its own blood supply is needed."],
+      ["What happens if the transfer fails?", "Tissue that does not survive is removed and the wound is repaired another way, if necessary with a second free tissue transfer. This is why the close checks in the first days matter."],
+      ["Will there be problems where the tissue was taken from?", "The donor site is chosen to cause the least loss of function. Most patients are left with a scar only; some sites can leave reduced feeling or mild weakness."]
+    ]
+  }
+},
+
+{ slug: "el-cerrahisi-el-yaralanmalari", group: "recon",
+  tr: {
+    name: "El cerrahisi ve el yaralanmaları",
+    short: "Tendon, sinir ve damar yaralanmaları, kopan parmağın yerine dikilmesi ve elin diğer cerrahi hastalıkları.",
+    lead: "El, küçük bir alanda çok sayıda tendon, sinir, damar ve eklem barındırır. Kesi, ezilme ya da kopma yaralanmalarında bu yapıların ilk ameliyatta doğru onarılması, elin ileride ne kadar iyi kullanılacağını büyük ölçüde belirler. El cerrahisi; tendon ve sinir onarımını, kopan parmak ya da elin yerine dikilmesini (replantasyon), kırık tespitini ve Dupuytren hastalığı, karpal tünel sendromu ve el kitleleri gibi hastalıkların tedavisini kapsar.",
+    facts: [["Anestezi", "Kolun bölgesel uyuşturulması (blok), lokal ya da genel anestezi"], ["Ameliyat süresi", "Yarım saatten (basit onarım) birkaç saate (replantasyon)"], ["Hastanede kalış", "Çoğunlukla aynı gün; replantasyonda yaklaşık 1 hafta"], ["Rehabilitasyon", "Atel ve el terapisi, haftalar–aylar"]],
+    who: [
+      "Cam, bıçak ya da makine kesilerine bağlı tendon ve sinir yaralanmaları",
+      "Parmak ya da elin tamamen veya kısmen kopması",
+      "Ezilme yaralanmaları ve el kırıkları",
+      "Dupuytren hastalığı, karpal tünel sendromu, tetik parmak ve el kitleleri"
+    ],
+    before: [
+      "Kopma yaralanmasında ilk yardım: kanamayı yaraya temiz bir bezle bastırarak durdurun. Kopan parçayı ovalamayın; kirliyse serum fizyolojik ya da temiz suyla nazikçe durulayın. Parçayı serum fizyolojikle ya da temiz suyla nemlendirilmiş (sırılsıklam olmayan) bir gazlı beze sarın, temiz bir naylon torbaya koyup ağzını kapatın ve bu torbayı buzlu su dolu ikinci bir torbaya yerleştirin. Parçayı doğrudan buza değdirmeyin. Parmak kısmen kopmuşsa bağlantıyı kesmeyin, olduğu gibi sarın. Ameliyat gerekebileceği için hastaneye varana kadar bir şey yiyip içmeyin ve zaman kaybetmeden hastaneye gidin.",
+      "Kesi yaralanmalarında parmakların hareketi ve hissi muayene edilir; tendon ve sinir yaralanmaları çoğu zaman ilk birkaç gün içinde onarılmalıdır.",
+      "Kırık ya da yabancı cisim şüphesinde röntgen çekilir.",
+      "Planlı ameliyatlarda (Dupuytren, karpal tünel) kullanılan kan sulandırıcılar ve sigara durumu önceden değerlendirilir."
+    ],
+    surgery: [
+      "Yara temizlenir, yaralanan yapılar belirlenir. Tendonlar özel dikiş teknikleriyle, sinirler ve damarlar mikroskop altında onarılır; kırıklar tel, vida ya da plakla tespit edilir.",
+      "Replantasyonda önce kemik sabitlenir, ardından tendonlar, atardamar, toplardamarlar ve sinirler sırayla dikilir. Kopan parçanın durumu ve yaralanmanın şekli replantasyonun mümkün olup olmadığını belirler."
+    ],
+    recovery: [
+      "Ameliyattan sonra el, onarılan yapıları koruyan bir atelle yukarıda tutulur.",
+      "Tendon onarımlarında koruyucu ve kontrollü hareketler genellikle ilk günlerde el terapisti eşliğinde başlar; tam güç kullanımına çoğunlukla 10–12 haftada izin verilir.",
+      "Sinir onarımından sonra his, sinirin büyüme hızına bağlı olarak aylar içinde geri gelir.",
+      "Replantasyondan sonra ilk günlerde parmağın rengi ve ısısı sık sık kontrol edilir; sigara ve soğuk kesinlikle önlenir."
+    ],
+    risks: [
+      "Onarılan tendonun yapışması ya da kopması, eklem sertliği",
+      "His kaybının kalıcı olması, soğuğa karşı hassasiyet",
+      "Enfeksiyon ve yara iyileşmesi sorunları",
+      "Replantasyonda dikilen parçanın tutmaması"
+    ],
+    faq: [
+      ["Kopan parmak her zaman yerine dikilebilir mi?", "Hayır. Parçanın ezilme derecesi, kopma seviyesi, geçen süre ve hastanın genel durumu belirleyicidir. Doğru korunan ve hızla ulaştırılan parçada başarı şansı artar."],
+      ["Tendon onarımından sonra ne kadar süre işe dönemem?", "Masa başı işlere birkaç hafta içinde dönülebilir. Elin güç gerektiren işlerde kullanılması çoğunlukla 3 ayı bulur; süre onarılan tendona ve el terapisine uyuma göre değişir."],
+      ["El terapisi neden bu kadar önemli?", "Doğru zamanda başlanan kontrollü egzersizler, onarılan tendonların çevre dokuya yapışmasını önlemenin ve eklem hareketini korumanın önemli bir yoludur."]
+    ]
+  },
+  en: {
+    name: "Hand surgery and hand injuries",
+    short: "Tendon, nerve and vessel injuries, reattaching severed fingers, and other surgical conditions of the hand.",
+    lead: "The hand packs many tendons, nerves, vessels and joints into a small space. After cuts, crush injuries or amputations, repairing these structures correctly at the first operation largely decides how well the hand will work later. Hand surgery covers tendon and nerve repair, reattaching a severed finger or hand (replantation), fixing fractures, and treating conditions such as Dupuytren's disease, carpal tunnel syndrome and hand lumps.",
+    facts: [["Anaesthesia", "Arm block, local or general anaesthesia"], ["Operating time", "From half an hour (simple repair) to several hours (replantation)"], ["Hospital stay", "Mostly same day; about 1 week after replantation"], ["Rehabilitation", "Splint and hand therapy over weeks to months"]],
+    who: [
+      "Tendon and nerve injuries from glass, knife or machine cuts",
+      "Complete or partial amputation of a finger or the hand",
+      "Crush injuries and hand fractures",
+      "Dupuytren's disease, carpal tunnel syndrome, trigger finger and hand lumps"
+    ],
+    before: [
+      "First aid for an amputation: press on the wound with a clean cloth to stop the bleeding. Do not scrub the severed part; if it is dirty, rinse it gently with saline or clean water. Wrap it in gauze moistened (not soaked) with saline or clean water, place it in a clean plastic bag, seal the bag and put it into a second bag filled with iced water. Do not let the part touch ice directly. If a finger is only partly severed, do not cut the connection; dress it as it is. Do not eat or drink until you reach hospital, as surgery may be needed, and go without delay.",
+      "After a cut, finger movement and feeling are examined; tendon and nerve injuries usually need repair within the first few days.",
+      "An X-ray is taken if a fracture or foreign body is suspected.",
+      "For planned operations (Dupuytren's, carpal tunnel), blood thinners and smoking are reviewed in advance."
+    ],
+    surgery: [
+      "The wound is cleaned and the injured structures are identified. Tendons are repaired with special suture techniques, nerves and vessels under the microscope, and fractures are fixed with wires, screws or plates.",
+      "In replantation the bone is fixed first, then the tendons, artery, veins and nerves are joined in turn. The state of the severed part and the type of injury decide whether replantation is possible."
+    ],
+    recovery: [
+      "After surgery the hand is kept raised in a splint that protects the repair.",
+      "After tendon repair, protected and controlled movement usually starts in the first days with a hand therapist; full-strength use is mostly allowed at 10–12 weeks.",
+      "After nerve repair, feeling returns over months, at the pace the nerve regrows.",
+      "After replantation, the finger's colour and warmth are checked often in the first days; smoking and cold must be avoided completely."
+    ],
+    risks: [
+      "Adhesion or rupture of the repaired tendon, joint stiffness",
+      "Permanent loss of feeling, sensitivity to cold",
+      "Infection and wound-healing problems",
+      "Failure of a replanted part"
+    ],
+    faq: [
+      ["Can a severed finger always be reattached?", "No. How badly the part is crushed, the level of the amputation, the time elapsed and the patient's general health all decide. A part that is kept correctly and brought in quickly has a better chance."],
+      ["How long before I can go back to work after a tendon repair?", "Desk work is usually possible within a few weeks. Heavy use of the hand mostly takes about 3 months, depending on the tendon repaired and on keeping up with hand therapy."],
+      ["Why does hand therapy matter so much?", "Controlled exercise started at the right time is an important way to stop repaired tendons sticking to surrounding tissue and to keep the joints moving."]
+    ]
+  }
+},
+
+{ slug: "meme-rekonstruksiyonu", group: "recon",
+  tr: {
+    name: "Meme rekonstrüksiyonu",
+    short: "Meme kanseri ameliyatından sonra memenin protez ya da kişinin kendi dokusuyla yeniden oluşturulması.",
+    lead: "Meme rekonstrüksiyonu, meme kanseri nedeniyle memenin tamamı ya da bir kısmı alındıktan sonra memenin yeniden şekillendirilmesidir. Kanser ameliyatıyla aynı seansta (erken) ya da tedavi bittikten aylar veya yıllar sonra (geç) yapılabilir. Yöntem seçimi; kanser tedavisinin planına, ışın tedavisi alınıp alınmayacağına, vücut yapısına ve kişinin tercihine göre genel cerrahi ve onkoloji ekibiyle birlikte yapılır.",
+    facts: [["Anestezi", "Genel anestezi"], ["Ameliyat süresi", "Protezle 1–3 saat; kendi dokusuyla 4–8 saat"], ["Hastanede kalış", "Protezle 1–2 gün; kendi dokusuyla 3–6 gün"], ["Günlük yaşama dönüş", "Protezle 3–4 hafta; kendi dokusuyla 6–8 hafta"]],
+    who: [
+      "Meme kanseri ya da kanser riskini azaltma amacıyla memesi alınacak veya alınmış kadınlar",
+      "Meme koruyucu ameliyat sonrası belirgin şekil bozukluğu veya asimetrisi olanlar",
+      "Doğuştan meme gelişim bozukluğu olanlar"
+    ],
+    before: [
+      "Rekonstrüksiyon planı, kanser tedavisini geciktirmeyecek şekilde meme cerrahı ve onkoloğunuzla birlikte yapılır.",
+      "Protezle onarımda çoğu zaman önce deriyi genişleten bir doku genişletici yerleştirilir, haftalar içinde serum ile şişirilir ve sonra kalıcı protezle değiştirilir.",
+      "Kendi dokusuyla onarımda en sık karın altındaki deri ve yağ dokusu (DIEP flebi) ya da sırttaki kas ve deri (latissimus dorsi flebi) kullanılır.",
+      "Işın tedavisi alınacaksa protezle onarımda sorun oranı artar; bu durum yöntem ve zamanlama seçiminde dikkate alınır."
+    ],
+    surgery: [
+      "Protezle onarımda protez ya da doku genişletici, göğüs kasının altına veya üstüne yerleştirilir.",
+      "Kendi dokusuyla onarımda karın ya da sırttan alınan doku meme şeklinde biçimlendirilir; serbest doku naklinde damarları mikroskop altında göğüsteki damarlara bağlanır.",
+      "Meme başı ve meme başı çevresindeki koyu bölge, ana onarım yerleştikten birkaç ay sonra küçük bir ameliyat ve dövme ile oluşturulabilir. Karşı memeyle simetri için diğer memede küçültme ya da dikleştirme yapılabilir."
+    ],
+    recovery: [
+      "Drenler genellikle birkaç gün ile iki hafta arasında çıkarılır. İlk haftalarda destekleyici sütyen kullanılır.",
+      "Kolun yukarı kaldırılması ve ağır kaldırma, ilk 4–6 hafta sınırlandırılır.",
+      "Karından doku alınan hastalarda karın bölgesi ilk haftalarda gergin olur; korse kullanılır ve öne eğik yürünür.",
+      "Memenin son şekli ve simetrisi birkaç ayda oturur; düzeltme için ek ameliyatlar gerekebilir."
+    ],
+    risks: [
+      "Mastektomi derisinde beslenme sorunu, sıvı toplanması (seroma)",
+      "Protez etrafında sert kapsül oluşması, protezin yer değiştirmesi, enfeksiyon nedeniyle protezin çıkarılması; yıllar içinde protez değişimi gereksinimi ve nadiren protezle ilişkili bir lenfoma türü (BIA-ALCL)",
+      "Kendi dokusuyla onarımda dokunun kısmen ya da tamamen kaybı",
+      "Karın duvarında zayıflık veya fıtık, sırt bölgesinde sıvı toplanması",
+      "İki meme arasında asimetri ve düzeltme ameliyatı gereksinimi"
+    ],
+    faq: [
+      ["Rekonstrüksiyon kanserin takibini zorlaştırır mı?", "Hayır. Yeniden oluşturulan meme, kanserin tekrarlayıp tekrarlamadığının muayene ve görüntüleme ile takibine engel olmaz."],
+      ["Mastektomiden yıllar sonra da yapılabilir mi?", "Evet. Geç rekonstrüksiyon, tedavi bittikten sonra herhangi bir zamanda planlanabilir; özellikle ışın almış göğüs duvarında kişinin kendi dokusu çoğu zaman daha uygun bir seçenektir."],
+      ["Yeniden yapılan memede his olur mu?", "His çoğunlukla azdır. Kendi dokusuyla yapılan onarımlarda zamanla bir miktar his gelişebilir; normal meme hissi beklenmemelidir."]
+    ]
+  },
+  en: {
+    name: "Breast reconstruction",
+    short: "Rebuilding the breast with an implant or the patient's own tissue after breast cancer surgery.",
+    lead: "Breast reconstruction rebuilds the breast after all or part of it has been removed for breast cancer. It can be done at the same operation as the cancer surgery (immediate) or months or years after treatment ends (delayed). The method is chosen with the breast surgery and oncology team, according to the cancer treatment plan, whether radiotherapy is planned, body shape and the patient's own preference.",
+    facts: [["Anaesthesia", "General anaesthesia"], ["Operating time", "Implant 1–3 hours; own tissue 4–8 hours"], ["Hospital stay", "Implant 1–2 days; own tissue 3–6 days"], ["Back to daily life", "Implant 3–4 weeks; own tissue 6–8 weeks"]],
+    who: [
+      "Women who will have or have had a mastectomy for breast cancer or to reduce cancer risk",
+      "Women with a marked change in shape or asymmetry after breast-conserving surgery",
+      "Women with a congenital breast development disorder"
+    ],
+    before: [
+      "The reconstruction is planned with your breast surgeon and oncologist so that it does not delay cancer treatment.",
+      "Implant reconstruction often starts with a tissue expander that stretches the skin; it is filled with saline over weeks and later replaced with a permanent implant.",
+      "Own-tissue reconstruction most often uses lower-abdominal skin and fat (DIEP flap) or back muscle and skin (latissimus dorsi flap).",
+      "Radiotherapy increases problems with implant reconstruction, and this is taken into account when choosing the method and timing."
+    ],
+    surgery: [
+      "In implant reconstruction the implant or expander is placed under or over the chest muscle.",
+      "In own-tissue reconstruction, tissue from the abdomen or back is shaped into a breast; in a free flap its vessels are joined to chest vessels under the microscope.",
+      "The nipple and areola can be rebuilt with a small operation and tattooing a few months after the main reconstruction settles. To match the other breast, it may be reduced or lifted."
+    ],
+    recovery: [
+      "Drains are usually removed between a few days and two weeks. A supportive bra is worn for the first weeks.",
+      "Raising the arm high and heavy lifting are limited for the first 4–6 weeks.",
+      "If tissue was taken from the abdomen, it feels tight for the first weeks; a support garment is worn and you walk slightly bent forward.",
+      "The final shape and symmetry settle over a few months; further operations may be needed for refinement."
+    ],
+    risks: [
+      "Poor blood supply to the mastectomy skin, fluid collection (seroma)",
+      "Hard scar capsule around the implant, implant displacement, implant removal because of infection; implant replacement over the years and, rarely, an implant-associated lymphoma (BIA-ALCL)",
+      "Partial or complete loss of own-tissue reconstruction",
+      "Abdominal wall weakness or hernia, fluid collection on the back",
+      "Asymmetry between the breasts and the need for revision surgery"
+    ],
+    faq: [
+      ["Does reconstruction make cancer follow-up harder?", "No. A reconstructed breast does not prevent checking for recurrence by examination and imaging."],
+      ["Can it be done years after a mastectomy?", "Yes. Delayed reconstruction can be planned at any time after treatment; on a chest wall that has had radiotherapy, the patient's own tissue is often the better option."],
+      ["Will the rebuilt breast have feeling?", "Feeling is usually limited. Some feeling may develop over time after own-tissue reconstruction, but normal breast sensation should not be expected."]
+    ]
+  }
+},
+
+/* Head, neck and face */
+{ slug: "cilt-kanseri-ve-onarim", group: "headneck",
+  tr: {
+    name: "Cilt kanseri cerrahisi ve onarım",
+    short: "Bazal hücreli, skuamöz hücreli kanserler ve melanomun çıkarılması, ardından bölgenin onarılması.",
+    lead: "Cilt kanserlerinin büyük çoğunluğu güneş gören bölgelerde, en sık yüzde görülür. En sık türler bazal hücreli kanser, skuamöz hücreli kanser ve melanomdur. Tedavinin temeli tümörün çevresindeki sağlam dokuyla birlikte tamamen çıkarılmasıdır. Plastik cerrahinin buradaki rolü, tümörü güvenli sınırlarla çıkarırken kalan yarayı burun, göz kapağı, dudak ve kulak gibi bölgelerde işlevi ve görünümü koruyarak kapatmaktır.",
+    facts: [["Anestezi", "Çoğunlukla lokal anestezi"], ["Ameliyat süresi", "Genellikle 30 dakika–2 saat"], ["Hastanede kalış", "Çoğunlukla aynı gün taburcu"], ["Dikişlerin alınması", "Bölgeye göre 5–14 gün"]],
+    who: [
+      "Büyüyen, kanayan, kabuklanan ya da iyileşmeyen yara veya kabarıklık",
+      "Şekli, rengi ya da boyutu değişen ben",
+      "Biyopsi ile cilt kanseri tanısı konmuş lezyonlar",
+      "Önceki ameliyattan sonra kenarında tümör kaldığı bildirilen ya da tekrarlayan lezyonlar"
+    ],
+    before: [
+      "Lezyon muayene edilir; tanı kesin değilse önce küçük bir parça alınarak (biyopsi) incelenir.",
+      "Melanom ve bazı skuamöz hücreli kanserlerde lenf bezleri muayene edilir; gerekirse ultrason veya ileri görüntüleme yapılır. Belirli kalınlıktaki melanomlarda bekçi lenf bezi biyopsisi önerilebilir.",
+      "Kan sulandırıcı kullanıyorsanız ilacı bırakıp bırakmamaya ilacı veren hekimle birlikte karar verilir."
+    ],
+    surgery: [
+      "Tümör, türüne ve boyutuna göre belirlenen bir güvenlik payıyla çıkarılır ve patolojiye gönderilir.",
+      "Yara mümkünse doğrudan dikilir. Kapanamayacak kadar büyükse çevredeki deri kaydırılarak (lokal flep) ya da başka bir bölgeden alınan deri yamasıyla (greft) onarılır. Büyük ve derin kayıplarda daha kapsamlı onarım gerekebilir.",
+      "Bazı durumlarda patoloji sonucu gelene kadar yara geçici olarak kapatılır ve kesin onarım tümörün tamamen çıktığı doğrulandıktan sonra yapılır."
+    ],
+    recovery: [
+      "Pansuman ve dikiş alma tarihleri ameliyat günü size bildirilir. Yüzdeki dikişler daha erken alınır.",
+      "İz, aylar içinde solar ve yumuşar. Bu dönemde güneşten korunmak izin daha iyi olgunlaşmasına yardımcı olur.",
+      "Patoloji raporunda kenarlarda tümör olup olmadığı belirtilir; tümör kaldıysa ek ameliyat gerekir.",
+      "Cilt kanseri geçirenlerde yeni bir cilt kanseri gelişme riski artar; düzenli cilt kontrolü ve güneşten korunma önerilir."
+    ],
+    risks: [
+      "Patoloji sonucunda kenarda tümör kalması ve ek ameliyat gereksinimi",
+      "Tümörün aynı yerde tekrarlaması",
+      "Enfeksiyon, kanama, flep ya da greftin kısmen tutmaması",
+      "Belirgin iz, göz kapağı veya dudakta çekilme"
+    ],
+    faq: [
+      ["Bazal hücreli kanser yayılır mı?", "Bazal hücreli kanser çok nadiren uzak organlara yayılır, ancak tedavi edilmezse bulunduğu yerde derin dokulara doğru ilerleyerek büyük doku kaybına yol açabilir. Bu nedenle erken çıkarılması önemlidir."],
+      ["Yüzdeki ameliyattan sonra belirgin iz kalır mı?", "Kesiler mümkün olduğunca yüzün doğal çizgi ve kıvrımlarına yerleştirilir. İzin görünümü tümörün boyutuna ve yerine bağlıdır; çoğu iz zamanla belirgin biçimde silikleşir."]
+    ]
+  },
+  en: {
+    name: "Skin cancer surgery and reconstruction",
+    short: "Removing basal cell and squamous cell cancers and melanoma, then repairing the area.",
+    lead: "Most skin cancers occur on sun-exposed skin, most often on the face. The commonest types are basal cell carcinoma, squamous cell carcinoma and melanoma. The mainstay of treatment is removing the tumour completely with a margin of healthy tissue. The plastic surgeon's role is to remove the tumour with safe margins and then close the wound while keeping function and appearance on the nose, eyelids, lips and ears.",
+    facts: [["Anaesthesia", "Mostly local anaesthesia"], ["Operating time", "Usually 30 minutes–2 hours"], ["Hospital stay", "Mostly home the same day"], ["Stitch removal", "5–14 days depending on the site"]],
+    who: [
+      "A sore or lump that grows, bleeds, crusts or does not heal",
+      "A mole that changes in shape, colour or size",
+      "Lesions diagnosed as skin cancer by biopsy",
+      "Lesions with tumour reported at the margin after earlier surgery, or recurrent lesions"
+    ],
+    before: [
+      "The lesion is examined; if the diagnosis is not certain, a small sample is taken first (biopsy).",
+      "For melanoma and some squamous cell cancers, the lymph nodes are examined, with ultrasound or further imaging when needed. For melanomas above a certain thickness, sentinel lymph node biopsy may be advised.",
+      "If you take blood thinners, whether to stop them is decided with the doctor who prescribes them."
+    ],
+    surgery: [
+      "The tumour is removed with a safety margin set by its type and size and is sent to pathology.",
+      "Where possible the wound is stitched directly. If it is too large, it is repaired by moving nearby skin (a local flap) or with a skin graft from elsewhere. Large, deep defects may need a more extensive reconstruction.",
+      "Sometimes the wound is closed temporarily until pathology confirms the tumour has been completely removed, and the final repair is done after that."
+    ],
+    recovery: [
+      "Dressing changes and stitch removal dates are given on the day of surgery. Stitches on the face come out earlier.",
+      "The scar fades and softens over months. Protecting it from the sun during this time helps it mature.",
+      "The pathology report states whether the margins are clear; if tumour remains, further surgery is needed.",
+      "People who have had a skin cancer are more likely to develop another; regular skin checks and sun protection are advised."
+    ],
+    risks: [
+      "Tumour at the margin on pathology and the need for further surgery",
+      "Recurrence at the same site",
+      "Infection, bleeding, partial failure of a flap or graft",
+      "A noticeable scar, or pulling of the eyelid or lip"
+    ],
+    faq: [
+      ["Does basal cell carcinoma spread?", "Basal cell carcinoma very rarely spreads to distant organs, but untreated it can grow into deeper tissues where it is and cause major tissue loss. Early removal matters."],
+      ["Will surgery on my face leave a visible scar?", "Incisions are placed in the face's natural lines and folds wherever possible. How the scar looks depends on the size and site of the tumour; most scars fade considerably with time."]
+    ]
+  }
+},
+
+{ slug: "yuz-kiriklari", group: "headneck",
+  tr: {
+    name: "Yüz kırıkları",
+    short: "Göz çukuru, elmacık kemiği, burun, üst ve alt çene kırıklarının tedavisi.",
+    lead: "Yüz kırıkları çoğunlukla trafik kazası, düşme, darp ve spor yaralanmalarından sonra görülür. Göz çukuru (orbita), elmacık kemiği, burun, üst çene ve alt çene en sık kırılan bölgelerdir. Tedavinin amacı kemikleri yerine getirerek görme, çiğneme ve nefes alma gibi işlevleri korumak ve yüzün simetrisini yeniden sağlamaktır. Kırıkların bir kısmı ameliyatsız izlenebilir.",
+    facts: [["Anestezi", "Genel anestezi"], ["Ameliyat süresi", "Genellikle 1–3 saat"], ["Hastanede kalış", "Çoğunlukla 1–3 gün"], ["Ameliyat zamanı", "Çoğu zaman şişlik azaldıktan sonra, ilk 1–2 hafta içinde"]],
+    who: [
+      "Çift görme, gözün içe çökmesi ya da göz hareketlerinde kısıtlılık",
+      "Dişlerin eskisi gibi kapanmaması, ağız açmada zorluk",
+      "Yüzde basıklık, asimetri ya da elmacık kemiğinde çöküklük",
+      "Yanakta, üst dudakta ya da dişlerde uyuşukluk"
+    ],
+    before: [
+      "Yüz kırıklarının değerlendirilmesinde bilgisayarlı tomografi temel incelemedir.",
+      "Göz çevresi kırıklarında göz muayenesi yapılır. Göz kasının kemik arasına sıkıştığı bazı durumlarda ameliyat acil olarak yapılır.",
+      "Çene kırıklarında diş kapanışı ayrıntılı olarak değerlendirilir."
+    ],
+    surgery: [
+      "Kırık kemikler yerine getirilir ve titanyum plak ve vidalarla sabitlenir. Kesiler mümkün olduğunca gizli yerlere, örneğin alt göz kapağının içine veya kirpik dibine, kaş ucuna ya da ağız içine yerleştirilir.",
+      "Göz çukurunun tabanındaki kırıklarda kemik kaybı varsa ince bir titanyum ağ ya da başka bir malzemeyle taban yeniden oluşturulur.",
+      "Çene kırıklarında dişlerin doğru kapanışı sağlanarak kemikler sabitlenir; bazı hastalarda dişler kısa süre birbirine bağlanabilir."
+    ],
+    recovery: [
+      "Şişlik ve morluk 1–2 hafta içinde büyük ölçüde geçer.",
+      "Göz çevresi ve burun kırıklarından sonra ilk haftalarda burun sümkürülmemelidir.",
+      "Çene kırıklarından sonra birkaç hafta yumuşak gıdalarla beslenilir ve ağız hijyenine özen gösterilir.",
+      "Plak ve vidalar genellikle kalıcıdır ve sorun yaratmadıkça çıkarılmaz."
+    ],
+    risks: [
+      "Enfeksiyon, plak ya da vidaya bağlı sorunlar",
+      "Kalıcı çift görme, gözün içe çökük kalması; çok nadiren görme kaybı",
+      "Kemiklerin tam yerine oturmaması ve yüzde asimetri kalması",
+      "Alt göz kapağında aşağı çekilme",
+      "Yanak ya da dudakta kalıcı uyuşukluk, diş kapanışında bozukluk"
+    ],
+    faq: [
+      ["Her yüz kırığı ameliyat gerektirir mi?", "Hayır. Yer değiştirmemiş ve işlev bozukluğu yapmayan kırıklar ameliyatsız izlenebilir. Karar, tomografi ve muayene bulgularına göre verilir."],
+      ["Neden şişliğin inmesi bekleniyor?", "Şişlik geçtikçe yüzün simetrisi daha doğru değerlendirilir ve kemikler daha kolay yerine oturtulur. Ancak göz kasının sıkıştığı durumlar gibi bekletilmemesi gereken kırıklar vardır."]
+    ]
+  },
+  en: {
+    name: "Facial fractures",
+    short: "Treatment of fractures of the eye socket, cheekbone, nose, upper and lower jaw.",
+    lead: "Facial fractures mostly follow road accidents, falls, assaults and sports injuries. The eye socket (orbit), cheekbone, nose, upper jaw and lower jaw are the commonest sites. Treatment aims to put the bones back in place to protect vision, chewing and breathing and to restore the symmetry of the face. Some fractures can be managed without surgery.",
+    facts: [["Anaesthesia", "General anaesthesia"], ["Operating time", "Usually 1–3 hours"], ["Hospital stay", "Mostly 1–3 days"], ["Timing", "Often after swelling settles, within the first 1–2 weeks"]],
+    who: [
+      "Double vision, a sunken eye or restricted eye movement",
+      "Teeth no longer meeting as before, difficulty opening the mouth",
+      "Flattening or asymmetry of the face, or a dip over the cheekbone",
+      "Numbness of the cheek, upper lip or teeth"
+    ],
+    before: [
+      "CT scanning is the key investigation for facial fractures.",
+      "With fractures around the eye, an eye examination is done. In some cases where an eye muscle is trapped in the fracture, surgery is urgent.",
+      "With jaw fractures, the bite is assessed in detail."
+    ],
+    surgery: [
+      "The broken bones are reduced and fixed with titanium plates and screws. Incisions are hidden wherever possible, for example inside the lower eyelid or just below the lashes, at the end of the eyebrow or inside the mouth.",
+      "If bone is missing from the floor of the eye socket, the floor is rebuilt with a thin titanium mesh or another material.",
+      "With jaw fractures, the bones are fixed with the teeth meeting correctly; in some patients the teeth are wired together for a short time."
+    ],
+    recovery: [
+      "Swelling and bruising mostly settle within 1–2 weeks.",
+      "After fractures around the eye or nose, do not blow your nose for the first weeks.",
+      "After jaw fractures, a soft diet is followed for several weeks, with careful mouth hygiene.",
+      "Plates and screws are usually permanent and are not removed unless they cause problems."
+    ],
+    risks: [
+      "Infection, problems with plates or screws",
+      "Persistent double vision or a sunken eye; very rarely, loss of vision",
+      "Bones healing out of position and residual facial asymmetry",
+      "Downward pulling of the lower eyelid",
+      "Lasting numbness of the cheek or lip, or a change in the bite"
+    ],
+    faq: [
+      ["Does every facial fracture need surgery?", "No. Fractures that have not moved and do not affect function can be watched. The decision is based on the CT scan and examination."],
+      ["Why wait for the swelling to go down?", "As swelling settles, the symmetry of the face can be judged better and the bones are easier to set. Some fractures, such as those trapping an eye muscle, should not wait."]
+    ]
+  }
+},
+
+{ slug: "bas-boyun-kanseri-sonrasi-onarim", group: "headneck",
+  tr: {
+    name: "Baş-boyun kanseri sonrası onarım",
+    short: "Ağız, dil, çene, tükürük bezi ve yüz tümörlerinin çıkarılmasından sonra oluşan doku kayıplarının onarımı.",
+    lead: "Ağız içi, dil, çene kemikleri, tükürük bezleri ve yüz derisindeki tümörlerin tedavisi; kulak burun boğaz, plastik cerrahi, onkoloji ve radyasyon onkolojisi uzmanlarının birlikte çalıştığı bir ekip işidir. Tümör çıkarıldıktan sonra oluşan doku kaybının aynı ameliyatta onarılması; konuşma, yutma, nefes alma ve yüz görünümünün korunmasında belirleyicidir. Boyundaki lenf bezlerinin çıkarılması (boyun diseksiyonu) ve kulak önündeki tükürük bezinin ameliyatı (parotis cerrahisi) da bu tedavinin parçası olabilir.",
+    facts: [["Anestezi", "Genel anestezi"], ["Ameliyat süresi", "Genellikle birkaç saat; serbest doku nakliyle daha uzun"], ["Hastanede kalış", "Çoğunlukla 1–2 hafta"], ["Sonrası", "Gerekirse ışın tedavisi; konuşma ve yutma terapisi"]],
+    who: [
+      "Ağız içi, dil, dudak ve çene tümörleri",
+      "Kulak önündeki (parotis) ve çene altındaki tükürük bezi tümörleri",
+      "Yüz ve kafa derisinde derin ya da geniş cilt kanserleri",
+      "Boyun lenf bezlerine yayılmış ya da yayılma riski taşıyan tümörler"
+    ],
+    before: [
+      "Tümörün yaygınlığı muayene, biyopsi ve tomografi veya MR gibi görüntülemelerle belirlenir. Tedavi planı ilgili uzmanların birlikte katıldığı kurulda yapılır.",
+      "Çene kemiği alınacaksa, kemiğin bacaktaki fibula kemiğinden alınan dokuyla yeniden yapılması için önceden ölçüm ve planlama yapılabilir.",
+      "Diş tedavisi, beslenme durumunun düzeltilmesi ve sigara ile alkolün bırakılması, ameliyat sonrası iyileşmeyi doğrudan etkiler."
+    ],
+    surgery: [
+      "Tümör çıkarıldıktan sonra kayıp, büyüklüğüne ve yerine göre lokal fleplerle, göğüs kası gibi saplı fleplerle ya da serbest doku nakliyle onarılır. Ön koldan ince deri, uyluktan deri ve yağ, bacaktan kemik dokusu en sık kullanılan seçeneklerdir.",
+      "Boyun diseksiyonu ve parotis ameliyatında yüz sinirini ve boyundaki önemli sinirleri koruyarak çalışılır.",
+      "Ağız içindeki büyük ameliyatlarda nefes yolunu güvenceye almak için geçici olarak boyundan nefes borusu açılabilir (trakeostomi) ve bir süre beslenme tüple sağlanabilir."
+    ],
+    recovery: [
+      "İlk günlerde serbest doku nakli yapıldıysa dokunun kan akımı sık sık kontrol edilir.",
+      "Trakeostomi ve beslenme tüpü çoğu hastada ödem azaldıkça birkaç gün ile birkaç hafta içinde çıkarılır.",
+      "Konuşma ve yutma terapisi, ağız içi onarımlarından sonra işlevin geri kazanılmasında önemlidir.",
+      "Patoloji sonucuna göre ışın tedavisi ya da kemoterapi gerekebilir; tedavi, yara iyileştikten sonra başlar."
+    ],
+    risks: [
+      "Flep dokusunun kısmen ya da tamamen kaybı",
+      "Ağız içi ile boyun arasında kaçak (fistül), yara iyileşmesinde gecikme",
+      "Parotis ameliyatından sonra yüz kaslarında geçici ya da kalıcı güçsüzlük, yemek yerken yanakta terleme",
+      "Boyun diseksiyonundan sonra omuzda güçsüzlük ve ağrı, boyunda his azalması, alt dudakta güçsüzlük, nadiren lenf sıvısı kaçağı",
+      "Dokunun alındığı bölgede sorunlar, örneğin fibula alınan bacakta yürümede geçici güçlük"
+    ],
+    faq: [
+      ["Parotis ameliyatından sonra yüzümde felç olur mu?", "Yüz siniri tükürük bezinin içinden geçtiği için ameliyat sinirin korunmasına özen gösterilerek yapılır. Geçici güçsüzlük görülebilir ve çoğunlukla haftalar–aylar içinde düzelir. Kalıcı güçsüzlük daha seyrektir ve tümörün sinire yakınlığıyla ilişkilidir."],
+      ["Onarılan dil ya da ağızla konuşabilecek miyim?", "Amaç konuşma ve yutmanın en iyi şekilde korunmasıdır. Sonuç, alınan dokunun miktarına ve yerine bağlıdır; çoğu hasta terapiyle anlaşılır konuşmaya ve ağızdan beslenmeye geri döner."]
+    ]
+  },
+  en: {
+    name: "Reconstruction after head and neck cancer",
+    short: "Repairing tissue loss after removing tumours of the mouth, tongue, jaw, salivary glands and face.",
+    lead: "Treating tumours of the mouth, tongue, jaw bones, salivary glands and facial skin is teamwork between ear, nose and throat surgeons, plastic surgeons, medical oncologists and radiation oncologists. Repairing the defect left by tumour removal at the same operation is key to keeping speech, swallowing, breathing and facial appearance. Removing the lymph nodes of the neck (neck dissection) and operating on the salivary gland in front of the ear (parotid surgery) can be part of this treatment.",
+    facts: [["Anaesthesia", "General anaesthesia"], ["Operating time", "Usually several hours; longer with a free flap"], ["Hospital stay", "Mostly 1–2 weeks"], ["Afterwards", "Radiotherapy if needed; speech and swallowing therapy"]],
+    who: [
+      "Tumours of the mouth, tongue, lip and jaw",
+      "Tumours of the salivary glands in front of the ear (parotid) and under the jaw",
+      "Deep or extensive skin cancers of the face and scalp",
+      "Tumours that have spread, or may spread, to the lymph nodes of the neck"
+    ],
+    before: [
+      "The extent of the tumour is defined by examination, biopsy and imaging such as CT or MRI. The treatment plan is made at a multidisciplinary meeting.",
+      "If jaw bone is to be removed, rebuilding it with the fibula bone from the leg may be measured and planned in advance.",
+      "Dental treatment, improving nutrition, and stopping smoking and alcohol directly affect healing after surgery."
+    ],
+    surgery: [
+      "After the tumour is removed, the defect is repaired, depending on its size and site, with local flaps, pedicled flaps such as the chest muscle, or a free tissue transfer. Thin skin from the forearm, skin and fat from the thigh and bone from the leg are the most common choices.",
+      "Neck dissection and parotid surgery are done while protecting the facial nerve and the important nerves of the neck.",
+      "In major surgery inside the mouth, a temporary opening in the windpipe (tracheostomy) may be made to secure breathing, and feeding may be by tube for a while."
+    ],
+    recovery: [
+      "If a free flap was used, its blood flow is checked often in the first days.",
+      "In most patients the tracheostomy and feeding tube are removed as swelling settles, within a few days to a few weeks.",
+      "Speech and swallowing therapy is important for regaining function after reconstruction inside the mouth.",
+      "Depending on pathology, radiotherapy or chemotherapy may be needed; it starts once the wounds have healed."
+    ],
+    risks: [
+      "Partial or complete loss of the flap",
+      "A leak between the mouth and neck (fistula), delayed wound healing",
+      "After parotid surgery, temporary or permanent weakness of the facial muscles, or sweating of the cheek when eating",
+      "After neck dissection, shoulder weakness and pain, numbness of the neck, weakness of the lower lip, rarely a lymph fluid (chyle) leak",
+      "Problems at the donor site, for example temporary difficulty walking after a fibula flap"
+    ],
+    faq: [
+      ["Will parotid surgery paralyse my face?", "The facial nerve runs through the gland, so surgery is done taking care to preserve it. Temporary weakness can occur and mostly recovers over weeks to months. Permanent weakness is less common and relates to how close the tumour is to the nerve."],
+      ["Will I be able to talk with a reconstructed tongue or mouth?", "The aim is to preserve speech and swallowing as well as possible. The result depends on how much tissue is removed and where; with therapy, most patients return to understandable speech and eating by mouth."]
+    ]
+  }
+},
+
+{ slug: "dudak-damak-yariklari", group: "headneck",
+  tr: {
+    name: "Dudak-damak yarıkları",
+    short: "Doğuştan yarık dudak ve yarık damağın bebeklik döneminden başlayan aşamalı tedavisi.",
+    lead: "Yarık dudak ve yarık damak, anne karnında dudağın ve damağın birleşmesinin tamamlanmamasıyla oluşan doğumsal farklılıklardır. Tek başına dudakta, tek başına damakta ya da ikisinde birlikte görülebilir. Tedavi, doğumdan ergenliğe kadar süren ve plastik cerrah, kulak burun boğaz uzmanı, ortodontist, dil ve konuşma terapisti ile çocuk doktorunun birlikte çalıştığı aşamalı bir süreçtir.",
+    facts: [["Anestezi", "Genel anestezi"], ["Dudak onarımı", "Genellikle 3–6 aylıkken"], ["Damak onarımı", "Genellikle 9–12 aylıkken"], ["Hastanede kalış", "Çoğunlukla 1–3 gün"]],
+    who: [
+      "Yarık dudak ve/veya yarık damakla doğan bebekler",
+      "Daha önce ameliyat olmuş ve dudak, burun ya da konuşmada düzeltme gereken çocuklar ve yetişkinler"
+    ],
+    before: [
+      "Yarık damaklı bebekler normal biberonu emmekte zorlanabilir; özel biberon ve besleme teknikleri doğumdan sonra hemen öğretilir. Bebeğin kilo alması ameliyat zamanlaması için önemlidir.",
+      "Geniş yarıklarda ameliyattan önce dudak ve burnu yaklaştıran bantlar ya da ağız içi plaklar kullanılabilir.",
+      "Kulak sorunları yarık damaklı çocuklarda sık görüldüğü için işitme takibi yapılır."
+    ],
+    surgery: [
+      "Dudak onarımında dudağın kas tabakası birleştirilir, dudak ve burun şekli düzeltilir.",
+      "Damak onarımında damaktaki kaslar konuşma için doğru konuma getirilerek damak kapatılır. Bu ameliyatın konuşma gelişimi başlamadan yapılması hedeflenir.",
+      "İlerleyen yıllarda gerekebilecek ameliyatlar: diş kemiğindeki yarığa kemik nakli (genellikle 8–11 yaş), konuşmayı düzeltmeye yönelik ameliyatlar, büyüme tamamlandığında bazı hastalarda çene ameliyatı ve ergenlikten sonra burun ve dudak düzeltmeleri."
+    ],
+    recovery: [
+      "Ameliyattan sonra bebeğin eliyle dikişlere dokunmasını önlemek için kısa süre kol atelleri kullanılabilir.",
+      "Dudaktaki dikiş hattı ilk günden itibaren düzenli olarak temizlenir; beslenme kısa süre sonra yeniden başlar.",
+      "Damak onarımından sonra birkaç hafta yumuşak ve sıvı gıdalarla beslenme önerilir.",
+      "Konuşma gelişimi düzenli olarak izlenir; gerekirse konuşma terapisi uygulanır."
+    ],
+    risks: [
+      "Dikiş hattında açılma, damakta delik kalması (fistül)",
+      "Konuşmada genizden gelen ses ve buna yönelik ek tedavi ya da ameliyat gereksinimi",
+      "İz ve dudak ya da burunda asimetri",
+      "Büyümeyle birlikte ek ameliyat gereksinimi"
+    ],
+    faq: [
+      ["Çocuğum normal konuşabilecek mi?", "Damak onarımı zamanında yapılan çocukların çoğu normal ya da normale yakın konuşur. Bir kısmında konuşma terapisi veya ek bir ameliyat gerekebilir; bu nedenle düzenli takip önemlidir."],
+      ["Kaç ameliyat gerekir?", "Yarığın tipine göre değişir. En az bir dudak ve/veya bir damak ameliyatı gerekir; büyüme döneminde kemik nakli ve düzeltme ameliyatları planlanabilir."]
+    ]
+  },
+  en: {
+    name: "Cleft lip and palate",
+    short: "Staged treatment of cleft lip and cleft palate, starting in infancy.",
+    lead: "Cleft lip and cleft palate are differences present at birth that arise when the lip and palate do not fully join before birth. They can affect the lip alone, the palate alone, or both. Treatment is a staged process from birth to adolescence, shared by a plastic surgeon, ear, nose and throat surgeon, orthodontist, speech and language therapist and paediatrician.",
+    facts: [["Anaesthesia", "General anaesthesia"], ["Lip repair", "Usually at 3–6 months"], ["Palate repair", "Usually at 9–12 months"], ["Hospital stay", "Mostly 1–3 days"]],
+    who: [
+      "Babies born with cleft lip and/or cleft palate",
+      "Children and adults who have had surgery and need correction of the lip, nose or speech"
+    ],
+    before: [
+      "Babies with a cleft palate may struggle with an ordinary bottle; special bottles and feeding techniques are taught soon after birth. Weight gain matters for the timing of surgery.",
+      "For wide clefts, tapes that bring the lip and nose together or plates inside the mouth may be used before surgery.",
+      "Ear problems are common in children with cleft palate, so hearing is monitored."
+    ],
+    surgery: [
+      "Lip repair joins the muscle layer of the lip and corrects the shape of the lip and nose.",
+      "Palate repair closes the palate after placing its muscles in the right position for speech. It aims to be done before speech develops.",
+      "Operations that may be needed in later years: a bone graft to the cleft in the gum (usually at 8–11 years), surgery to improve speech, jaw surgery in some patients once growth is complete, and nose and lip refinements after puberty."
+    ],
+    recovery: [
+      "After surgery, arm splints may be used briefly to keep the baby's hands away from the stitches.",
+      "The lip wound is cleaned regularly from the first day; feeding restarts soon after surgery.",
+      "After palate repair, soft and liquid foods are advised for several weeks.",
+      "Speech development is monitored regularly, with speech therapy when needed."
+    ],
+    risks: [
+      "Opening of the wound, a hole remaining in the palate (fistula)",
+      "Nasal-sounding speech and the need for further therapy or surgery for it",
+      "Scarring and asymmetry of the lip or nose",
+      "The need for further surgery as the child grows"
+    ],
+    faq: [
+      ["Will my child be able to speak normally?", "Most children whose palate is repaired on time speak normally or nearly normally. Some need speech therapy or a further operation, which is why regular follow-up matters."],
+      ["How many operations are needed?", "It depends on the type of cleft. At least one lip and/or one palate operation is needed; bone grafting and refinements may be planned during growth."]
+    ]
+  }
+},
+
+/* Facial aesthetic surgery */
+{ slug: "burun-estetigi", group: "face",
+  tr: {
+    name: "Burun estetiği",
+    short: "Burnun şeklinin yüzle uyumlu olacak şekilde düzeltilmesi; gerekirse nefes yolunun da açılması.",
+    lead: "Burun estetiği (rinoplasti), burnun kemik ve kıkırdak yapısının yeniden şekillendirilmesidir. Burun sırtındaki kemer, burun ucunun genişliği veya düşüklüğü, burnun eğriliği gibi konular düzeltilebilir. Burun içindeki bölmenin eğriliği (septum deviasyonu) ya da burun kanadındaki darlık nedeniyle nefes almada güçlük varsa, aynı ameliyatta işlevsel düzeltme de yapılır.",
+    facts: [["Anestezi", "Genel anestezi"], ["Ameliyat süresi", "Genellikle 2–3 saat"], ["Hastanede kalış", "Aynı gün ya da 1 gece"], ["Sosyal yaşama dönüş", "Atel çıktıktan sonra, yaklaşık 1–2 hafta"]],
+    who: [
+      "Burnunun şeklinden memnun olmayan ve beklentileri gerçekçi olan kişiler",
+      "Burun kemiği ve kıkırdak gelişimi tamamlanmış olanlar; kızlarda genellikle 16, erkeklerde 17–18 yaşından sonra",
+      "Septum eğriliği ya da burun kanadı darlığına bağlı nefes güçlüğü olanlar",
+      "Daha önce burun ameliyatı olmuş ve düzeltme isteyenler"
+    ],
+    before: [
+      "Muayenede burnun dış yapısı, burun içi ve yüz oranları değerlendirilir; beklentiler ayrıntılı olarak konuşulur.",
+      "Kapalı (kesisiz) ya da açık (burun ucunun altından küçük bir kesiyle) tekniğin hangisinin uygun olduğu burnun yapısına göre belirlenir.",
+      "Kanamayı artırabilecek ilaçlar ve bitkisel ürünler ameliyattan önce bırakılır; sigara iyileşmeyi olumsuz etkiler."
+    ],
+    surgery: [
+      "Burnun derisi kemik ve kıkırdaktan ayrılır; kemer törpülenir ya da kesilir, burun ucu kıkırdakları şekillendirilir. Gerekirse septumdan alınan kıkırdakla burun desteklenir.",
+      "İşlem sonunda burnun içine silikon atel ya da tampon, dışına ise burnu koruyan bir atel yerleştirilir."
+    ],
+    recovery: [
+      "İlk günlerde göz çevresinde şişlik ve morluk olur; 1–2 hafta içinde büyük ölçüde geçer.",
+      "Dış atel ve burun içindeki atel ya da tamponlar genellikle 5–7 gün içinde çıkarılır.",
+      "İlk haftalarda burun sümkürülmemeli, yüzüstü yatılmamalı ve gözlük burna yük bindirecek şekilde kullanılmamalıdır.",
+      "Burun ucundaki şişlik aylarca sürebilir; son şekil yaklaşık 1 yılda ortaya çıkar."
+    ],
+    risks: [
+      "Kanama, enfeksiyon",
+      "Nefes almada güçlük, burun içinde yapışıklık ya da septumda delik",
+      "Asimetri ya da beklenen şeklin tam elde edilememesi ve düzeltme ameliyatı gereksinimi",
+      "Burun ucunda uzun süren uyuşukluk"
+    ],
+    faq: [
+      ["Açık mı kapalı teknik mi daha iyi?", "Tek bir doğru teknik yoktur. Kapalı teknik dışarıda iz bırakmaz; açık teknik, özellikle burun ucunda ayrıntılı çalışma gerektiğinde daha iyi görüş sağlar. Seçim burnun yapısına göre yapılır."],
+      ["Ameliyattan sonra nefesim düzelir mi?", "Nefes güçlüğü septum eğriliği, burun eti büyümesi ya da burun kanadındaki darlıktan kaynaklanıyorsa aynı ameliyatta düzeltilmeye çalışılır; çoğu hastada nefes belirgin biçimde rahatlar. Alerji gibi burun içi hastalıklar ayrıca tedavi gerektirebilir."],
+      ["Düzeltme ameliyatı ne zaman yapılabilir?", "Şişliğin tamamen inmesi ve dokuların yumuşaması için genellikle en az 1 yıl beklenir."]
+    ]
+  },
+  en: {
+    name: "Rhinoplasty",
+    short: "Reshaping the nose to suit the face and, if needed, opening the airway.",
+    lead: "Rhinoplasty reshapes the bone and cartilage framework of the nose. A hump on the bridge, a wide or drooping tip, or a crooked nose can be corrected. If breathing is difficult because of a deviated septum or weak nostril walls, a functional correction is done at the same operation.",
+    facts: [["Anaesthesia", "General anaesthesia"], ["Operating time", "Usually 2–3 hours"], ["Hospital stay", "Same day or 1 night"], ["Back to social life", "After the splint comes off, about 1–2 weeks"]],
+    who: [
+      "People unhappy with the shape of their nose who have realistic expectations",
+      "Those whose nasal growth is complete; usually after 16 in girls and 17–18 in boys",
+      "Those with breathing difficulty from a deviated septum or narrow nostril walls",
+      "Those who have had nasal surgery before and want a correction"
+    ],
+    before: [
+      "The examination covers the outside of the nose, the inside of the nose and facial proportions; expectations are discussed in detail.",
+      "Whether a closed (no outside incision) or open (a small incision under the tip) technique suits you depends on the structure of your nose.",
+      "Medicines and herbal products that increase bleeding are stopped before surgery; smoking slows healing."
+    ],
+    surgery: [
+      "The skin is lifted off the bone and cartilage; the hump is rasped or removed and the tip cartilages are reshaped. If needed, the nose is supported with cartilage taken from the septum.",
+      "At the end, silicone splints or packing are placed inside the nose and a protective splint outside."
+    ],
+    recovery: [
+      "Swelling and bruising around the eyes appear in the first days and mostly settle within 1–2 weeks.",
+      "The outer splint and the inner splints or packing are usually removed within 5–7 days.",
+      "For the first weeks, do not blow your nose, do not sleep face down and do not let glasses rest on the nose.",
+      "Swelling of the tip can last for months; the final shape appears at about 1 year."
+    ],
+    risks: [
+      "Bleeding, infection",
+      "Difficulty breathing, scar bands inside the nose or a hole in the septum",
+      "Asymmetry or not fully achieving the expected shape, and the need for revision surgery",
+      "Long-lasting numbness of the tip"
+    ],
+    faq: [
+      ["Is open or closed rhinoplasty better?", "There is no single right technique. Closed rhinoplasty leaves no outside scar; open rhinoplasty gives a better view when detailed tip work is needed. The choice depends on the structure of the nose."],
+      ["Will my breathing improve?", "If breathing difficulty comes from a deviated septum, enlarged turbinates or narrow nostril walls, it is addressed at the same operation, and breathing improves noticeably for most patients. Conditions inside the nose such as allergy may need separate treatment."],
+      ["When can a revision be done?", "Usually at least 1 year is allowed for swelling to settle completely and the tissues to soften."]
+    ]
+  }
+},
+
+{ slug: "goz-kapagi-estetigi", group: "face",
+  tr: {
+    name: "Göz kapağı estetiği",
+    short: "Üst göz kapağındaki fazla derinin, alt göz kapağındaki torbaların düzeltilmesi.",
+    lead: "Göz kapağı estetiği (blefaroplasti), yaşla birlikte üst göz kapağında biriken fazla derinin ve alt göz kapağında öne çıkan yağ torbalarının düzeltilmesidir. Üst kapaktaki fazla deri, bazı kişilerde görme alanının üst kısmını da daraltabilir. Ameliyat tek başına üst ya da alt kapağa veya ikisine birlikte yapılabilir.",
+    facts: [["Anestezi", "Lokal anestezi ve sedasyon ya da genel anestezi"], ["Ameliyat süresi", "Genellikle 1–2 saat"], ["Hastanede kalış", "Çoğunlukla aynı gün taburcu"], ["Dikişlerin alınması", "Yaklaşık 5–7 gün"]],
+    who: [
+      "Üst göz kapağında sarkan, katlanan deri",
+      "Alt göz kapağında belirgin torbalanma",
+      "Göz kapağı sarkıklığı nedeniyle görme alanının üst kısmı daralanlar"
+    ],
+    before: [
+      "Göz kuruluğu, tiroid hastalığı ve önceki göz ameliyatları sorgulanır; gerekirse göz hastalıkları uzmanı muayenesi istenir.",
+      "Göz kapağının kendisinin düşük olması (pitozis) ya da kaşın düşüklüğü, deri fazlalığından ayırt edilir; çünkü bunlar farklı ameliyatlar gerektirir.",
+      "Kanamayı artırabilecek ilaçlar ameliyattan önce gözden geçirilir."
+    ],
+    surgery: [
+      "Üst kapakta kesi kapağın doğal katlantısına yerleştirilir; fazla deri ve gerekirse bir miktar kas ve yağ alınır.",
+      "Alt kapakta kesi kirpik dibine ya da göz kapağının iç yüzüne yapılır; yağ torbaları alınır ya da çukurları dolduracak şekilde yeniden yerleştirilir."
+    ],
+    recovery: [
+      "İlk 2–3 gün soğuk uygulama ve başın yüksekte tutulması şişliği azaltır.",
+      "Morluk ve şişlik çoğunlukla 1–2 haftada geçer.",
+      "Gözde kuruluk ya da sulanma birkaç hafta sürebilir; damla ve pomadlar bu dönemde yardımcı olur.",
+      "Ameliyattan sonra gözde ani artan ağrı, şişlik ya da görmede azalma olursa hemen başvurmanız gerekir."
+    ],
+    risks: [
+      "Göz kuruluğu, gözün tam kapanmaması",
+      "Alt kapağın aşağı çekilmesi ya da dışa dönmesi",
+      "Asimetri, iz",
+      "Çok nadiren göz arkasında kanamaya bağlı görme kaybı"
+    ],
+    faq: [
+      ["Göz altı morlukları ve kırışıklıklar da düzelir mi?", "Göz kapağı ameliyatı fazla deri ve yağ torbalarını düzeltir. Göz altındaki koyu renk ve ince kırışıklıklar bu ameliyatla tam olarak düzelmez; cilde yönelik başka yöntemler gerekebilir."],
+      ["Sonuç kalıcı mı?", "Alınan deri ve yağ geri gelmez, ancak yaşlanma süreci devam eder. Üst kapak sonuçları çoğunlukla uzun yıllar korunur."]
+    ]
+  },
+  en: {
+    name: "Eyelid surgery",
+    short: "Correcting excess upper-eyelid skin and lower-eyelid bags.",
+    lead: "Eyelid surgery (blepharoplasty) corrects the excess skin that gathers on the upper eyelids with age and the fat bags that bulge in the lower eyelids. In some people, excess upper-eyelid skin also narrows the upper field of vision. Surgery can be done on the upper or lower lids alone or on both together.",
+    facts: [["Anaesthesia", "Local anaesthesia with sedation, or general anaesthesia"], ["Operating time", "Usually 1–2 hours"], ["Hospital stay", "Mostly home the same day"], ["Stitch removal", "About 5–7 days"]],
+    who: [
+      "Hooded, folded skin on the upper eyelids",
+      "Marked bags in the lower eyelids",
+      "People whose upper field of vision is narrowed by eyelid skin"
+    ],
+    before: [
+      "Dry eye, thyroid disease and previous eye surgery are asked about; an eye specialist's assessment may be requested.",
+      "A drooping lid (ptosis) or a low brow is distinguished from excess skin, because these need different operations.",
+      "Medicines that increase bleeding are reviewed before surgery."
+    ],
+    surgery: [
+      "On the upper lid, the incision lies in the natural crease; excess skin and, if needed, some muscle and fat are removed.",
+      "On the lower lid, the incision is just below the lashes or on the inside of the lid; fat bags are removed or repositioned to fill hollows."
+    ],
+    recovery: [
+      "Cold compresses and keeping the head raised for the first 2–3 days reduce swelling.",
+      "Bruising and swelling mostly settle within 1–2 weeks.",
+      "Dryness or watering of the eyes can last a few weeks; drops and ointments help during this time.",
+      "If you develop sudden increasing pain, swelling or reduced vision after surgery, seek help immediately."
+    ],
+    risks: [
+      "Dry eye, incomplete eye closure",
+      "Downward pulling or outward turning of the lower lid",
+      "Asymmetry, scarring",
+      "Very rarely, loss of vision from bleeding behind the eye"
+    ],
+    faq: [
+      ["Will dark circles and fine wrinkles improve too?", "Eyelid surgery corrects excess skin and fat bags. Dark colouring and fine wrinkles under the eyes are not fully corrected by this operation; skin treatments may be needed."],
+      ["Is the result permanent?", "Removed skin and fat do not come back, but ageing continues. Upper-lid results mostly last for many years."]
+    ]
+  }
+},
+
+{ slug: "yuz-ve-boyun-germe", group: "face",
+  tr: {
+    name: "Yüz ve boyun germe",
+    short: "Yüzün alt yarısındaki ve boyundaki sarkmanın derin dokular toparlanarak düzeltilmesi.",
+    lead: "Yüz germe ameliyatı, yaşla birlikte yanaklarda, çene hattında ve boyunda oluşan sarkmanın düzeltilmesidir. Günümüzdeki yöntemlerde yalnızca deri gerilmez; derinin altındaki kas-bağ dokusu tabakası (SMAS) yeniden konumlandırılır. Böylece daha doğal ve daha uzun süren bir sonuç hedeflenir. Boyun germe çoğunlukla yüz germeyle birlikte yapılır.",
+    facts: [["Anestezi", "Genel anestezi ya da sedasyonla lokal anestezi"], ["Ameliyat süresi", "Genellikle 3–5 saat"], ["Hastanede kalış", "Çoğunlukla 1 gece"], ["Sosyal yaşama dönüş", "Yaklaşık 2–3 hafta"]],
+    who: [
+      "Çene hattında belirsizleşme ve yanaklarda sarkma",
+      "Boyunda gevşek deri ve belirgin bantlar",
+      "Genel sağlığı iyi, sigara içmeyen ya da bırakabilecek kişiler"
+    ],
+    before: [
+      "Yüzdeki sarkmanın derecesi, deri kalitesi ve beklentiler değerlendirilir; göz kapağı ya da kaş ameliyatı gibi eşlik eden işlemler planlanabilir.",
+      "Sigara deri beslenmesini bozarak yara iyileşmesi sorunlarına yol açar; ameliyattan en az 4 hafta önce bırakılmalıdır.",
+      "Yüksek tansiyon ameliyat sonrası kanama riskini artırır; tansiyonun kontrol altında olması gerekir."
+    ],
+    surgery: [
+      "Kesi şakaktan başlayıp kulağın önünden ve arkasından saçlı deriye doğru uzanır. Deri kaldırılır, alttaki kas-bağ dokusu tabakası yukarı ve geriye doğru yeniden konumlandırılır, fazla deri alınır.",
+      "Boyunda çene altından küçük bir kesiyle kas bantları birleştirilir ve gerekirse fazla yağ alınır."
+    ],
+    recovery: [
+      "Dren konulduysa genellikle 1–2 gün içinde çıkarılır. İlk günlerde başın yüksekte tutulması önerilir.",
+      "Şişlik ve morluk 2–3 haftada büyük ölçüde geçer; hafif ödem birkaç ay sürebilir.",
+      "Kulak çevresinde ve yanaklarda his azalması olur ve çoğunlukla aylar içinde düzelir.",
+      "Sonuç çoğunlukla yıllarca sürer, ancak yaşlanma süreci devam eder."
+    ],
+    risks: [
+      "Deri altında kan toplanması (hematom); en sık görülen sorundur",
+      "Yüz sinirinin dallarında çoğunlukla geçici güçsüzlük",
+      "Deride beslenme sorunu ve yara iyileşmesinde gecikme; sigara içenlerde daha sık",
+      "Belirgin iz, kesi çevresinde saç kaybı, kulak memesinde şekil bozukluğu"
+    ],
+    faq: [
+      ["Ameliyattan sonra yüzüm gergin ya da yapay görünür mü?", "Ameliyatın amacı deriyi gerip yüzün ifadesini değiştirmek değil, sarkan derin dokuları eski yerine getirmektir. Amaç, yüzün daha dinlenmiş ama kişinin kendisine benzer görünmesidir."],
+      ["Dolgu veya iplerle aynı sonuç alınabilir mi?", "Hafif sarkmalarda cerrahi olmayan yöntemler geçici bir iyileşme sağlayabilir. Belirgin sarkmada fazla derinin alınması ve derin dokuların yeniden konumlandırılması için cerrahi gerekir."]
+    ]
+  },
+  en: {
+    name: "Facelift and neck lift",
+    short: "Correcting sagging of the lower face and neck by repositioning the deeper tissues.",
+    lead: "A facelift corrects the sagging of the cheeks, jawline and neck that comes with age. Modern techniques do not just pull the skin; the muscle and connective-tissue layer under the skin (SMAS) is repositioned, aiming for a more natural and longer-lasting result. A neck lift is usually done together with a facelift.",
+    facts: [["Anaesthesia", "General anaesthesia or local anaesthesia with sedation"], ["Operating time", "Usually 3–5 hours"], ["Hospital stay", "Mostly 1 night"], ["Back to social life", "About 2–3 weeks"]],
+    who: [
+      "A blurred jawline and sagging cheeks",
+      "Loose skin and prominent bands in the neck",
+      "People in good general health who do not smoke or can stop"
+    ],
+    before: [
+      "The degree of sagging, skin quality and expectations are assessed; accompanying procedures such as eyelid or brow surgery may be planned.",
+      "Smoking impairs the skin's blood supply and causes healing problems; it should be stopped at least 4 weeks before surgery.",
+      "High blood pressure increases the risk of bleeding after surgery and needs to be controlled."
+    ],
+    surgery: [
+      "The incision starts at the temple and runs in front of and behind the ear into the hairline. The skin is lifted, the deeper layer is repositioned upwards and backwards, and excess skin is removed.",
+      "In the neck, the muscle bands are joined through a small incision under the chin and excess fat is removed if needed."
+    ],
+    recovery: [
+      "Any drains are usually removed within 1–2 days. Keeping the head raised is advised for the first days.",
+      "Swelling and bruising mostly settle in 2–3 weeks; mild swelling can last a few months.",
+      "Numbness around the ears and cheeks is expected and mostly improves over months.",
+      "The result mostly lasts for years, but ageing continues."
+    ],
+    risks: [
+      "A collection of blood under the skin (haematoma); the most common problem",
+      "Weakness of branches of the facial nerve, mostly temporary",
+      "Poor skin blood supply and delayed wound healing; more common in smokers",
+      "A visible scar, hair loss around the incision, distortion of the earlobe"
+    ],
+    faq: [
+      ["Will my face look tight or unnatural?", "The aim is not to pull the skin and change your expression but to return sagging deeper tissues to where they were. The aim is for the face to look rested but still like you."],
+      ["Can fillers or threads give the same result?", "With mild sagging, non-surgical methods can give a temporary improvement. Marked sagging needs surgery to remove excess skin and reposition the deeper tissues."]
+    ]
+  }
+},
+
+{ slug: "kepce-kulak", group: "face",
+  tr: {
+    name: "Kepçe kulak",
+    short: "Başa göre fazla açık duran kulakların arkaya doğru yeniden şekillendirilmesi.",
+    lead: "Kepçe kulak, kulak kıkırdağındaki kıvrımın gelişmemesi ya da kulak çanağının derin olması nedeniyle kulağın başa göre fazla açık durmasıdır. Kepçe kulak ameliyatında (otoplasti) kıkırdak yeniden şekillendirilerek kulak daha doğal bir konuma getirilir. Ameliyat çocuklarda ve yetişkinlerde yapılabilir.",
+    facts: [["Anestezi", "Çocuklarda genel, yetişkinlerde çoğunlukla lokal anestezi"], ["Ameliyat süresi", "Genellikle 1–2 saat"], ["Hastanede kalış", "Çoğunlukla aynı gün taburcu"], ["Bantla koruma", "Gece bandı yaklaşık 4–6 hafta"]],
+    who: [
+      "Kulak gelişimi büyük ölçüde tamamlanmış, genellikle 5–6 yaşından büyük çocuklar",
+      "Kulaklarının görünümünden rahatsız olan yetişkinler",
+      "Bir kulağı diğerinden belirgin farklı duranlar"
+    ],
+    before: [
+      "Kulak kıkırdağının yapısı ve iki kulak arasındaki fark değerlendirilir.",
+      "Çocuklarda ameliyatın okul öncesinde yapılması çoğu zaman tercih edilir; çocuğun kendisinin de ameliyatı istemesi önemlidir."
+    ],
+    surgery: [
+      "Kulağın arkasından yapılan bir kesiyle kıkırdağa ulaşılır. Eksik kıvrım kalıcı dikişlerle oluşturulur, gerekirse derin çanak küçültülür ve kulak başa yaklaştırılır.",
+      "Kesi kulağın arkasında kaldığı için iz çoğunlukla önden görünmez."
+    ],
+    recovery: [
+      "İlk birkaç gün kulaklar sargıyla korunur.",
+      "Sargı çıktıktan sonra kulakların katlanmasını önlemek için birkaç hafta, özellikle geceleri bant kullanılır.",
+      "Ağrı ve şişlik çoğunlukla bir hafta içinde azalır; çocuklar genellikle bir hafta sonra okula dönebilir.",
+      "Temas sporlarına yaklaşık 6 hafta ara verilir."
+    ],
+    risks: [
+      "Kulağın kısmen eski haline dönmesi",
+      "İki kulak arasında asimetri ya da fazla düzeltme",
+      "Dikişin deriden görünmesi ya da dışarı çıkması",
+      "Kan toplanması, enfeksiyon, kulak arkasında kalın iz"
+    ],
+    faq: [
+      ["Bebeklikte ameliyatsız düzeltilebilir mi?", "Doğumdan sonraki ilk haftalarda kulak kıkırdağı çok yumuşaktır; bu dönemde başlanan kalıplama (atel) tedavisiyle birçok kepçe kulak ameliyatsız düzeltilebilir. Bu nedenle bebeklikte fark edildiğinde erken başvurmak önemlidir."],
+      ["En uygun yaş kaçtır?", "Kulak 5–6 yaşında yetişkin boyutuna büyük ölçüde ulaşır. Bu yaştan sonra ameliyat yapılabilir; okul öncesi dönem çocuğun alay konusu olmasını önlemek için sık tercih edilir."],
+      ["Yetişkinlikte de yapılabilir mi?", "Evet. Yaş sınırı yoktur; yetişkinlerde kıkırdak daha sert olduğu için teknikte küçük farklılıklar gerekebilir."]
+    ]
+  },
+  en: {
+    name: "Prominent ear correction",
+    short: "Reshaping ears that stick out too far from the head.",
+    lead: "Prominent ears stand out from the head because a fold in the ear cartilage has not formed or the bowl of the ear is deep. Otoplasty reshapes the cartilage to bring the ear into a more natural position. It can be done in children and adults.",
+    facts: [["Anaesthesia", "General in children, mostly local in adults"], ["Operating time", "Usually 1–2 hours"], ["Hospital stay", "Mostly home the same day"], ["Headband", "At night for about 4–6 weeks"]],
+    who: [
+      "Children whose ears are close to full size, usually over 5–6 years old",
+      "Adults bothered by how their ears look",
+      "People with one ear clearly different from the other"
+    ],
+    before: [
+      "The structure of the ear cartilage and the difference between the two ears are assessed.",
+      "In children, surgery before starting school is often preferred; it matters that the child also wants the operation."
+    ],
+    surgery: [
+      "The cartilage is reached through an incision behind the ear. The missing fold is created with permanent stitches, the deep bowl is reduced if needed, and the ear is brought closer to the head.",
+      "Because the incision is behind the ear, the scar is usually not visible from the front."
+    ],
+    recovery: [
+      "The ears are protected with a dressing for the first few days.",
+      "After the dressing comes off, a headband is worn for several weeks, especially at night, to stop the ears folding forward.",
+      "Pain and swelling mostly settle within a week; children can usually return to school after a week.",
+      "Contact sports are avoided for about 6 weeks."
+    ],
+    risks: [
+      "Partial return of the ear to its earlier position",
+      "Asymmetry between the ears or overcorrection",
+      "A stitch showing through or coming out of the skin",
+      "Bleeding, infection, a thick scar behind the ear"
+    ],
+    faq: [
+      ["Can it be corrected without surgery in babies?", "In the first weeks after birth the ear cartilage is very soft, and moulding with splints started at this time can correct many prominent ears without surgery. Seeing a doctor early, when it is noticed in infancy, matters."],
+      ["What is the best age?", "The ear reaches most of its adult size by 5–6 years. Surgery can be done after this; the pre-school period is often chosen so the child is not teased."],
+      ["Can it be done in adulthood?", "Yes. There is no upper age limit; adult cartilage is stiffer, so small changes in technique may be needed."]
+    ]
+  }
+},
+
+/* Breast and body */
+{ slug: "meme-kucultme", group: "body",
+  tr: {
+    name: "Meme küçültme",
+    short: "Boyun, sırt ve omuz ağrısına yol açan büyük memelerin küçültülüp toparlanması.",
+    lead: "Meme küçültme ameliyatı, vücut oranlarına göre fazla büyük memelerin hacminin azaltılması ve meme dokusunun daha yukarıda, daha toplu bir şekle getirilmesidir. Büyük memeler boyun, sırt ve omuz ağrısına, sütyen askısının omuzda iz bırakmasına, meme altında pişik ve yaralara ve spor yapmada güçlüğe yol açabilir. Ameliyat bu yakınmaları azaltmanın yanında memenin şeklini de düzeltmeyi amaçlar.",
+    facts: [["Anestezi", "Genel anestezi"], ["Ameliyat süresi", "Genellikle 2–4 saat"], ["Hastanede kalış", "Çoğunlukla 1–2 gece"], ["Masa başı işe dönüş", "Yaklaşık 2 hafta"]],
+    who: [
+      "Büyük memeler nedeniyle boyun, sırt ve omuz ağrısı olanlar",
+      "Meme altında tekrarlayan pişik, mantar ya da yara oluşanlar",
+      "Meme büyüklüğü nedeniyle egzersiz yapmakta ve giysi bulmakta zorlananlar",
+      "Kilosu dengede olanlar; meme gelişimi tamamlanmış olmalıdır"
+    ],
+    before: [
+      "Yaşa ve risk durumuna göre ameliyattan önce meme ultrasonu ve/veya mamografi istenir.",
+      "Meme başının yeni konumu ve alınacak doku miktarı ölçülerek planlanır.",
+      "Kilo vermeyi planlıyorsanız ameliyatı hedef kilonuza ulaştıktan sonra yapmak sonucun kalıcılığı açısından daha iyidir. Sigara, yara iyileşmesi sorunlarını artırır; ameliyattan en az 4 hafta önce bırakılmalıdır."
+    ],
+    surgery: [
+      "Meme başı ve çevresi, kendisini besleyen doku sapı üzerinde yukarı taşınır; fazla meme dokusu, yağ ve deri alınır.",
+      "İz, meme başı çevresinde, meme başından aşağı inen dikey bir çizgide ve çoğu zaman meme altı katlantısında kalır.",
+      "Alınan doku patolojik incelemeye gönderilir."
+    ],
+    recovery: [
+      "Drenler genellikle 1–2 gün içinde çıkarılır. Birkaç hafta destekleyici sütyen kullanılır.",
+      "Ağır kaldırma ve spor yaklaşık 6 hafta sınırlandırılır.",
+      "İzler ilk aylarda kırmızı ve sert olur, 1 yıl içinde rengi açılır ve yumuşar.",
+      "Boyun ve sırt ağrısındaki rahatlama çoğu hastada ilk haftalarda fark edilir."
+    ],
+    risks: [
+      "Kan toplanması, enfeksiyon, dikişlerin birleştiği noktada yara iyileşmesinde gecikme",
+      "Meme başında his değişikliği; nadiren meme başı dokusunun beslenme sorunu (büyük küçültmelerde ve sigara içenlerde daha sık)",
+      "Emzirme yeteneğinin azalabilmesi",
+      "Asimetri, kalın iz, meme içinde yağ dokusunda sertlik"
+    ],
+    faq: [
+      ["Ameliyattan sonra emzirebilir miyim?", "Meme başını besleyen doku korunduğu için birçok kadın emzirebilir, ancak süt miktarı azalabilir ve bu garanti edilemez. Hamilelik düşünüyorsanız bunu planlama sırasında konuşmak önemlidir."],
+      ["Memeler yeniden büyür mü?", "Alınan doku geri gelmez. Ancak kilo alma, hamilelik ve yaşla birlikte meme boyutu ve şekli değişebilir."]
+    ]
+  },
+  en: {
+    name: "Breast reduction",
+    short: "Reducing and reshaping large breasts that cause neck, back and shoulder pain.",
+    lead: "Breast reduction lowers the volume of breasts that are large for the body and lifts the breast into a higher, firmer shape. Large breasts can cause neck, back and shoulder pain, grooves from bra straps, rashes and sores under the breast, and difficulty exercising. Besides easing these complaints, the operation also aims to improve breast shape.",
+    facts: [["Anaesthesia", "General anaesthesia"], ["Operating time", "Usually 2–4 hours"], ["Hospital stay", "Mostly 1–2 nights"], ["Back to desk work", "About 2 weeks"]],
+    who: [
+      "Women with neck, back and shoulder pain from large breasts",
+      "Women with recurrent rashes, fungal infection or sores under the breast",
+      "Women who find exercise or clothing difficult because of breast size",
+      "Women with a stable weight; breast development should be complete"
+    ],
+    before: [
+      "Depending on age and risk, breast ultrasound and/or mammography is requested before surgery.",
+      "The new nipple position and the amount of tissue to remove are measured and planned.",
+      "If you plan to lose weight, having surgery after reaching your target weight gives a more lasting result. Smoking increases healing problems and should be stopped at least 4 weeks before surgery."
+    ],
+    surgery: [
+      "The nipple and areola are moved up on a stalk of tissue that keeps their blood supply; excess breast tissue, fat and skin are removed.",
+      "Scars lie around the areola, in a vertical line below it and often in the fold under the breast.",
+      "The removed tissue is sent for pathology."
+    ],
+    recovery: [
+      "Drains are usually removed within 1–2 days. A supportive bra is worn for several weeks.",
+      "Heavy lifting and sport are limited for about 6 weeks.",
+      "Scars are red and firm in the first months and fade and soften within a year.",
+      "Most patients notice relief of neck and back pain in the first weeks."
+    ],
+    risks: [
+      "Bleeding, infection, delayed healing where the incisions meet",
+      "Change in nipple sensation; rarely, poor blood supply to the nipple (more common with large reductions and in smokers)",
+      "Reduced ability to breastfeed",
+      "Asymmetry, thick scars, firm areas from fat in the breast"
+    ],
+    faq: [
+      ["Can I breastfeed after surgery?", "Because the tissue under the nipple is preserved, many women can breastfeed, but milk supply may be lower and this cannot be guaranteed. If you are thinking of pregnancy, discuss it during planning."],
+      ["Will the breasts grow again?", "Removed tissue does not come back. Breast size and shape can still change with weight gain, pregnancy and age."]
+    ]
+  }
+},
+
+{ slug: "meme-buyutme-ve-diklestirme", group: "body",
+  tr: {
+    name: "Meme büyütme ve dikleştirme",
+    short: "Memenin protez ya da yağ nakliyle büyütülmesi, sarkık memenin yukarı kaldırılması.",
+    lead: "Meme büyütme, memelerin hacminin genellikle silikon protezle, bazı durumlarda kişinin kendi yağ dokusuyla artırılmasıdır. Meme dikleştirme (mastopeksi) ise hamilelik, emzirme, kilo kaybı ve yaşla sarkan memenin fazla derisinin alınarak meme başıyla birlikte yukarı kaldırılmasıdır. Hacim kaybı ve sarkma birlikteyse iki işlem aynı ameliyatta yapılabilir.",
+    facts: [["Anestezi", "Genel anestezi"], ["Ameliyat süresi", "Büyütmede 1–2 saat; dikleştirmeyle 2–3 saat"], ["Hastanede kalış", "Aynı gün ya da 1 gece"], ["Masa başı işe dönüş", "Yaklaşık 1 hafta"]],
+    who: [
+      "Memelerini vücut oranlarına göre küçük bulanlar",
+      "Hamilelik, emzirme ya da kilo kaybından sonra meme hacmi azalan ve sarkan kişiler",
+      "İki meme arasında belirgin boyut farkı olanlar",
+      "Meme gelişimi tamamlanmış, beklentileri gerçekçi olanlar"
+    ],
+    before: [
+      "Göğüs yapısı, deri kalitesi ve meme ölçüleri değerlendirilerek protez boyutu ve şekli birlikte seçilir.",
+      "Yaşa ve risk durumuna göre ameliyattan önce meme ultrasonu ve/veya mamografi istenir.",
+      "Protezlerin ömür boyu kalıcı cihazlar olmadığı, ileride değişim gerekebileceği bilinmelidir."
+    ],
+    surgery: [
+      "Protez, meme altı katlantısındaki, meme başı çevresindeki ya da koltuk altındaki bir kesiden yerleştirilir. Protez meme dokusunun ya da göğüs kasının altına yerleştirilebilir.",
+      "Dikleştirmede meme başı yukarı taşınır, fazla deri alınır ve meme dokusu yeniden şekillendirilir. İz meme başı çevresinde, dikey bir çizgide ve bazen meme altı katlantısında kalır.",
+      "Yağ nakliyle büyütmede yağ, liposuction ile karın ya da uyluktan alınıp memeye enjekte edilir; elde edilebilecek büyüme daha sınırlıdır."
+    ],
+    recovery: [
+      "İlk günlerde göğüste gerginlik ve ağrı olur; ağrı kesicilerle kontrol edilir.",
+      "Birkaç hafta destekleyici sütyen kullanılır; kolun zorlanması ve ağır kaldırma 4–6 hafta sınırlandırılır.",
+      "Protez ilk haftalarda yüksek durur ve aylar içinde doğal konumuna yerleşir.",
+      "Protezli memelerde de düzenli meme taraması sürdürülür. Silikon protezlerde, belirti olmasa da yırtılmayı saptamak için ameliyattan 5–6 yıl sonra, ardından 2–3 yılda bir ultrason ya da MR ile kontrol önerilir.",
+      "Yıllar sonra memede yeni gelişen şişlik, sıvı toplanması ya da kitle fark ederseniz başvurmanız gerekir."
+    ],
+    risks: [
+      "Protez çevresinde sert kapsül oluşması (kapsüler kontraktür)",
+      "Protezin yırtılması, yer değiştirmesi ya da kenarlarının ele gelmesi",
+      "Meme başında his değişikliği, enfeksiyon, kan toplanması",
+      "Dikleştirmede belirgin iz, meme başının beslenme sorunu ve zamanla sarkmanın yeniden oluşması; büyütme ve dikleştirme birlikte yapıldığında düzeltme ameliyatı gereksinimi daha sıktır",
+      "Yıllar içinde protez değişimi ya da ek ameliyat gereksinimi",
+      "Nadiren, çoğunlukla pürüzlü yüzeyli protezlerle ilişkili bir lenfoma türü (BIA-ALCL); çok nadiren protez kapsülünde başka tümörler (skuamöz hücreli kanser, diğer lenfomalar)",
+      "Bazı kişilerin protezlerle ilişkilendirdiği yorgunluk, eklem ağrısı gibi genel yakınmalar; nedeni henüz tam olarak açıklanamamıştır"
+    ],
+    faq: [
+      ["Protezler kaç yılda bir değiştirilmeli?", "Belirli bir değişim süresi yoktur; sorun olmadıkça protez yerinde kalabilir. Ancak protezler ömür boyu süren cihazlar değildir ve yıllar içinde yırtılma ya da kapsül sorunları nedeniyle değişim gerekebilir."],
+      ["Protezle emzirebilir miyim?", "Protez meme dokusunun altına yerleştirildiği için çoğu kadın emzirebilir. Meme başı çevresinden yapılan kesilerde ya da meme dokusuna müdahale edildiğinde emzirme etkilenebilir."],
+      ["Dikleştirmenin sonucu ne kadar sürer?", "Meme yeniden yukarı kaldırılır, ancak yerçekimi, hamilelik ve kilo değişimleriyle zamanla bir miktar sarkma yeniden oluşabilir."]
+    ]
+  },
+  en: {
+    name: "Breast augmentation and lift",
+    short: "Enlarging the breast with an implant or fat grafting, and lifting a sagging breast.",
+    lead: "Breast augmentation increases breast volume, usually with a silicone implant and sometimes with the patient's own fat. A breast lift (mastopexy) removes excess skin from a breast that has sagged after pregnancy, breastfeeding, weight loss or with age, and raises it together with the nipple. When volume loss and sagging occur together, both can be done at one operation.",
+    facts: [["Anaesthesia", "General anaesthesia"], ["Operating time", "Augmentation 1–2 hours; with a lift 2–3 hours"], ["Hospital stay", "Same day or 1 night"], ["Back to desk work", "About 1 week"]],
+    who: [
+      "Women who find their breasts small for their body",
+      "Women whose breasts have lost volume and sagged after pregnancy, breastfeeding or weight loss",
+      "Women with a clear difference in size between the breasts",
+      "Women whose breast development is complete and who have realistic expectations"
+    ],
+    before: [
+      "Chest shape, skin quality and breast measurements are assessed, and implant size and shape are chosen together.",
+      "Depending on age and risk, breast ultrasound and/or mammography is requested before surgery.",
+      "Implants are not lifetime devices, and a replacement may be needed in the future."
+    ],
+    surgery: [
+      "The implant is placed through an incision in the fold under the breast, around the areola or in the armpit. It can sit under the breast tissue or under the chest muscle.",
+      "In a lift, the nipple is moved up, excess skin is removed and the breast tissue is reshaped. Scars lie around the areola, in a vertical line and sometimes in the fold under the breast.",
+      "In fat grafting, fat is taken from the abdomen or thighs by liposuction and injected into the breast; the increase that can be achieved is more limited."
+    ],
+    recovery: [
+      "The chest feels tight and sore for the first days; pain is controlled with painkillers.",
+      "A supportive bra is worn for several weeks; straining the arms and heavy lifting are limited for 4–6 weeks.",
+      "The implant sits high in the first weeks and settles into a natural position over months.",
+      "Regular breast screening continues after augmentation. With silicone implants, ultrasound or MRI is advised 5–6 years after surgery and then every 2–3 years to detect a rupture that causes no symptoms.",
+      "If you notice new swelling, a fluid collection or a lump in the breast years later, see a doctor."
+    ],
+    risks: [
+      "A hard scar capsule around the implant (capsular contracture)",
+      "Implant rupture, displacement or palpable edges",
+      "Change in nipple sensation, infection, a collection of blood",
+      "With a lift, visible scars, poor blood supply to the nipple and sagging returning over time; revision is more common when augmentation and lift are combined",
+      "Implant replacement or further surgery over the years",
+      "Rarely, a type of lymphoma mostly linked to textured implants (BIA-ALCL); very rarely, other tumours in the implant capsule (squamous cell carcinoma, other lymphomas)",
+      "General symptoms such as fatigue and joint pain that some people attribute to their implants; their cause is not yet fully understood"
+    ],
+    faq: [
+      ["How often do implants need replacing?", "There is no fixed replacement interval; an implant can stay as long as it causes no problems. But implants are not lifetime devices, and rupture or capsule problems may call for replacement over the years."],
+      ["Can I breastfeed with implants?", "Because the implant sits behind the breast tissue, most women can breastfeed. An incision around the areola or surgery on the breast tissue itself can affect breastfeeding."],
+      ["How long does a lift last?", "The breast is raised again, but with gravity, pregnancy and weight changes some sagging can return over time."]
+    ]
+  }
+},
+
+{ slug: "karin-germe", group: "body",
+  tr: {
+    name: "Karın germe",
+    short: "Hamilelik ya da kilo kaybından sonra karında kalan fazla deri ve yağın alınması, karın kaslarının toparlanması.",
+    lead: "Karın germe (abdominoplasti), karnın alt kısmındaki fazla deri ve yağ dokusunun alınması ve hamilelikte ya da kilo değişimlerinde birbirinden ayrılan karın kaslarının gerektiğinde orta hatta birleştirilmesidir. Egzersiz ve diyetle düzelmeyen deri sarkması ve karın duvarı gevşekliği için uygulanır. Bir kilo verme yöntemi değildir.",
+    facts: [["Anestezi", "Genel anestezi"], ["Ameliyat süresi", "Genellikle 2–4 saat"], ["Hastanede kalış", "Çoğunlukla 1–2 gece"], ["Masa başı işe dönüş", "Yaklaşık 2–3 hafta"]],
+    who: [
+      "Hamilelik sonrası karın derisinde sarkma ve kaslarda ayrılma olanlar",
+      "Fazla kilo verdikten sonra karında deri fazlalığı kalanlar",
+      "Kilosu en az 6–12 aydır sabit olanlar; obezite cerrahisi sonrasında genellikle 12–18 ay beklenir",
+      "Hamilelik planı tamamlanmış olanlar"
+    ],
+    before: [
+      "Karın derisinin fazlalığı, karın kaslarındaki ayrılma ve varsa fıtık muayene ile değerlendirilir.",
+      "Sigara, yara iyileşmesi sorunlarını belirgin biçimde artırır; ameliyattan en az 4 hafta önce bırakılmalıdır.",
+      "Bacakta pıhtı riskini azaltmak için ameliyat sırasında ve sonrasında önlemler alınır."
+    ],
+    surgery: [
+      "İç çamaşırı hattında kalacak şekilde, iki kalça kemiği arasında yatay bir kesi yapılır. Karın derisi kaldırılır, kaslar orta hatta dikilir, fazla deri ve yağ alınır.",
+      "Göbek yeni deride açılan bir delikten dışarı alınır. Fazlalık yalnızca göbeğin altındaysa göbeğe dokunulmayan daha kısa bir ameliyat (mini karın germe) yapılabilir.",
+      "Gerekirse bel ve yanlara liposuction eklenir."
+    ],
+    recovery: [
+      "İlk günlerde gerginliği azaltmak için hafif öne eğik yürünür ve bacaklar hafif bükülü olarak yatılır.",
+      "Drenler genellikle birkaç gün içinde çıkarılır. Yaklaşık 6 hafta korse kullanılır.",
+      "Ağır kaldırma ve karın egzersizleri 6 hafta sınırlandırılır.",
+      "İz ilk aylarda belirgindir; 1 yıl içinde açılır ve yumuşar."
+    ],
+    risks: [
+      "Deri altında sıvı ya da kan toplanması, enfeksiyon",
+      "Göbekte şekil bozukluğu ya da yara iyileşmesi sorunu",
+      "Kesi hattının ortasında yara iyileşmesinde gecikme; sigara içenlerde daha sık",
+      "Alt karında his azalması, belirgin ya da kalın iz",
+      "Bacakta pıhtı ve akciğere pıhtı atması"
+    ],
+    faq: [
+      ["Ameliyattan sonra hamile kalabilir miyim?", "Hamilelik mümkündür, ancak karın derisi ve kaslar yeniden gerilerek sonucu bozabilir. Bu nedenle ameliyatın hamilelik planı tamamlandıktan sonra yapılması önerilir."],
+      ["Çatlaklar da geçer mi?", "Alınan deri üzerindeki çatlaklar, çoğunlukla göbek altındakiler, ameliyatla ortadan kalkar. Kalan derideki çatlaklar ise aynı kalır."]
+    ]
+  },
+  en: {
+    name: "Tummy tuck",
+    short: "Removing excess abdominal skin and fat after pregnancy or weight loss and tightening the abdominal muscles.",
+    lead: "A tummy tuck (abdominoplasty) removes excess skin and fat from the lower abdomen and, when needed, stitches together the abdominal muscles that separated in the midline during pregnancy or weight change. It treats loose skin and a lax abdominal wall that do not improve with diet and exercise. It is not a weight-loss method.",
+    facts: [["Anaesthesia", "General anaesthesia"], ["Operating time", "Usually 2–4 hours"], ["Hospital stay", "Mostly 1–2 nights"], ["Back to desk work", "About 2–3 weeks"]],
+    who: [
+      "Women with loose abdominal skin and separated muscles after pregnancy",
+      "People left with excess abdominal skin after major weight loss",
+      "People whose weight has been stable for at least 6–12 months; after weight-loss surgery, usually 12–18 months",
+      "Those who have finished having children"
+    ],
+    before: [
+      "Excess skin, separation of the abdominal muscles and any hernia are assessed by examination.",
+      "Smoking markedly increases wound-healing problems; it should be stopped at least 4 weeks before surgery.",
+      "Measures are taken during and after surgery to lower the risk of a clot in the leg."
+    ],
+    surgery: [
+      "A horizontal incision is made between the hip bones, placed to lie within the underwear line. The abdominal skin is lifted, the muscles are stitched in the midline, and excess skin and fat are removed.",
+      "The navel is brought out through an opening in the new skin. If the excess is only below the navel, a shorter operation that leaves the navel alone (mini tummy tuck) may be possible.",
+      "Liposuction of the waist and flanks can be added if needed."
+    ],
+    recovery: [
+      "For the first days you walk slightly bent forward and lie with the knees slightly bent to ease tension.",
+      "Drains are usually removed within a few days. A support garment is worn for about 6 weeks.",
+      "Heavy lifting and abdominal exercise are limited for 6 weeks.",
+      "The scar is noticeable in the first months and fades and softens within a year."
+    ],
+    risks: [
+      "A collection of fluid or blood under the skin, infection",
+      "Problems with the shape or healing of the navel",
+      "Delayed healing in the middle of the incision; more common in smokers",
+      "Numbness of the lower abdomen, a noticeable or thick scar",
+      "A clot in the leg or lung"
+    ],
+    faq: [
+      ["Can I get pregnant after surgery?", "Pregnancy is possible, but the skin and muscles can stretch again and spoil the result. That is why surgery is advised once you have finished having children."],
+      ["Will stretch marks go?", "Stretch marks on the skin that is removed, mostly those below the navel, are taken away. Those on the remaining skin stay."]
+    ]
+  }
+},
+
+{ slug: "liposuction-ve-jinekomasti", group: "body",
+  tr: {
+    name: "Liposuction ve jinekomasti",
+    short: "Bölgesel yağ birikimlerinin alınması ve erkeklerde meme büyümesinin düzeltilmesi.",
+    lead: "Liposuction, diyet ve egzersize direnç gösteren bölgesel yağ birikimlerinin ince kanüllerle alınarak vücut hatlarının düzeltilmesidir; bir kilo verme yöntemi değildir. Jinekomasti ise erkeklerde meme bezi dokusunun ve çevresindeki yağın büyümesidir. Jinekomasti ameliyatında çoğunlukla liposuction ile bez dokusunun küçük bir kesiden çıkarılması birlikte uygulanır.",
+    facts: [["Anestezi", "Sedasyonla lokal ya da genel anestezi"], ["Ameliyat süresi", "Genellikle 1–3 saat"], ["Hastanede kalış", "Çoğunlukla aynı gün ya da 1 gece"], ["Korse", "Yaklaşık 4–6 hafta"]],
+    who: [
+      "Kilosu ideal ağırlığına yakın, karın, bel, basen, uyluk, kol ya da gıdı bölgesinde bölgesel yağ birikimi olanlar",
+      "Deri esnekliği iyi olanlar; sarkık derisi olanlarda germe ameliyatı gerekebilir",
+      "Ergenlik dönemi geçmiş ve en az bir yıldır süren jinekomastisi olan erkekler"
+    ],
+    before: [
+      "Jinekomastide önce nedeni araştırılır: kullanılan ilaçlar, anabolik steroidler, hormon bozuklukları ve karaciğer veya testis hastalıkları değerlendirilir; gerekirse kan tahlilleri ve ultrason istenir.",
+      "Ergenlik döneminde görülen jinekomasti çoğunlukla kendiliğinden geriler; bu dönemde genellikle bir süre beklenir.",
+      "Liposuction öncesinde alınacak bölgeler ayakta işaretlenir. Alınabilecek yağ miktarının güvenlik sınırları vardır."
+    ],
+    surgery: [
+      "Küçük kesilerden bölgeye yağı ayırmayı kolaylaştıran ve kanamayı azaltan bir sıvı verilir, ardından yağ ince kanüllerle alınır.",
+      "Jinekomastide liposuction ile yağ alındıktan sonra sert bez dokusu meme başının alt kenarındaki küçük bir kesiden çıkarılır ve patolojiye gönderilir."
+    ],
+    recovery: [
+      "Morluk ve şişlik ilk 2–3 haftada belirgindir; şişliğin tamamen inmesi birkaç ay sürer.",
+      "Korse, şişliği azaltmak ve derinin yeni şekle uyumunu desteklemek için yaklaşık 4–6 hafta kullanılır.",
+      "Hafif yürüyüş ilk günlerde başlar; spor genellikle 3–4 haftadan sonra kademeli olarak yapılabilir.",
+      "Kilo korunduğu sürece alınan yağ hücreleri geri gelmez; ancak kilo alınırsa kalan yağ hücreleri büyüyebilir."
+    ],
+    risks: [
+      "Yüzeyde dalgalanma, çukurluk ya da asimetri",
+      "Sıvı toplanması, uzun süren uyuşukluk",
+      "Jinekomastide kan toplanması (en sık görülen sorun), meme başının altında çöküklük ya da fazla doku kalması",
+      "Nadiren enfeksiyon, deride beslenme sorunu, bacakta ya da akciğerde pıhtı",
+      "Çok nadir ama ciddi riskler: kanülle karın duvarının ya da iç organların yaralanması, yağ embolisi, büyük hacimli işlemlerde sıvı dengesi bozukluğu ve lokal anestezik ilaca bağlı zehirlenme"
+    ],
+    faq: [
+      ["Liposuction ile kaç kilo verilir?", "Liposuction kilo vermek için değil, bölgesel şekil düzeltmek için yapılır. Tartıdaki değişim genellikle sınırlıdır; asıl fark vücut hatlarında görülür."],
+      ["Jinekomasti spor ve diyetle geçer mi?", "Yağ ağırlıklı büyüme kilo vermeyle azalabilir. Sert meme bezi dokusu ise kilo vermekle küçülmez ve cerrahi olarak çıkarılması gerekir."]
+    ]
+  },
+  en: {
+    name: "Liposuction and gynaecomastia",
+    short: "Removing localised fat deposits and correcting breast enlargement in men.",
+    lead: "Liposuction removes localised fat deposits that resist diet and exercise through fine cannulas to improve body contour; it is not a weight-loss method. Gynaecomastia is enlargement of the breast gland and surrounding fat in men. Surgery for gynaecomastia usually combines liposuction with removing the gland through a small incision.",
+    facts: [["Anaesthesia", "Local with sedation, or general anaesthesia"], ["Operating time", "Usually 1–3 hours"], ["Hospital stay", "Mostly same day or 1 night"], ["Compression garment", "About 4–6 weeks"]],
+    who: [
+      "People close to their ideal weight with localised fat on the abdomen, waist, hips, thighs, arms or under the chin",
+      "People with good skin elasticity; loose skin may need a lift instead",
+      "Men past puberty with gynaecomastia lasting at least a year"
+    ],
+    before: [
+      "With gynaecomastia, the cause is looked for first: medicines, anabolic steroids, hormone disorders and liver or testicular disease are assessed, with blood tests and ultrasound when needed.",
+      "Gynaecomastia during puberty mostly resolves on its own, so waiting for a while is usually advised.",
+      "Areas for liposuction are marked standing. There are safe limits to the amount of fat that can be removed."
+    ],
+    surgery: [
+      "A fluid that helps free the fat and reduces bleeding is introduced through small incisions, and the fat is then removed with fine cannulas.",
+      "For gynaecomastia, after the fat is removed by liposuction, the firm gland is taken out through a small incision at the lower edge of the areola and sent for pathology."
+    ],
+    recovery: [
+      "Bruising and swelling are marked for the first 2–3 weeks; swelling takes a few months to settle completely.",
+      "A compression garment is worn for about 4–6 weeks to reduce swelling and help the skin adapt to the new shape.",
+      "Light walking starts in the first days; sport can usually be resumed gradually after 3–4 weeks.",
+      "Removed fat cells do not return as long as weight is stable; if weight is gained, the remaining fat cells can grow."
+    ],
+    risks: [
+      "Surface irregularity, dents or asymmetry",
+      "Fluid collection, long-lasting numbness",
+      "With gynaecomastia, a collection of blood (the most common problem), a hollow under the nipple or residual tissue",
+      "Rarely, infection, poor skin blood supply, a clot in the leg or lung",
+      "Very rare but serious risks: injury to the abdominal wall or internal organs by the cannula, fat embolism, fluid imbalance in large-volume procedures and toxicity from the local anaesthetic"
+    ],
+    faq: [
+      ["How much weight will I lose with liposuction?", "Liposuction is for reshaping areas, not for weight loss. The change on the scales is usually small; the main difference is in body contour."],
+      ["Will gynaecomastia go with exercise and diet?", "Fatty enlargement can shrink with weight loss. Firm breast gland tissue does not shrink with weight loss and needs to be removed surgically."]
+    ]
+  }
+}
+];
+const procBySlug = slug => PROCS.find(p => p.slug === slug);
+const pl = p => p[lang] || p.tr;
+
+const procIndex = () => `
+  <div class="page-head">
+    <h1>${t({ tr: "Ameliyatlar", en: "Procedures" })}</h1>
+    <p class="lead">${t({
+      tr: "Plastik, rekonstrüktif ve estetik cerrahinin kapsamındaki ameliyatlar hakkında hasta bilgilendirme sayfaları. Her sayfada ameliyatın kimler için uygun olduğu, nasıl yapıldığı, iyileşme süreci ve olası riskleri anlatılıyor.",
+      en: "Patient information pages on operations within plastic, reconstructive and aesthetic surgery. Each page explains who the operation is for, how it is done, what recovery involves and the possible risks." })}</p>
+  </div>
+  ${PROC_GROUPS.map(g => `
+  <section class="sec">
+    <h2>${t(g.name)}</h2>
+    <ul class="plist">${PROCS.filter(p => p.group === g.id).map(p => `
+      <li><a href="#${p.slug}">${pl(p).name}</a><p>${pl(p).short}</p></li>`).join("")}
+    </ul>
+  </section>`).join("")}
+  <p class="note">${t(PROC_LABELS.note)}</p>`;
+
+const procPage = p => {
+  const c = pl(p);
+  const g = PROC_GROUPS.find(x => x.id === p.group);
+  const list = items => `<ul class="ticks">${items.map(x => `<li>${x}</li>`).join("")}</ul>`;
+  const paras = items => items.map(x => `<p>${x}</p>`).join("");
+  const row = (key, body) => `<section class="psec"><h2>${t(PROC_LABELS[key])}</h2><div class="psec-body">${body}</div></section>`;
+  const others = PROCS.filter(x => x.group === p.group && x.slug !== p.slug);
+  return `
+  <div class="page-head">
+    <p class="crumb"><a href="#procedures">${t(PROC_LABELS.all)}</a><span aria-hidden="true">/</span>${t(g.name)}</p>
+    <h1>${c.name}</h1>
+    <p class="lead">${c.lead}</p>
+  </div>
+  <section class="sec">
+    <h2 class="sr">${t(PROC_LABELS.facts)}</h2>
+    <dl class="facts facts-4">${c.facts.map(([k, v]) => `
+      <div><dt>${k}</dt><dd>${v}</dd></div>`).join("")}
+    </dl>
+    <p class="quiet">${t(PROC_LABELS.typical)}</p>
+  </section>
+  <div class="psecs">
+    ${row("who", list(c.who))}
+    ${row("before", list(c.before))}
+    ${row("surgery", paras(c.surgery))}
+    ${row("recovery", list(c.recovery))}
+    ${row("risks", list(c.risks))}
+    ${row("faq", c.faq.map(([q, a]) => `<details class="faq"><summary>${q}</summary><p>${a}</p></details>`).join(""))}
+  </div>
+  <p class="note">${t(PROC_LABELS.note)}</p>
+  <section class="visit">
+    <div><h2>${t({ tr: "Muayene ve randevu", en: "Appointments" })}</h2>
+    <p>${t({ tr: "Poliklinik randevuları MHRS üzerinden ya da ALO 182 aranarak alınır.", en: "Outpatient appointments are booked through MHRS, the national appointment system, or by calling 182." })}</p></div>
+    <div class="btns"><a class="btn btn-primary" href="#contact">${t(CTA_VISIT)}</a></div>
+  </section>
+  ${others.length ? `<section class="sec">
+    <h2>${t(PROC_LABELS.others)}</h2>
+    <ul class="plist">${others.map(x => `<li><a href="#${x.slug}">${pl(x).name}</a><p>${pl(x).short}</p></li>`).join("")}</ul>
+  </section>` : ""}`;
+};
+
 const PAGES = {
+  procedures: () => procIndex(),
   home: () => `
   <section class="hero${ENTER}">
     <div class="hero-text">
@@ -630,6 +1941,7 @@ const PAGES = {
     <p class="lead">${t({
       tr: "Plastik, rekonstrüktif ve estetik cerrahinin üç alanında yoğunlaşıyorum. Her başlığın yanında o alandaki akademik çalışmalarımdan örnekler yer alıyor.",
       en: "My practice concentrates on three areas of plastic, reconstructive and aesthetic surgery. Each one is listed with examples of my academic work in that field." })}</p>
+    <p><a href="#procedures">${t({ tr: "Ameliyatlar hakkında hasta bilgilendirme sayfaları", en: "Patient information on individual procedures" })}</a></p>
   </div>
   <div>${AREAS.map(a => `
     <article class="focus">
@@ -722,7 +2034,7 @@ const PAGES = {
     en: "Medical assessments cannot be made by email. In an emergency, call 112." })}</p>`
 };
 
-const routeNow = () => { const h = location.hash.replace("#", ""); return PAGES[h] ? h : "home"; };
+const routeNow = () => { const h = location.hash.replace("#", ""); return (PAGES[h] || procBySlug(h)) ? h : "home"; };
 
 function render(scrollTop) {
   const r = routeNow();
@@ -730,13 +2042,17 @@ function render(scrollTop) {
   firstPaint = false;
   document.documentElement.lang = lang;
   document.getElementById("skip").textContent = t({ tr: "İçeriğe geç", en: "Skip to content" });
+  const proc = procBySlug(r);
+  const navId = proc ? "procedures" : r;
   document.getElementById("nav").innerHTML = NAV.map(([id, label]) =>
-    `<a href="#${id}"${id === r ? ' aria-current="page"' : ""}>${t(label)}</a>`).join("");
+    `<a href="#${id}"${id === navId ? ' aria-current="page"' : ""}>${t(label)}</a>`).join("");
   document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
-  document.getElementById("main").innerHTML = `<div class="page">${PAGES[r]()}</div>`;
+  document.getElementById("main").innerHTML = `<div class="page">${proc ? procPage(proc) : PAGES[r]()}</div>`;
+  document.title = proc ? `${pl(proc).name} · Op. Dr. Çağhan Benli` : (navId === "procedures" ? `${t({ tr: "Ameliyatlar", en: "Procedures" })} · Op. Dr. Çağhan Benli` : "Op. Dr. Çağhan Benli");
   document.getElementById("foot").innerHTML = `
     <p>© 2026 Çağhan Benli</p>
     <p>${t({ tr: "Son güncelleme", en: "Last updated" })}: ${t(UPDATED)}</p>
+    <p>${t({ tr: "Site editörü", en: "Site editor" })}: Op. Dr. Çağhan Benli, <a href="mailto:${EMAIL}">${EMAIL}</a></p>
     <p>${t({ tr: "Bu sitedeki içerik bilgilendirme amaçlıdır, tanı ve tedavi yerine geçmez.", en: "The content of this site is for information only and does not replace diagnosis or treatment." })}</p>`;
   if (scrollTop) window.scrollTo(0, 0);
 }
