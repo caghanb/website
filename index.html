@@ -204,7 +204,7 @@ main{display:block;min-height:60vh}
 .press-item:first-child{border-top:0;padding-top:0}
 .press-item:last-child{padding-bottom:0}
 .press-shot{display:block;justify-self:start;max-width:100%;border:1px solid var(--line);border-radius:4px;overflow:hidden;background:#fff;box-shadow:0 1px 2px rgb(40 46 43 / .06)}
-.press-shot img{display:block;width:100%;height:auto;max-height:420px;object-fit:cover;object-position:top}
+.press-shot img{display:block;width:100%;height:auto}
 .press-shot.narrow{max-width:340px}
 .press-text{display:flex;flex-direction:column;gap:14px}
 .press-meta{display:flex;flex-wrap:wrap;gap:4px 16px;color:var(--muted);font-size:.95rem}
@@ -1858,29 +1858,29 @@ const procPage = p => {
   </section>` : ""}`;
 };
 
-/* Press coverage. Screenshots are cropped to masthead, headline and date:
-   patient photos and identity are left out (Tanıtım Yönetmeliği, RG 12.11.2025). */
+/* Press coverage. Screenshots show masthead, headline, date and the article photo.
+   Patient images are published with the patient's explicit consent (Tanıtım Yönetmeliği, RG 12.11.2025). */
 const PRESS = [
   { outlet: "Milliyet", agency: "DHA", date: { tr: "24 Aralık 2025", en: "24 December 2025" },
     title: "Devlet hastanesinde bir ilk! Yüz germe operasyonuna girdi, 15 yıl gençleşerek çıktı",
     href: "https://www.milliyet.com.tr/gundem/devlet-hastanesinde-bir-ilk-ameliyat-masasindan-15-yil-gencleserek-kalkti-7508616",
-    img: "assets/press/milliyet.jpg", w: 800, h: 530 },
+    img: "assets/press/milliyet.jpg", w: 800, h: 1001 },
   { outlet: "Habertürk", agency: "Anadolu Ajansı", date: { tr: "24 Aralık 2025", en: "24 December 2025" },
     title: "Bitlis'te ilk kez \"derin plan yüz germe ameliyatı\" yapıldı",
     href: "https://yerel-haberler.haberturk.com/bitlis-haberleri/bitliste-ilk-kez-derin-plan-yuz-germe-ameliyati-yapildi-40065690",
-    img: "assets/press/haberturk.jpg", w: 480, h: 494, narrow: true },
+    img: "assets/press/haberturk.jpg", w: 480, h: 711, narrow: true },
   { outlet: "CNN Türk", agency: "DHA", date: { tr: "24 Aralık 2025", en: "24 December 2025" },
     title: "Devlet hastanesinde bir ilk! 15 yıl gençleşti",
     href: "https://www.cnnturk.com/turkiye/galeri/devlet-hastanesinde-bir-ilk-15-yil-genclesti-2376594",
-    img: "assets/press/cnnturk.jpg", w: 800, h: 306 },
+    img: "assets/press/cnnturk.jpg", w: 800, h: 768 },
   { outlet: "Haberler.com", agency: "Anadolu Ajansı", date: { tr: "24 Aralık 2025", en: "24 December 2025" },
     title: "Bitlis'te ilk kez \"derin plan yüz germe ameliyatı\" yapıldı",
     href: "https://www.haberler.com/saglik/bitlis-devlet-hastanesi-nde-ilk-derin-plan-yuz-germe-ameliyati-basariyla-gerceklestirildi-19387844-haberi/",
-    img: "assets/press/haberlercom.jpg", w: 800, h: 236 },
+    img: "assets/press/haberlercom.jpg", w: 800, h: 759 },
   { outlet: "Medimagazin", agency: "DHA", date: { tr: "24 Aralık 2025", en: "24 December 2025" },
     title: "Bitlis Devlet Hastanesinde ilk kez derin plan yüz germe ameliyatı yapıldı",
     href: "https://medimagazin.com.tr/guncel/bitlis-devlet-hastanesinde-ilk-kez-derin-plan-yuz-germe-ameliyati-yapildi-118627",
-    img: "assets/press/medimagazin.jpg", w: 800, h: 230 }
+    img: "assets/press/medimagazin.jpg", w: 800, h: 608 }
 ];
 
 const PAGES = {
@@ -2060,8 +2060,8 @@ const PAGES = {
     </article>`).join("")}
   </div>
   <p class="note">${t({
-    tr: "Görseller haberlerin başlık bölümünden alınmıştır. Hasta mahremiyeti gereği hasta fotoğrafları ve kimlik bilgileri bu sitede yer almaz. Haberlerin tamamı yayın kuruluşlarının sitelerindedir.",
-    en: "The images show the headline area of each article. To protect patient privacy, patient photographs and identifying details are not shown on this site. The full articles are on the publishers' websites." })}</p>`,
+    tr: "Görseller, haberlerin yayın kuruluşlarının sitelerindeki ekran görüntüleridir. Hasta görselleri, hastanın açık rızasıyla yayımlanmaktadır. Haberlerin tamamı yayın kuruluşlarının sitelerindedir.",
+    en: "The images are screenshots of the articles on the publishers' websites. Patient images are published with the patient's explicit consent. The full articles are on the publishers' websites." })}</p>`,
 
   contact: () => `
   <div class="page-head"><h1>${t({ tr: "Muayene ve iletişim", en: "Appointments and contact" })}</h1></div>
