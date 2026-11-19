@@ -354,7 +354,8 @@ main{display:block;min-height:60vh}
 /* ---------- Settings you may want to change ---------- */
 const PHOTO = "";               // portrait: put a data: URI or a relative file path here
 const EMAIL = "drcaghanbenli@gmail.com";
-const UPDATED = { tr: "18 Kasım 2026", en: "18 November 2026" };
+const INSTAGRAM = { handle: "drcaghan", href: "https://www.instagram.com/drcaghan/" };
+const UPDATED = { tr: "19 Kasım 2026", en: "19 November 2026" };
 
 /* ---------- Content ---------- */
 const ME = "<b>Benli Ç</b>";
@@ -2089,6 +2090,11 @@ const PAGES = {
         <button class="copy" type="button" id="copy-mail">${t({ tr: "Adresi kopyala", en: "Copy address" })}</button>
       </div>
       <div class="block">
+        <h2>Instagram</h2>
+        <p class="big"><a href="${INSTAGRAM.href}" rel="me">@${INSTAGRAM.handle}</a></p>
+        <p>${t({ tr: "Bilgilendirme paylaşımları. Mesaj yoluyla tıbbi değerlendirme yapılamaz.", en: "Informational posts. Medical assessments cannot be made by direct message." })}</p>
+      </div>
+      <div class="block">
         <h2>${t({ tr: "Akademik profiller", en: "Academic profiles" })}</h2>
         <div class="profiles">${PROFILES.map(p => `<a href="${p.href}">${p.name}<span>${p.id}</span></a>`).join("")}</div>
       </div>
@@ -2118,6 +2124,7 @@ function render(scrollTop) {
     <p>© 2026 Çağhan Benli</p>
     <p>${t({ tr: "Son güncelleme", en: "Last updated" })}: ${t(UPDATED)}</p>
     <p>${t({ tr: "Site editörü", en: "Site editor" })}: Op. Dr. Çağhan Benli, <a href="mailto:${EMAIL}">${EMAIL}</a></p>
+    <p>Instagram: <a href="${INSTAGRAM.href}" rel="me">@${INSTAGRAM.handle}</a></p>
     <p>${t({ tr: "Bu sitedeki içerik bilgilendirme amaçlıdır, tanı ve tedavi yerine geçmez.", en: "The content of this site is for information only and does not replace diagnosis or treatment." })}</p>`;
   if (scrollTop) window.scrollTo(0, 0);
 }
